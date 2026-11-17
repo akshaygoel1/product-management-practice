@@ -493,6 +493,30 @@ function FlowRef({ content }: { content: any }) {
   );
 }
 
+/* Business-case reference: numbered model-answer sections + key consideration */
+function CaseRef({ content }: { content: any }) {
+  return (
+    <div>
+      {(content.sections ?? []).map((s: any, i: number) => (
+        <Sec key={i} label={s.title ?? `Section ${i + 1}`}>
+          <ul className="space-y-1.5 text-[15px]" style={{ listStyle: "disc", paddingLeft: 20 }}>
+            {(s.points ?? []).map((p: string, j: number) => (
+              <li key={j}>{p}</li>
+            ))}
+          </ul>
+        </Sec>
+      ))}
+      {content.consideration && (
+        <div className="mt-4">
+          <Box>
+            <strong>Key consideration:</strong> {content.consideration}
+          </Box>
+        </div>
+      )}
+    </div>
+  );
+}
+
 const referenceRenderers: Record<SchemaId, (p: { content: any }) => JSX.Element> = {
   "kpi-tree": KpiTreeRef,
   "causal-diagram": CausalRef,
@@ -507,6 +531,7 @@ const referenceRenderers: Record<SchemaId, (p: { content: any }) => JSX.Element>
   metrics: MetricsRef,
   wireframing: WireframeRef,
   "user-flow": FlowRef,
+  "case-analysis": CaseRef,
 };
 
 export function ReferenceView({ schema, content }: { schema: SchemaId; content: any }) {
@@ -518,7 +543,7 @@ export function ReferenceView({ schema, content }: { schema: SchemaId; content: 
    Read-only summary of the user's answer (recap / side-by-side)
    ============================================================ */
 
-export function summarizeAnswer(schema: SchemaId, data: any): string[] {
+export function summarizeAnswer(schema: SchemaId, data: any, labels?: string[]): string[] {
   if (!data) return [];
   const out: string[] = [];
   const val = (v: unknown) => (typeof v === "string" ? v.trim() : v == null ? "" : String(v).trim());
@@ -634,12 +659,17 @@ export function summarizeAnswer(schema: SchemaId, data: any): string[] {
         if (val(s.text)) push(`${i + 1}. ${s.lane ? `(${s.lane}) ` : ""}[${s.type}] ${val(s.text)}${s.branches ? ` — ${s.branches.split("\n").join(" / ")}` : ""}`);
       });
       break;
+    case "case-analysis":
+      (data.answers ?? []).forEach((a: string, i: number) => {
+        if (val(a)) push(`${labels?.[i] ?? `Part ${i + 1}`}: ${val(a)}`);
+      });
+      break;
   }
   return out.filter((s) => s && s.trim().length > 0);
 }
 
-export function AnswerSummary({ schema, data }: { schema: SchemaId; data: any }) {
-  const lines = summarizeAnswer(schema, data);
+export function AnswerSummary({ schema, data, labels }: { schema: SchemaId; data: any; labels?: string[] }) {
+  const lines = summarizeAnswer(schema, data, labels);
   if (lines.length === 0) return <p className="muted text-[15px]">Nothing written yet.</p>;
   return (
     <ul className="space-y-1 text-[15px] list-disc pl-5">

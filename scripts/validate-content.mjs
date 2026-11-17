@@ -27,12 +27,13 @@ const SCHEMAS = new Set([
   "metrics",
   "wireframing",
   "user-flow",
+  "case-analysis",
 ]);
 
 const topicFiles = readdirSync(contentDir).filter((f) => f.endsWith(".json") && f !== "topics.json" && f !== "combined.json");
 const topics = JSON.parse(readFileSync(join(contentDir, "topics.json"), "utf8"));
 const TOPIC_IDS = new Set(topics.map((t) => t.id));
-if (topics.length !== 13) fail(`Expected 13 topics, found ${topics.length}`);
+if (topics.length !== 14) fail(`Expected 14 topics, found ${topics.length}`);
 for (const t of topics) {
   if (!SCHEMAS.has(t.answerSchema)) fail(`Topic ${t.id}: unknown answerSchema ${t.answerSchema}`);
 }
@@ -40,16 +41,23 @@ for (const t of topics) {
 const EXPECTED_MINUTES = { easy: 10, medium: 15, hard: 25 };
 
 const problems = [];
+const CASE_FILE = "case-hours";
 for (const file of topicFiles) {
   const arr = JSON.parse(readFileSync(join(contentDir, file), "utf8"));
   if (!Array.isArray(arr)) fail(`${file}: not an array`);
   const topicId = file.replace(".json", "");
   if (!TOPIC_IDS.has(topicId)) fail(`${file}: topic id ${topicId} not in topics.json`);
-  if (arr.length !== 3) fail(`${file}: expected 3 problems, found ${arr.length}`);
-  const diffs = arr.map((p) => p.difficulty).sort().join(",");
-  if (diffs !== "easy,hard,medium") fail(`${file}: difficulty mix should be easy, medium, hard — got ${diffs}`);
+  const isCaseFile = topicId === CASE_FILE;
+  if (isCaseFile) {
+    if (arr.length !== 12) fail(`${file}: expected 12 case problems, found ${arr.length}`);
+  } else {
+    if (arr.length !== 3) fail(`${file}: expected 3 problems, found ${arr.length}`);
+    const diffs = arr.map((p) => p.difficulty).sort().join(",");
+    if (diffs !== "easy,hard,medium") fail(`${file}: difficulty mix should be easy, medium, hard — got ${diffs}`);
+  }
   for (const p of arr) {
     p._src = file;
+    p._isCase = isCaseFile;
     problems.push(p);
   }
 }
@@ -82,13 +90,38 @@ for (const p of problems) {
   if (p.type === "single" && p.steps.length !== 1) fail(`${p.id}: single problems must have exactly 1 step`);
   if (p.type === "combined" && (p.steps.length < 2 || p.steps.length > 4)) fail(`${p.id}: combined problems must have 2 to 4 steps`);
   const expectedMinutes = p.type === "combined" ? (p.steps.length === 2 ? 30 : 45) : EXPECTED_MINUTES[p.difficulty];
-  if (p.estimatedMinutes !== expectedMinutes) fail(`${p.id}: estimatedMinutes ${p.estimatedMinutes}, expected ${expectedMinutes}`);
+  if (p._isCase) {
+    if (!Number.isInteger(p.estimatedMinutes) || p.estimatedMinutes < 30 || p.estimatedMinutes > 60) {
+      fail(`${p.id}: case estimatedMinutes should be an integer between 30 and 60 — got ${p.estimatedMinutes}`);
+    }
+  } else if (p.estimatedMinutes !== expectedMinutes) {
+    fail(`${p.id}: estimatedMinutes ${p.estimatedMinutes}, expected ${expectedMinutes}`);
+  }
 
   p.steps.forEach((s, i) => {
     if (!TOPIC_IDS.has(s.topic)) fail(`${p.id} step ${i + 1}: unknown topic ${s.topic}`);
     if (!s.task || !s.task.trim()) fail(`${p.id} step ${i + 1}: missing task`);
     if (!Array.isArray(s.hints) || s.hints.length < 1) fail(`${p.id} step ${i + 1}: needs at least one hint`);
     if (!SCHEMAS.has(s.answerSchema)) fail(`${p.id} step ${i + 1}: unknown answerSchema ${s.answerSchema}`);
+
+    /* business-case specific checks */
+    if (p._isCase) {
+      if (s.topic !== CASE_FILE) fail(`${p.id}: case steps must use topic ${CASE_FILE}`);
+      if (s.answerSchema !== "case-analysis") fail(`${p.id}: case problems must use answerSchema case-analysis`);
+      if (!Array.isArray(s.taskPoints) || s.taskPoints.length === 0 || s.taskPoints.some((t) => !t || !t.trim())) {
+        fail(`${p.id}: case problems need taskPoints`);
+      }
+      if (!Array.isArray(s.worksheet) || s.worksheet.length !== (s.taskPoints?.length ?? -1) || s.worksheet.some((w) => !w?.label)) {
+        fail(`${p.id}: worksheet must have one labelled part per taskPoint`);
+      }
+      if (s.constraints && (!Array.isArray(s.constraints) || s.constraints.some((c) => !c || !c.trim()))) {
+        fail(`${p.id}: constraints must be an array of strings`);
+      }
+      if (!Array.isArray(s.deliverables) || s.deliverables.length < 3) {
+        fail(`${p.id}: case problems need at least 3 deliverables`);
+      }
+    }
+
     const ref = s.reference;
     if (!ref || typeof ref !== "object") {
       fail(`${p.id} step ${i + 1}: missing reference`);
@@ -96,7 +129,15 @@ for (const p of problems) {
     }
     if (!ref.content || typeof ref.content !== "object") fail(`${p.id} step ${i + 1}: reference.content missing`);
     if (!Array.isArray(ref.rubric) || ref.rubric.length < 3) fail(`${p.id} step ${i + 1}: rubric needs 3+ items`);
-    if (p.type === "single") {
+    if (p._isCase) {
+      const c = ref.content;
+      if (!Array.isArray(c.sections) || c.sections.length === 0 || c.sections.some((sec) => !sec?.title || !Array.isArray(sec.points) || sec.points.length === 0)) {
+        fail(`${p.id}: case reference.content needs sections with title and points`);
+      }
+      if (Array.isArray(s.deliverables) && Array.isArray(ref.rubric) && ref.rubric.length !== s.deliverables.length) {
+        fail(`${p.id}: case rubric should mirror the deliverables list`);
+      }
+    } else if (p.type === "single") {
       if (!ref.whyItWorks) fail(`${p.id}: single problems need whyItWorks`);
       if (!Array.isArray(ref.commonMistakes) || ref.commonMistakes.length === 0) fail(`${p.id}: single problems need commonMistakes`);
     }
@@ -154,13 +195,18 @@ for (const p of problems) {
     case "user-flow":
       if (!Array.isArray(c.steps) || c.steps.length === 0) fail(`${p.id}: user-flow content needs steps`);
       break;
+    case "case-analysis":
+      if (!Array.isArray(c.sections) || c.sections.length === 0) fail(`${p.id}: case-analysis content needs sections`);
+      break;
   }
 }
 
 const singles = problems.filter((p) => p.type === "single").length;
 const combos = problems.filter((p) => p.type === "combined").length;
-if (singles !== 39) fail(`Expected 39 single problems, found ${singles}`);
+if (singles !== 51) fail(`Expected 51 single problems (39 skill + 12 cases), found ${singles}`);
 if (combos !== 12) fail(`Expected 12 combined problems, found ${combos}`);
+const cases = problems.filter((p) => p._isCase).length;
+if (cases !== 12) fail(`Expected 12 case-hour problems, found ${cases}`);
 
 if (errors.length > 0) {
   console.error(`\nContent validation FAILED (${errors.length} problem${errors.length > 1 ? "s" : ""}):\n`);
@@ -169,4 +215,4 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
-console.log(`✓ Content OK: ${problems.length} problems (39 single + 12 combined), 13 topics, all schemas valid.`);
+console.log(`✓ Content OK: ${problems.length} problems (51 single + 12 combined), 14 topics, all schemas valid.`);

@@ -11,5 +11,6 @@
   { "id": "idea-filters", "name": "Idea filters", "description": "Score ideas on chosen criteria and pick with reason.", "answerSchema": "idea-filters" },
   { "id": "metrics", "name": "Metrics", "description": "Define north-star, inputs, guardrails and counter-metrics.", "answerSchema": "metrics" },
   { "id": "wireframing", "name": "Wireframing", "description": "Describe screens as ordered component lists.", "answerSchema": "wireframing" },
-  { "id": "user-flow", "name": "User flow", "description": "Map steps, decisions and failure paths.", "answerSchema": "user-flow" }
+  { "id": "user-flow", "name": "User flow", "description": "Map steps, decisions and failure paths.", "answerSchema": "user-flow" },
+  { "id": "case-hours", "name": "Case Hours", "description": "End-to-end business cases: analyse the data, make the call, and defend it.", "answerSchema": "case-analysis" }
 ]

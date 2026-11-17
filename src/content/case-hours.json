@@ -1,0 +1,1484 @@
+[
+  {
+    "id": "case-01",
+    "title": "Reducing Customer Support Costs at QuickKart",
+    "type": "single",
+    "difficulty": "medium",
+    "estimatedMinutes": 35,
+    "tags": ["business-case", "operations", "kpi-tree", "capacity-planning"],
+    "scenario": {
+      "company": "QuickKart",
+      "context": "QuickKart is an Indian quick-commerce platform operating in 25 cities. It delivers groceries and household essentials within 15–30 minutes.\n\nOver the last six months, the business has grown by 40%, but customer support costs have increased by 75%. Customers complain about delayed responses, while support agents are struggling to manage their workload.\n\nThe COO wants to reduce support costs without negatively affecting customer satisfaction.",
+      "tables": [
+        {
+          "title": "Data snapshot",
+          "columns": ["Metric", "Current value"],
+          "rows": [
+            ["Monthly orders", "4 million"],
+            ["Support queries per month", "480,000"],
+            ["Average handling time", "6 minutes"],
+            ["Average agent working hours/month", "160"],
+            ["Productive time per agent", "75%"],
+            ["Average agent cost/month", "₹28,000"],
+            ["Queries resolved on first contact", "62%"],
+            ["Average customer satisfaction", "3.6/5"]
+          ]
+        },
+        {
+          "title": "Query breakdown",
+          "columns": ["Query category", "Share of queries"],
+          "rows": [
+            ["Order tracking", "30%"],
+            ["Late delivery", "25%"],
+            ["Missing/wrong items", "20%"],
+            ["Refund status", "15%"],
+            ["Payment issues", "10%"]
+          ]
+        }
+      ]
+    },
+    "steps": [
+      {
+        "topic": "case-hours",
+        "task": "You are the PM responsible for customer support experience. Work through each part in order.",
+        "taskPoints": [
+          "Estimate how many support agents QuickKart needs to handle the current query volume.",
+          "Identify which query categories should be addressed first.",
+          "Map the business objective of reducing support costs to measurable product outcomes.",
+          "Recommend product opportunities to reduce avoidable support queries.",
+          "Create a prioritised roadmap for the next two quarters."
+        ],
+        "constraints": [
+          "Customer satisfaction must not fall below 3.5/5.",
+          "The company cannot increase its support budget.",
+          "Engineering capacity is limited to two squads."
+        ],
+        "deliverables": [
+          "Agent capacity calculation with assumptions.",
+          "Query prioritisation matrix.",
+          "Business-to-product outcome map.",
+          "Three proposed product initiatives.",
+          "A two-quarter roadmap with success metrics."
+        ],
+        "hints": [
+          "Workload in minutes = 480,000 × 6. An agent supplies 160 × 60 × 75% productive minutes.",
+          "Order tracking and late delivery together are 55% of volume — and both are tied to the delivery promise."
+        ],
+        "answerSchema": "case-analysis",
+        "worksheet": [
+          { "label": "Agent capacity", "placeholder": "Show your arithmetic: workload ÷ productive minutes per agent." },
+          { "label": "Priority categories", "placeholder": "Where does query volume concentrate, and why there?" },
+          { "label": "Outcome map", "placeholder": "Business objective → measurable product outcomes." },
+          { "label": "Product opportunities", "placeholder": "Which product changes would remove queries entirely?" },
+          { "label": "Two-quarter roadmap", "placeholder": "Sequence initiatives across two quarters, with success metrics." }
+        ],
+        "reference": {
+          "content": {
+            "sections": [
+              {
+                "title": "1. Agent requirement",
+                "points": [
+                  "Monthly workload = 480,000 queries × 6 minutes = 2.88 million minutes.",
+                  "Productive time per agent = 160 × 60 × 75% = 7,200 minutes.",
+                  "Agents required = 2,880,000 ÷ 7,200 = 400 agents.",
+                  "With a 10% buffer: approximately 440 agents."
+                ]
+              },
+              {
+                "title": "2. Priority query categories",
+                "points": [
+                  "Order tracking (30%) and late delivery (25%) should be prioritised as they contribute 55% of all queries."
+                ]
+              },
+              {
+                "title": "3. Product outcomes",
+                "points": [
+                  "Reduce support queries per 1,000 orders.",
+                  "Increase self-service resolution.",
+                  "Improve first-contact resolution.",
+                  "Maintain or improve customer satisfaction."
+                ]
+              },
+              {
+                "title": "4. Product opportunities",
+                "points": [
+                  "Real-time order tracking.",
+                  "Proactive delivery delay notifications.",
+                  "Self-service refunds.",
+                  "Easy reporting of missing or incorrect items."
+                ]
+              },
+              {
+                "title": "5. Roadmap",
+                "points": [
+                  "Prioritise order tracking, followed by proactive notifications and self-service issue resolution.",
+                  "Measure the reduction in support queries alongside customer satisfaction."
+                ]
+              }
+            ]
+          },
+          "rubric": [
+            "Agent capacity calculation with assumptions.",
+            "Query prioritisation matrix.",
+            "Business-to-product outcome map.",
+            "Three proposed product initiatives.",
+            "A two-quarter roadmap with success metrics."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "case-02",
+    "title": "Finding the Right Customers for a Subscription Business — FitLife",
+    "type": "single",
+    "difficulty": "hard",
+    "estimatedMinutes": 45,
+    "tags": ["business-case", "segmentation", "research", "growth"],
+    "scenario": {
+      "company": "FitLife",
+      "context": "FitLife is a fitness app offering personalised workout plans, diet tracking and live sessions with fitness coaches.\n\nThe app has acquired 500,000 users in the last year. However, only 8% of users convert to a paid subscription, and monthly churn among paid users has reached 12%.\n\nThe CEO believes the company is attracting the wrong customers and wants the product team to identify its highest-value segments.",
+      "tables": [
+        {
+          "title": "Data snapshot",
+          "columns": ["User segment", "Share of users", "Paid conversion", "Monthly paid churn"],
+          "rows": [
+            ["Beginners", "40%", "5%", "16%"],
+            ["Weight management", "25%", "10%", "11%"],
+            ["Fitness enthusiasts", "15%", "18%", "5%"],
+            ["Working professionals", "20%", "9%", "8%"]
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "title": "Additional observations",
+          "items": [
+            "70% of users who complete three workouts in their first week remain active after 30 days.",
+            "Only 18% of new users complete three workouts in their first week.",
+            "Users who attend at least one live coaching session have 30% higher subscription renewal.",
+            "Paid acquisition accounts for 65% of new users.",
+            "The average CAC is ₹350.",
+            "Monthly subscription price is ₹499."
+          ]
+        },
+        {
+          "title": "Internal perspectives",
+          "items": [
+            "CEO: \"We should focus on fitness enthusiasts. They are more likely to pay.\"",
+            "Growth Lead: \"Beginners are a much larger market. We should improve conversion through discounts.\"",
+            "Head of Product: \"Perhaps the real issue is that users never develop a workout habit.\""
+          ]
+        }
+      ]
+    },
+    "steps": [
+      {
+        "topic": "case-hours",
+        "task": "Work through each part in order.",
+        "taskPoints": [
+          "Identify the most attractive customer segments. Consider both current value and growth potential.",
+          "Explain which segments should be prioritised and which should be deprioritised.",
+          "Design a research plan to understand why users fail to develop a workout habit.",
+          "Identify the key activation behaviours that could predict long-term retention.",
+          "Recommend product and acquisition experiments to improve LTV."
+        ],
+        "deliverables": [
+          "Segmentation model.",
+          "Segment attractiveness matrix.",
+          "Research plan with interview participants and questions.",
+          "Activation funnel.",
+          "Three prioritised experiments."
+        ],
+        "hints": [
+          "Compare conversion × churn per segment, and weight by share of users.",
+          "70% of users who finish three workouts in week one stay past day 30 — only 18% do."
+        ],
+        "answerSchema": "case-analysis",
+        "worksheet": [
+          { "label": "Attractive segments", "placeholder": "Value per segment today, and growth potential." },
+          { "label": "Prioritisation", "placeholder": "Who to focus on — and who to deprioritise, with reasons." },
+          { "label": "Research plan", "placeholder": "Who to interview, and what to ask." },
+          { "label": "Activation behaviours", "placeholder": "Which early actions predict retention?" },
+          { "label": "LTV experiments", "placeholder": "Product and acquisition experiments to test." }
+        ],
+        "reference": {
+          "content": {
+            "sections": [
+              {
+                "title": "1. Most promising segments",
+                "points": [
+                  "Fitness enthusiasts: 18% conversion and 5% churn — strongest current segment.",
+                  "Working professionals: 9% conversion and 8% churn — promising secondary segment."
+                ]
+              },
+              {
+                "title": "2. Research plan",
+                "points": [
+                  "Interview retained and churned users across both segments, along with beginners.",
+                  "Understand their motivations, workout habits, barriers and reasons for discontinuing."
+                ]
+              },
+              {
+                "title": "3. Key insight",
+                "points": [
+                  "Users completing three workouts in their first week show significantly better retention.",
+                  "This is a promising activation behaviour to investigate."
+                ]
+              },
+              {
+                "title": "4. Recommended experiments",
+                "points": [
+                  "Personalised first-week workout plans.",
+                  "Flexible workout schedules for professionals.",
+                  "Coaching prompts for users who stop exercising.",
+                  "Targeted acquisition campaigns for high-value segments."
+                ]
+              },
+              {
+                "title": "5. Metrics",
+                "points": [
+                  "Prioritise 30-day retention, paid conversion, LTV/CAC and the percentage of users completing three workouts in their first week."
+                ]
+              }
+            ]
+          },
+          "rubric": [
+            "Segmentation model.",
+            "Segment attractiveness matrix.",
+            "Research plan with interview participants and questions.",
+            "Activation funnel.",
+            "Three prioritised experiments."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "case-03",
+    "title": "The Referral Program That Isn't Growing — PlayZone",
+    "type": "single",
+    "difficulty": "medium",
+    "estimatedMinutes": 35,
+    "tags": ["business-case", "growth", "referrals", "experimentation"],
+    "scenario": {
+      "company": "PlayZone",
+      "context": "PlayZone is a mobile gaming platform with 8 million registered users. It offers multiplayer games, leaderboards, tournaments and virtual rewards.\n\nThe company wants to reduce its dependence on paid acquisition by improving organic growth through referrals.\n\nIts existing referral program gives users 100 coins for every friend who installs the app and completes registration.\n\nDespite this incentive, the referral program is underperforming.",
+      "tables": [
+        {
+          "title": "Data snapshot",
+          "columns": ["Metric", "Current value"],
+          "rows": [
+            ["Monthly active users", "2 million"],
+            ["Users who visit referral page", "20% of MAU"],
+            ["Users who send at least one invite", "8% of MAU"],
+            ["Average invites per participating user", "3"],
+            ["Invite-to-install conversion", "12%"],
+            ["Install-to-registration conversion", "55%"],
+            ["Registration-to-first-game conversion", "40%"],
+            ["30-day retention of referred users", "18%"],
+            ["30-day retention of paid-acquired users", "25%"]
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "title": "Additional information",
+          "items": [
+            "Most invitations are shared through WhatsApp.",
+            "Users say the reward is not exciting enough.",
+            "Some users create multiple accounts to claim rewards.",
+            "The company has no reliable way to identify which referral channels bring the most valuable users."
+          ]
+        }
+      ]
+    },
+    "steps": [
+      {
+        "topic": "case-hours",
+        "task": "Work through each part in order.",
+        "taskPoints": [
+          "Map the referral funnel and identify its biggest bottlenecks.",
+          "Define successful referrals as a set of measurable product outcomes.",
+          "Identify the difference between referral volume and referral quality.",
+          "Propose improvements to referral mechanics and incentives.",
+          "Design experiments to test your ideas.",
+          "Define the metrics and guardrails you would use to evaluate success."
+        ],
+        "constraints": [
+          "The company cannot significantly increase its referral reward budget.",
+          "Referral fraud must not increase.",
+          "Referred users should be meaningfully engaged, not just registered."
+        ],
+        "deliverables": [
+          "Referral funnel.",
+          "Growth loop diagram.",
+          "Prioritised opportunities.",
+          "Three experiment proposals.",
+          "Measurement framework."
+        ],
+        "hints": [
+          "Walk the funnel: 2M × 20% × 8% × 3 × 12% × 55% × 40%.",
+          "The reward only pays at registration — there is no incentive for the friend to actually play or stay."
+        ],
+        "answerSchema": "case-analysis",
+        "worksheet": [
+          { "label": "Funnel bottlenecks", "placeholder": "Convert the percentages into absolute numbers, stage by stage." },
+          { "label": "Success definition", "placeholder": "What counts as a referral that actually created value?" },
+          { "label": "Volume vs quality", "placeholder": "How would you measure each separately?" },
+          { "label": "Mechanics & incentives", "placeholder": "Changes to the loop and the reward, within budget." },
+          { "label": "Experiments", "placeholder": "What would you test first, and how?" },
+          { "label": "Metrics & guardrails", "placeholder": "Primary metric, plus fraud and cost guardrails." }
+        ],
+        "reference": {
+          "content": {
+            "sections": [
+              {
+                "title": "1. Referral funnel",
+                "points": [
+                  "Referral page visitors: 400,000.",
+                  "Users sending invites: 160,000.",
+                  "Invitations sent: 480,000.",
+                  "Installs: 57,600.",
+                  "Registrations: 31,680.",
+                  "Users completing first game: 12,672.",
+                  "The biggest opportunities are increasing referral participation and improving conversion to first gameplay."
+                ]
+              },
+              {
+                "title": "2. Successful referral",
+                "points": [
+                  "A successful referral should be a new user who registers, completes meaningful gameplay and remains active after 30 days."
+                ]
+              },
+              {
+                "title": "3. Product opportunities",
+                "points": [
+                  "Exclusive in-game rewards.",
+                  "Invite friends directly into multiplayer games.",
+                  "Group challenges and referral milestones.",
+                  "Easier WhatsApp sharing."
+                ]
+              },
+              {
+                "title": "4. Experiments",
+                "points": [
+                  "Test different reward types, referral milestones and invite-to-play mechanics."
+                ]
+              },
+              {
+                "title": "5. Metrics",
+                "points": [
+                  "Primary: 30-day retained referred users.",
+                  "Guardrails: referral fraud, reward cost and referred-user retention."
+                ]
+              }
+            ]
+          },
+          "rubric": [
+            "Referral funnel.",
+            "Growth loop diagram.",
+            "Prioritised opportunities.",
+            "Three experiment proposals.",
+            "Measurement framework."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "case-04",
+    "title": "Should We Launch a Premium Plan? — Streamly",
+    "type": "single",
+    "difficulty": "hard",
+    "estimatedMinutes": 45,
+    "tags": ["business-case", "pricing", "monetisation", "research"],
+    "scenario": {
+      "company": "Streamly",
+      "context": "Streamly is an Indian video-streaming platform with 3 million monthly active users.\n\nIts current business model relies on advertising and a basic subscription plan costing ₹99 per month.\n\nThe company is considering launching a premium plan with exclusive content, ad-free streaming and offline downloads.\n\nHowever, leadership is unsure whether users will pay more for these features.",
+      "tables": [
+        {
+          "title": "Data snapshot",
+          "columns": ["Metric", "Current value"],
+          "rows": [
+            ["Monthly active users", "3 million"],
+            ["Paying subscribers", "300,000"],
+            ["Basic subscription price", "₹99/month"],
+            ["Average revenue per paying user", "₹115/month"],
+            ["Monthly subscriber churn", "8%"],
+            ["Average monthly ad revenue per free user", "₹18"],
+            ["Monthly content cost", "₹2.5 crore"]
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "title": "User research findings",
+          "items": [
+            "45% of surveyed users complain about advertisements.",
+            "35% want access to exclusive content.",
+            "28% want offline downloads.",
+            "20% say the existing subscription is already expensive.",
+            "Heavy users watch an average of 90 minutes per day.",
+            "Light users watch less than 20 minutes per day."
+          ]
+        }
+      ]
+    },
+    "steps": [
+      {
+        "topic": "case-hours",
+        "task": "Work through each part in order.",
+        "taskPoints": [
+          "Should Streamly launch a premium subscription? Explain your reasoning.",
+          "Identify which user segments are most likely to upgrade.",
+          "Recommend a pricing and packaging strategy.",
+          "Design research to estimate willingness to pay.",
+          "Propose an experiment to validate the premium plan before a full launch.",
+          "Identify the potential impact on advertising revenue and existing subscriptions."
+        ],
+        "constraints": [
+          "The company cannot increase content spending significantly.",
+          "The premium plan must be profitable.",
+          "The basic plan should remain attractive to existing users."
+        ],
+        "deliverables": [
+          "Monetisation opportunity assessment.",
+          "Proposed pricing and packaging.",
+          "User research plan.",
+          "Experiment design.",
+          "Revenue and risk assumptions."
+        ],
+        "hints": [
+          "Heavy users are 90 min/day and 45% complain about ads — start there.",
+          "Upgrades cannibalise ₹18/user/month of ad revenue — include that in the model."
+        ],
+        "answerSchema": "case-analysis",
+        "worksheet": [
+          { "label": "Launch decision", "placeholder": "Launch, test first, or don't launch — with reasoning." },
+          { "label": "Upgrade segments", "placeholder": "Who is most likely to pay more, and why?" },
+          { "label": "Pricing & packaging", "placeholder": "Price point, bundle, and what stays in the basic plan." },
+          { "label": "WTP research", "placeholder": "How would you estimate willingness to pay?" },
+          { "label": "Validation experiment", "placeholder": "A limited pilot design before full launch." },
+          { "label": "Ad & subscription impact", "placeholder": "Cannibalisation of ad revenue and effect on existing plans." }
+        ],
+        "reference": {
+          "content": {
+            "sections": [
+              {
+                "title": "1. Recommendation",
+                "points": [
+                  "Test a premium plan with a limited audience before a full launch.",
+                  "There is demand for ad-free streaming and exclusive content, but willingness to pay is not yet established."
+                ]
+              },
+              {
+                "title": "2. Target segment",
+                "points": [
+                  "Heavy users who watch approximately 90 minutes daily are the strongest initial target."
+                ]
+              },
+              {
+                "title": "3. Pricing hypothesis",
+                "points": [
+                  "Test a ₹149/month premium plan offering ad-free viewing and offline downloads, against the existing ₹99 plan."
+                ]
+              },
+              {
+                "title": "4. Research and experiments",
+                "points": [
+                  "Interview heavy and light users.",
+                  "Test different feature bundles and price points.",
+                  "Run a limited premium subscription pilot."
+                ]
+              },
+              {
+                "title": "5. Success metrics",
+                "points": [
+                  "Premium conversion, revenue per user, churn and total revenue including advertising."
+                ]
+              }
+            ],
+            "consideration": "Premium subscriptions may increase subscription revenue but reduce advertising revenue if free users upgrade."
+          },
+          "rubric": [
+            "Monetisation opportunity assessment.",
+            "Proposed pricing and packaging.",
+            "User research plan.",
+            "Experiment design.",
+            "Revenue and risk assumptions."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "case-05",
+    "title": "The A/B Test That Misled Everyone — ShopEase",
+    "type": "single",
+    "difficulty": "hard",
+    "estimatedMinutes": 35,
+    "tags": ["business-case", "experimentation", "metrics", "statistics"],
+    "scenario": {
+      "company": "ShopEase",
+      "context": "ShopEase is an e-commerce platform with 5 million monthly active users.\n\nThe product team recently tested a redesigned checkout experience. The new version reduces the number of checkout steps and introduces a prominent one-click purchase button.\n\nThe initial results look promising. The Head of Growth wants to roll out the new checkout to all users immediately.\n\nHowever, the analytics team has raised concerns.",
+      "tables": [
+        {
+          "title": "Experiment results (two weeks)",
+          "columns": ["Metric", "Existing checkout", "New checkout"],
+          "rows": [
+            ["Users exposed", "100,000", "100,000"],
+            ["Checkout completion", "32%", "36%"],
+            ["Average order value", "₹1,200", "₹1,050"],
+            ["Payment failure rate", "4%", "6%"],
+            ["Refund rate", "3%", "5%"],
+            ["Customer support contacts/order", "0.08", "0.12"]
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "title": "Additional information",
+          "items": [
+            "The new checkout was tested on both Android and iOS.",
+            "Android users showed a 7 percentage-point increase in checkout completion.",
+            "iOS users showed no meaningful change.",
+            "The test ran during a major sale event.",
+            "The analytics team has not yet checked statistical significance."
+          ]
+        }
+      ]
+    },
+    "steps": [
+      {
+        "topic": "case-hours",
+        "task": "Work through each part in order.",
+        "taskPoints": [
+          "Interpret the experiment results.",
+          "Determine whether the new checkout should be launched.",
+          "Identify which metrics should be primary, secondary and guardrail metrics.",
+          "Explain what additional analysis is needed before making a decision.",
+          "Recommend the next experiment or product iteration."
+        ],
+        "deliverables": [
+          "Experiment analysis.",
+          "Metric hierarchy.",
+          "Launch recommendation.",
+          "Follow-up experiment design."
+        ],
+        "hints": [
+          "Check direction on every metric: completion up, but AOV, failures, refunds and support contacts all worsened.",
+          "A 4-point lift on n=100,000 per arm — ask what significance testing and the sale event do to the read."
+        ],
+        "answerSchema": "case-analysis",
+        "worksheet": [
+          { "label": "Result interpretation", "placeholder": "Read every row of the results table, not just completion." },
+          { "label": "Launch decision", "placeholder": "Roll out now or not — and on what evidence?" },
+          { "label": "Metric hierarchy", "placeholder": "Primary, secondary and guardrail metrics." },
+          { "label": "Further analysis", "placeholder": "What would you check before deciding?" },
+          { "label": "Next experiment", "placeholder": "Design the follow-up test or iteration." }
+        ],
+        "reference": {
+          "content": {
+            "sections": [
+              {
+                "title": "1. Interpretation",
+                "points": [
+                  "The new checkout improves completion from 32% to 36%, but average order value decreases by ₹150.",
+                  "Payment failures and refunds also increase."
+                ]
+              },
+              {
+                "title": "2. Recommendation",
+                "points": [
+                  "Do not roll it out immediately.",
+                  "The increase in checkout completion may not translate into better business outcomes."
+                ]
+              },
+              {
+                "title": "3. Metrics",
+                "points": [
+                  "Primary: Revenue per checkout visitor or completed orders per visitor.",
+                  "Secondary: Checkout completion rate and average order value.",
+                  "Guardrails: Payment failure, refund rate and support contacts."
+                ]
+              },
+              {
+                "title": "4. Further analysis",
+                "points": [
+                  "Check statistical significance and sample quality.",
+                  "Analyse Android and iOS separately.",
+                  "Investigate the increase in refunds and payment failures.",
+                  "Account for the sale-period effect."
+                ]
+              },
+              {
+                "title": "5. Next step",
+                "points": [
+                  "Improve the Android experience separately and run another controlled experiment before wider rollout."
+                ]
+              }
+            ]
+          },
+          "rubric": [
+            "Experiment analysis.",
+            "Metric hierarchy.",
+            "Launch recommendation.",
+            "Follow-up experiment design."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "case-06",
+    "title": "The Roadmap Nobody Agrees On — EnterpriseFlow",
+    "type": "single",
+    "difficulty": "hard",
+    "estimatedMinutes": 45,
+    "tags": ["business-case", "prioritisation", "roadmap", "stakeholders"],
+    "scenario": {
+      "company": "EnterpriseFlow",
+      "context": "EnterpriseFlow is a B2B SaaS platform used by mid-sized businesses to manage projects, approvals and internal workflows.\n\nThe company has 40,000 paying organisations and an annual recurring revenue of ₹80 crore.\n\nThe product team has capacity to deliver only two major initiatives in the next quarter.\n\nUnfortunately, every department has a different priority.",
+      "tables": [
+        {
+          "title": "Competing requests",
+          "columns": ["Request", "Key facts", "Effort"],
+          "rows": [
+            ["Sales: Enterprise SSO", "Requested by 12 enterprise prospects. Potential contract value: ₹2 crore annually. Two large deals are blocked without it.", "8 weeks"],
+            ["Customer Success: Better Onboarding", "25% of new customers fail to complete setup. Customers who complete setup have 35% lower churn.", "6 weeks"],
+            ["Engineering: Platform Reliability", "15% of support tickets are related to performance. Platform incidents have increased by 40%.", "5 weeks"],
+            ["CEO: AI-powered Reporting", "Considered strategically important. Three competitors have recently launched AI reporting. No validated customer demand yet.", "10 weeks"]
+          ]
+        }
+      ]
+    },
+    "steps": [
+      {
+        "topic": "case-hours",
+        "task": "Work through each part in order.",
+        "taskPoints": [
+          "Evaluate all four initiatives.",
+          "Choose the two initiatives that should be prioritised.",
+          "Explain the criteria and trade-offs behind your decision.",
+          "Build a quarterly roadmap.",
+          "Prepare a short explanation for each stakeholder whose request is deprioritised.",
+          "Identify what evidence you would collect before committing to the next quarter."
+        ],
+        "deliverables": [
+          "Prioritisation framework.",
+          "Initiative scoring matrix.",
+          "Quarterly roadmap.",
+          "Stakeholder communication plan.",
+          "Risks and dependencies."
+        ],
+        "hints": [
+          "Score each initiative on revenue at stake, evidence, urgency and effort: SSO ₹2 crore, onboarding 35% churn delta, incidents +40%, AI unvalidated.",
+          "You can only fund two of four — say what you are saying no to, and why."
+        ],
+        "answerSchema": "case-analysis",
+        "worksheet": [
+          { "label": "Initiative evaluation", "placeholder": "Assess each request on impact, evidence and effort." },
+          { "label": "Two picks", "placeholder": "Which two initiatives, and why these?" },
+          { "label": "Criteria & trade-offs", "placeholder": "The framework behind your call." },
+          { "label": "Quarterly roadmap", "placeholder": "Sequence the two initiatives across the quarter." },
+          { "label": "Stakeholder messages", "placeholder": "What you would say to each deprioritised stakeholder." },
+          { "label": "Next-quarter evidence", "placeholder": "What you would gather to inform the next decision." }
+        ],
+        "reference": {
+          "content": {
+            "sections": [
+              {
+                "title": "1. Recommended priorities",
+                "points": [
+                  "Enterprise SSO: Potential ₹2 crore annual contract value and deals currently blocked.",
+                  "Platform reliability: Incidents have increased 40%, creating widespread customer impact."
+                ]
+              },
+              {
+                "title": "2. Deprioritised initiatives",
+                "points": [
+                  "AI reporting: Demand is not validated and implementation effort is high.",
+                  "Onboarding: Important, but can be scheduled for the following quarter if capacity is constrained."
+                ]
+              },
+              {
+                "title": "3. Roadmap",
+                "points": [
+                  "First: Address critical reliability issues.",
+                  "Next: Deliver enterprise SSO, coordinating with the sales pipeline."
+                ]
+              },
+              {
+                "title": "4. Stakeholder management",
+                "points": [
+                  "Explain decisions using customer impact, revenue potential, urgency, engineering effort and strategic alignment."
+                ]
+              },
+              {
+                "title": "5. Metrics",
+                "points": [
+                  "SSO adoption, enterprise deal conversion, platform uptime, incident frequency and customer churn."
+                ]
+              }
+            ]
+          },
+          "rubric": [
+            "Prioritisation framework.",
+            "Initiative scoring matrix.",
+            "Quarterly roadmap.",
+            "Stakeholder communication plan.",
+            "Risks and dependencies."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "case-07",
+    "title": "Expanding Beyond Metro Cities — FreshBasket",
+    "type": "single",
+    "difficulty": "hard",
+    "estimatedMinutes": 50,
+    "tags": ["business-case", "market-entry", "gtm", "unit-economics"],
+    "scenario": {
+      "company": "FreshBasket",
+      "context": "FreshBasket is an online grocery delivery platform operating in Bengaluru, Mumbai, Delhi and Hyderabad.\n\nThe company has achieved strong adoption in metro cities and wants to expand into Tier 2 cities.\n\nThe CEO believes cities like Jaipur, Indore, Lucknow and Coimbatore represent a significant growth opportunity.\n\nHowever, the current business model may not work outside metros.",
+      "tables": [
+        {
+          "title": "Data snapshot",
+          "columns": ["Metric", "Metro cities", "Tier 2 pilot"],
+          "rows": [
+            ["Average order value", "₹650", "₹420"],
+            ["Orders per customer/month", "5", "2"],
+            ["Delivery cost/order", "₹35", "₹65"],
+            ["Average delivery time", "25 min", "48 min"],
+            ["Monthly repeat purchase rate", "55%", "28%"],
+            ["Customer acquisition cost", "₹280", "₹190"]
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "title": "Additional information",
+          "items": [
+            "Tier 2 users show greater preference for regional products.",
+            "Many users prefer scheduled delivery over instant delivery.",
+            "Local competitors offer lower delivery fees.",
+            "FreshBasket's current warehouse model is optimised for high order density.",
+            "The company has a limited expansion budget."
+          ]
+        }
+      ]
+    },
+    "steps": [
+      {
+        "topic": "case-hours",
+        "task": "Work through each part in order.",
+        "taskPoints": [
+          "Assess whether FreshBasket should expand into Tier 2 cities.",
+          "Estimate the opportunity and identify the most attractive launch cities.",
+          "Identify which aspects of the product need localisation.",
+          "Recommend a pilot launch strategy.",
+          "Define the metrics that should determine whether the pilot is successful.",
+          "Explain whether FreshBasket should change its delivery promise or operating model."
+        ],
+        "deliverables": [
+          "Market opportunity assessment.",
+          "City selection criteria.",
+          "Customer segmentation.",
+          "Localisation opportunities.",
+          "Pilot plan and success metrics."
+        ],
+        "hints": [
+          "Tier 2 unit economics: AOV ₹420 × 2 orders vs ₹65 delivery cost and ₹190 CAC.",
+          "Scheduled delivery and regional products are the two clearest localisation signals in the data."
+        ],
+        "answerSchema": "case-analysis",
+        "worksheet": [
+          { "label": "Expand or not", "placeholder": "Your call on expansion, with the reasoning." },
+          { "label": "Opportunity & cities", "placeholder": "Sizing and which cities to launch first." },
+          { "label": "Localisation needs", "placeholder": "What must change for Tier 2 users." },
+          { "label": "Pilot strategy", "placeholder": "A limited launch plan within the budget." },
+          { "label": "Pilot metrics", "placeholder": "What success looks like, numerically." },
+          { "label": "Delivery promise", "placeholder": "Instant, scheduled, or a different operating model?" }
+        ],
+        "reference": {
+          "content": {
+            "sections": [
+              {
+                "title": "1. Recommendation",
+                "points": [
+                  "Run a limited Tier 2 pilot rather than expanding everywhere immediately."
+                ]
+              },
+              {
+                "title": "2. Opportunity",
+                "points": [
+                  "Tier 2 cities have lower CAC (₹190 vs ₹280), but also lower order frequency and AOV, with higher delivery costs."
+                ]
+              },
+              {
+                "title": "3. Product opportunities",
+                "points": [
+                  "Regional product catalogues.",
+                  "Scheduled delivery options.",
+                  "Local language support.",
+                  "Affordable delivery and minimum-order options."
+                ]
+              },
+              {
+                "title": "4. Pilot strategy",
+                "points": [
+                  "Test one or two cities, such as Indore and Jaipur, after validating local demand and operational feasibility."
+                ]
+              },
+              {
+                "title": "5. Success metrics",
+                "points": [
+                  "Repeat purchase rate, contribution margin per order, delivery cost, order frequency and customer retention."
+                ]
+              }
+            ],
+            "consideration": "Lower acquisition costs do not automatically make a market profitable. Unit economics must work."
+          },
+          "rubric": [
+            "Market opportunity assessment.",
+            "City selection criteria.",
+            "Customer segmentation.",
+            "Localisation opportunities.",
+            "Pilot plan and success metrics."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "case-08",
+    "title": "Too Many Buyers, Too Few Sellers — SkillBridge",
+    "type": "single",
+    "difficulty": "hard",
+    "estimatedMinutes": 45,
+    "tags": ["business-case", "marketplace", "liquidity", "incentives"],
+    "scenario": {
+      "company": "SkillBridge",
+      "context": "SkillBridge is an online marketplace connecting students with tutors.\n\nThe platform has grown rapidly through student acquisition campaigns. However, students increasingly complain that they cannot find tutors at their preferred times.\n\nAt the same time, many tutors complain that they receive too few bookings.\n\nThe CEO is concerned that the marketplace is growing in registrations but not in successful transactions.",
+      "tables": [
+        {
+          "title": "Data snapshot",
+          "columns": ["Metric", "Current value"],
+          "rows": [
+            ["Registered students", "200,000"],
+            ["Active students/month", "60,000"],
+            ["Registered tutors", "20,000"],
+            ["Active tutors/month", "5,000"],
+            ["Monthly booking requests", "80,000"],
+            ["Completed bookings", "42,000"],
+            ["Average tutor response time", "9 hours"],
+            ["Booking cancellation rate", "22%"]
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "title": "Additional findings",
+          "items": [
+            "60% of booking requests are concentrated in five subjects.",
+            "70% of students prefer evening sessions.",
+            "Only 35% of tutors are available during evening hours.",
+            "Tutors receive an average of 3 booking requests per month.",
+            "Students often contact multiple tutors before confirming a booking."
+          ]
+        }
+      ]
+    },
+    "steps": [
+      {
+        "topic": "case-hours",
+        "task": "Work through each part in order.",
+        "taskPoints": [
+          "Diagnose the marketplace's liquidity problem.",
+          "Identify whether the primary constraint is demand, supply, availability or matching.",
+          "Identify which marketplace segments or locations should be prioritised.",
+          "Recommend interventions to improve successful bookings.",
+          "Define metrics to measure marketplace health.",
+          "Explain how you would avoid solving the problem by simply increasing discounts."
+        ],
+        "deliverables": [
+          "Marketplace health analysis.",
+          "Supply-demand segmentation.",
+          "Opportunity map.",
+          "Proposed interventions.",
+          "Marketplace metrics framework."
+        ],
+        "hints": [
+          "70% of demand sits in evenings where only 35% of tutors are available — that is the binding constraint.",
+          "60% of requests concentrate in five subjects; start liquidity there, not with more students."
+        ],
+        "answerSchema": "case-analysis",
+        "worksheet": [
+          { "label": "Liquidity diagnosis", "placeholder": "Where do requests fail to become completed bookings?" },
+          { "label": "Primary constraint", "placeholder": "Demand, supply, availability or matching — which one?" },
+          { "label": "Priority segments", "placeholder": "Which subjects and time slots first?" },
+          { "label": "Interventions", "placeholder": "Changes that convert more requests into bookings." },
+          { "label": "Health metrics", "placeholder": "The marketplace-health dashboard." },
+          { "label": "Beyond discounts", "placeholder": "Why discounts alone would fail, and what instead." }
+        ],
+        "reference": {
+          "content": {
+            "sections": [
+              {
+                "title": "1. Problem diagnosis",
+                "points": [
+                  "The marketplace has a supply-demand mismatch, particularly for evening sessions and popular subjects.",
+                  "70% of students prefer evenings.",
+                  "Only 35% of tutors are available then."
+                ]
+              },
+              {
+                "title": "2. Product opportunities",
+                "points": [
+                  "Incentivise tutors to offer evening slots.",
+                  "Improve tutor availability visibility.",
+                  "Recommend alternative time slots.",
+                  "Improve matching by subject, availability and quality.",
+                  "Reduce cancellations through better booking confirmation."
+                ]
+              },
+              {
+                "title": "3. Prioritisation",
+                "points": [
+                  "Focus first on evening tutor availability and matching, rather than acquiring more students."
+                ]
+              },
+              {
+                "title": "4. Metrics",
+                "points": [
+                  "Booking fulfilment rate, time to match, cancellation rate, tutor utilisation and completed bookings."
+                ]
+              }
+            ],
+            "consideration": "Marketplace growth should be measured through successful transactions, not registrations."
+          },
+          "rubric": [
+            "Marketplace health analysis.",
+            "Supply-demand segmentation.",
+            "Opportunity map.",
+            "Proposed interventions.",
+            "Marketplace metrics framework."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "case-09",
+    "title": "The AI Assistant That Users Don't Trust — HelpMate",
+    "type": "single",
+    "difficulty": "hard",
+    "estimatedMinutes": 50,
+    "tags": ["business-case", "ai", "quality", "trust"],
+    "scenario": {
+      "company": "HelpMate",
+      "context": "HelpMate is an AI-powered customer support assistant used by a telecom company.\n\nIt answers customer questions about billing, recharge plans, network issues and account management.\n\nThe company launched the assistant six months ago to reduce support costs and improve response times.\n\nAlthough adoption is increasing, customer satisfaction has started declining.",
+      "tables": [
+        {
+          "title": "Data snapshot",
+          "columns": ["Metric", "Current value"],
+          "rows": [
+            ["Monthly AI conversations", "500,000"],
+            ["Queries resolved without human support", "65%"],
+            ["Queries escalated to agents", "35%"],
+            ["Incorrect or misleading responses", "8%"],
+            ["Customer satisfaction", "3.2/5"],
+            ["Average AI response time", "3 seconds"],
+            ["Average human resolution time", "8 minutes"]
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "title": "Additional findings",
+          "items": [
+            "Billing-related queries have a 95% accuracy rate.",
+            "Network troubleshooting queries have a 72% accuracy rate.",
+            "Plan recommendation queries have a 68% accuracy rate.",
+            "Users often repeat questions when the assistant fails to understand them.",
+            "Some users receive incorrect answers about refund eligibility.",
+            "The AI team wants to expand the assistant to handle more complex queries."
+          ]
+        },
+        {
+          "title": "Internal perspectives",
+          "items": [
+            "CEO: \"The assistant must resolve at least 80% of queries without human support.\"",
+            "Customer Support Lead: \"We should prioritise accuracy over automation.\"",
+            "AI Engineering Lead: \"We need more training data and a better model.\""
+          ]
+        }
+      ]
+    },
+    "steps": [
+      {
+        "topic": "case-hours",
+        "task": "Work through each part in order.",
+        "taskPoints": [
+          "Identify the most important problems with the current AI assistant.",
+          "Define what successful AI support should mean for the business and the customer.",
+          "Decide which query categories the assistant should handle, escalate or avoid.",
+          "Recommend product changes to improve trust and resolution quality.",
+          "Design an evaluation framework for AI responses.",
+          "Propose a phased roadmap for expanding AI capabilities."
+        ],
+        "deliverables": [
+          "AI quality metric framework.",
+          "Query categorisation and escalation policy.",
+          "Product opportunity prioritisation.",
+          "Evaluation plan.",
+          "Phased roadmap."
+        ],
+        "hints": [
+          "Split accuracy by query type: billing 95% vs troubleshooting 72% vs plan recommendations 68%.",
+          "Resolution quality ≠ automation rate — refunds are a sensitive category to escalate."
+        ],
+        "answerSchema": "case-analysis",
+        "worksheet": [
+          { "label": "Key problems", "placeholder": "What is actually hurting trust and satisfaction?" },
+          { "label": "Success definition", "placeholder": "What good looks like for business and customer." },
+          { "label": "Handle / escalate / avoid", "placeholder": "A policy per query category." },
+          { "label": "Trust improvements", "placeholder": "Product changes that raise resolution quality." },
+          { "label": "Evaluation framework", "placeholder": "How you would continuously measure AI quality." },
+          { "label": "Phased roadmap", "placeholder": "Sequence: fix, then expand." }
+        ],
+        "reference": {
+          "content": {
+            "sections": [
+              {
+                "title": "1. Problem diagnosis",
+                "points": [
+                  "The assistant has inconsistent accuracy across query types.",
+                  "Network troubleshooting and plan recommendations are particularly weak."
+                ]
+              },
+              {
+                "title": "2. Recommended approach",
+                "points": [
+                  "Automate high-confidence billing queries.",
+                  "Improve network troubleshooting before expanding it.",
+                  "Escalate uncertain or sensitive refund queries to human agents.",
+                  "Clearly communicate when the assistant is unsure."
+                ]
+              },
+              {
+                "title": "3. Evaluation framework",
+                "points": [
+                  "Measure answer accuracy, resolution rate, escalation rate, customer satisfaction and incorrect-response rate."
+                ]
+              },
+              {
+                "title": "4. Product opportunities",
+                "points": [
+                  "Confidence-based escalation.",
+                  "Human handoff with conversation context.",
+                  "Better feedback mechanisms.",
+                  "Improved knowledge retrieval and answer validation."
+                ]
+              },
+              {
+                "title": "5. Roadmap",
+                "points": [
+                  "First improve accuracy in existing use cases, then expand into more complex queries."
+                ]
+              }
+            ],
+            "consideration": "The goal should be successful customer resolution, not simply maximising the percentage of queries handled by AI."
+          },
+          "rubric": [
+            "AI quality metric framework.",
+            "Query categorisation and escalation policy.",
+            "Product opportunity prioritisation.",
+            "Evaluation plan.",
+            "Phased roadmap."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "case-10",
+    "title": "Build or Buy? — FinEdge's Payment Infrastructure",
+    "type": "single",
+    "difficulty": "hard",
+    "estimatedMinutes": 45,
+    "tags": ["business-case", "technical-pm", "build-vs-buy", "finance"],
+    "scenario": {
+      "company": "FinEdge",
+      "context": "FinEdge is a fintech company offering payment processing services to small businesses.\n\nThe company currently relies on a third-party payment infrastructure provider. As transaction volume grows, the fees charged by the provider are becoming a significant expense.\n\nThe CTO believes FinEdge should build its own payment processing infrastructure.\n\nThe CFO believes continuing with the third-party provider is more economical.\n\nThe PM has been asked to evaluate both options.",
+      "tables": [
+        {
+          "title": "Data snapshot",
+          "columns": ["Metric", "Current value"],
+          "rows": [
+            ["Monthly transactions", "10 million"],
+            ["Average transaction value", "₹800"],
+            ["Provider fee", "0.25% per transaction"],
+            ["Current monthly infrastructure cost", "₹5 lakh"],
+            ["Estimated internal build cost", "₹1.5 crore"],
+            ["Estimated internal build timeline", "9 months"],
+            ["Third-party integration cost", "₹10 lakh"],
+            ["Third-party integration timeline", "2 months"]
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "title": "Additional considerations",
+          "items": [
+            "The current provider has 99.9% uptime.",
+            "The internal team has limited experience with payment infrastructure.",
+            "Building internally would require hiring 5 additional engineers.",
+            "Regulatory and security compliance requirements are significant.",
+            "The company expects transaction volume to double in 18 months."
+          ]
+        }
+      ]
+    },
+    "steps": [
+      {
+        "topic": "case-hours",
+        "task": "Work through each part in order.",
+        "taskPoints": [
+          "Calculate the current cost of using the third-party provider.",
+          "Compare the financial and operational implications of both options.",
+          "Identify the risks of building an internal payment infrastructure.",
+          "Recommend build, buy or a hybrid approach.",
+          "Identify what information is missing from the decision.",
+          "Define the milestones and success metrics for your recommendation."
+        ],
+        "deliverables": [
+          "Cost comparison.",
+          "Build-vs-buy decision matrix.",
+          "Risk assessment.",
+          "Recommendation with assumptions.",
+          "Implementation milestones."
+        ],
+        "hints": [
+          "Provider fee = 0.25% × (10 million × ₹800) per month — put that against ₹1.5 crore build plus ongoing costs.",
+          "Volume doubles in 18 months; compliance and team experience are open risks."
+        ],
+        "answerSchema": "case-analysis",
+        "worksheet": [
+          { "label": "Current cost", "placeholder": "The real monthly cost of the third party." },
+          { "label": "Options comparison", "placeholder": "Financial and operational trade-offs of build vs buy." },
+          { "label": "Build risks", "placeholder": "What could go wrong with building in-house." },
+          { "label": "Recommendation", "placeholder": "Build, buy or hybrid — with assumptions stated." },
+          { "label": "Missing information", "placeholder": "What you would ask for before deciding." },
+          { "label": "Milestones & metrics", "placeholder": "How you would de-risk and measure the path." }
+        ],
+        "reference": {
+          "content": {
+            "sections": [
+              {
+                "title": "1. Current provider cost",
+                "points": [
+                  "Monthly transaction value = 10 million × ₹800 = ₹800 crore.",
+                  "Provider fee = 0.25% × ₹800 crore = ₹2 crore/month.",
+                  "Including infrastructure costs: approximately ₹2.05 crore/month."
+                ]
+              },
+              {
+                "title": "2. Recommendation",
+                "points": [
+                  "Do not immediately build the entire payment infrastructure.",
+                  "Explore a hybrid approach and investigate whether better provider pricing is possible."
+                ]
+              },
+              {
+                "title": "3. Key considerations",
+                "points": [
+                  "Internal build cost: ₹1.5 crore.",
+                  "Internal build timeline: 9 months.",
+                  "Third-party integration: ₹10 lakh and 2 months.",
+                  "Additional hiring, security and compliance costs must be considered."
+                ]
+              },
+              {
+                "title": "4. Missing information",
+                "points": [
+                  "Internal infrastructure operating costs.",
+                  "Hiring and maintenance expenses.",
+                  "Payment failure and fraud rates.",
+                  "Regulatory requirements.",
+                  "Provider pricing at higher transaction volumes."
+                ]
+              },
+              {
+                "title": "5. Metrics",
+                "points": [
+                  "Cost per transaction, uptime, payment success rate, fraud rate and total cost of ownership."
+                ]
+              }
+            ],
+            "consideration": "The quoted build cost alone is insufficient to establish that building internally is cheaper."
+          },
+          "rubric": [
+            "Cost comparison.",
+            "Build-vs-buy decision matrix.",
+            "Risk assessment.",
+            "Recommendation with assumptions.",
+            "Implementation milestones."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "case-11",
+    "title": "The Product Launch That Nobody Noticed — NoteFlow",
+    "type": "single",
+    "difficulty": "medium",
+    "estimatedMinutes": 35,
+    "tags": ["business-case", "gtm", "launch", "funnel"],
+    "scenario": {
+      "company": "NoteFlow",
+      "context": "NoteFlow is a productivity app that helps professionals organise meeting notes, tasks and project updates.\n\nThe company recently launched an AI meeting summarisation feature after spending three months building it.\n\nThe launch received positive feedback internally, and the marketing team ran a campaign across social media, email and the website.\n\nHowever, adoption has been disappointing.",
+      "tables": [
+        {
+          "title": "Data snapshot",
+          "columns": ["Metric", "Current value"],
+          "rows": [
+            ["Monthly active users", "100,000"],
+            ["Users who saw the announcement", "70,000"],
+            ["Users who opened the feature page", "18,000"],
+            ["Users who tried the feature", "6,000"],
+            ["Users who completed a summary", "3,000"],
+            ["Users who used it again within 7 days", "900"],
+            ["Users who shared a summary", "300"]
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "title": "Additional findings",
+          "items": [
+            "60% of users who tried the feature said the output required too much editing.",
+            "25% did not understand how to connect their meeting recordings.",
+            "15% were concerned about meeting privacy.",
+            "Existing users say they already use other tools for meeting summaries.",
+            "The marketing team wants to increase campaign spending."
+          ]
+        }
+      ]
+    },
+    "steps": [
+      {
+        "topic": "case-hours",
+        "task": "Work through each part in order.",
+        "taskPoints": [
+          "Diagnose where the launch funnel is breaking down.",
+          "Determine whether this is an awareness, activation, usability, value or positioning problem.",
+          "Identify the most promising target segment.",
+          "Recommend changes to the product experience and launch strategy.",
+          "Decide whether additional marketing investment is justified.",
+          "Define the metrics for a relaunch."
+        ],
+        "deliverables": [
+          "Launch funnel analysis.",
+          "Problem diagnosis.",
+          "Target segment and positioning.",
+          "Relaunch strategy.",
+          "Success metrics."
+        ],
+        "hints": [
+          "700k saw it, 6k tried, 900 returned — the break is after first use, not awareness.",
+          "60% cite editing effort; 25% can't connect recordings — fix activation before spending on media."
+        ],
+        "answerSchema": "case-analysis",
+        "worksheet": [
+          { "label": "Funnel breakdown", "placeholder": "Stage-by-stage conversion, and where it collapses." },
+          { "label": "Problem diagnosis", "placeholder": "Awareness, activation, usability, value or positioning?" },
+          { "label": "Target segment", "placeholder": "Who is this feature actually for?" },
+          { "label": "Product & launch changes", "placeholder": "What you would fix before relaunching." },
+          { "label": "Marketing investment", "placeholder": "Should spend increase now — why or why not?" },
+          { "label": "Relaunch metrics", "placeholder": "How you would measure a relaunch." }
+        ],
+        "reference": {
+          "content": {
+            "sections": [
+              {
+                "title": "1. Funnel diagnosis",
+                "points": [
+                  "Announcement views: 70,000.",
+                  "Feature page visits: 18,000.",
+                  "Feature trials: 6,000.",
+                  "Completed summaries: 3,000.",
+                  "Repeat usage: 900.",
+                  "Only 15% of users who tried the feature returned within seven days."
+                ]
+              },
+              {
+                "title": "2. Main problems",
+                "points": [
+                  "Output requires too much editing.",
+                  "Recording integration is confusing.",
+                  "Privacy concerns prevent adoption."
+                ]
+              },
+              {
+                "title": "3. Recommendation",
+                "points": [
+                  "Improve the product experience before increasing marketing spend."
+                ]
+              },
+              {
+                "title": "4. Product opportunities",
+                "points": [
+                  "Improve summary accuracy and editing controls.",
+                  "Simplify recording integration.",
+                  "Clearly communicate privacy and data handling.",
+                  "Improve onboarding with a sample meeting."
+                ]
+              },
+              {
+                "title": "5. Metrics",
+                "points": [
+                  "Feature activation, summary completion, seven-day repeat usage and user satisfaction."
+                ]
+              }
+            ]
+          },
+          "rubric": [
+            "Launch funnel analysis.",
+            "Problem diagnosis.",
+            "Target segment and positioning.",
+            "Relaunch strategy.",
+            "Success metrics."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "case-12",
+    "title": "A Critical Feature Is Causing More Harm Than Good — RideNow",
+    "type": "single",
+    "difficulty": "hard",
+    "estimatedMinutes": 45,
+    "tags": ["business-case", "incident", "risk", "communication"],
+    "scenario": {
+      "company": "RideNow",
+      "context": "RideNow is a ride-hailing platform operating in 15 Indian cities.\n\nThe company recently launched an automatic driver allocation feature designed to reduce passenger waiting times.\n\nThe feature uses an algorithm to assign nearby drivers to ride requests.\n\nInitially, the launch appeared successful. Average driver allocation time decreased significantly.\n\nHowever, within two weeks, the company started receiving complaints from drivers and passengers.",
+      "tables": [
+        {
+          "title": "Data snapshot",
+          "columns": ["Metric", "Before launch", "After launch"],
+          "rows": [
+            ["Average driver allocation time", "90 sec", "45 sec"],
+            ["Ride cancellation rate", "8%", "13%"],
+            ["Driver rejection rate", "12%", "22%"],
+            ["Passenger complaints per 1,000 rides", "14", "25"],
+            ["Driver satisfaction", "4.1/5", "3.2/5"],
+            ["Completed rides/day", "500,000", "470,000"]
+          ]
+        }
+      ],
+      "notes": [
+        {
+          "title": "Additional findings",
+          "items": [
+            "Drivers complain that some allocated rides are too far away.",
+            "Passengers report that drivers accept and then cancel.",
+            "The algorithm prioritises the nearest driver, without considering driver preferences or traffic.",
+            "The engineering team says a full redesign will take six weeks.",
+            "The CEO wants the feature fixed before the next city expansion."
+          ]
+        }
+      ]
+    },
+    "steps": [
+      {
+        "topic": "case-hours",
+        "task": "Work through each part in order.",
+        "taskPoints": [
+          "Assess the severity and business impact of the issue.",
+          "Decide whether to roll back, disable selectively or continue with the feature.",
+          "Identify the most important information needed to understand the problem.",
+          "Recommend immediate mitigations and longer-term improvements.",
+          "Prepare a communication plan for drivers, customers and internal stakeholders.",
+          "Define the criteria for safely relaunching the feature."
+        ],
+        "deliverables": [
+          "Incident assessment.",
+          "Rollback or mitigation decision.",
+          "Root-cause investigation plan.",
+          "Stakeholder communication plan.",
+          "Relaunch criteria and metrics."
+        ],
+        "hints": [
+          "Allocation got faster, but completed rides fell 6% and driver satisfaction dropped 4.1 → 3.2.",
+          "Nearest-driver matching ignores distance, traffic and driver preferences — mitigation can precede the 6-week redesign."
+        ],
+        "answerSchema": "case-analysis",
+        "worksheet": [
+          { "label": "Severity & impact", "placeholder": "Quantify the harm before choosing an action." },
+          { "label": "Rollback decision", "placeholder": "Roll back, disable selectively, or continue?" },
+          { "label": "Information needed", "placeholder": "What data would explain the failure pattern?" },
+          { "label": "Mitigations & fixes", "placeholder": "Stop the bleeding now; fix the logic later." },
+          { "label": "Communication plan", "placeholder": "What drivers, customers and leadership hear, and when." },
+          { "label": "Relaunch criteria", "placeholder": "Numbers that must recover before relaunch." }
+        ],
+        "reference": {
+          "content": {
+            "sections": [
+              {
+                "title": "1. Problem diagnosis",
+                "points": [
+                  "Driver allocation time has improved, but cancellations, complaints and driver dissatisfaction have increased.",
+                  "Completed rides have fallen by 6%."
+                ]
+              },
+              {
+                "title": "2. Recommendation",
+                "points": [
+                  "Temporarily roll back or selectively disable the new allocation logic in affected markets while investigating the issue."
+                ]
+              },
+              {
+                "title": "3. Immediate actions",
+                "points": [
+                  "Investigate driver rejection and cancellation patterns.",
+                  "Include traffic and driver preferences in allocation.",
+                  "Test revised matching logic in a limited market.",
+                  "Communicate the issue and mitigation to drivers and customers."
+                ]
+              },
+              {
+                "title": "4. Relaunch criteria",
+                "points": [
+                  "Cancellation rate returns to or below its previous level.",
+                  "Driver satisfaction recovers.",
+                  "Completed rides return to baseline or improve.",
+                  "Passenger complaints decline."
+                ]
+              },
+              {
+                "title": "5. Metrics",
+                "points": [
+                  "Allocation time, driver acceptance rate, cancellation rate, completed rides and driver satisfaction."
+                ]
+              }
+            ],
+            "consideration": "Faster allocation is not a success if it results in fewer completed rides and a worse experience."
+          },
+          "rubric": [
+            "Incident assessment.",
+            "Rollback or mitigation decision.",
+            "Root-cause investigation plan.",
+            "Stakeholder communication plan.",
+            "Relaunch criteria and metrics."
+          ]
+        }
+      }
+    ]
+  }
+]

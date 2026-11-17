@@ -14,6 +14,7 @@ import ideaFilters from "../content/idea-filters.json";
 import metrics from "../content/metrics.json";
 import wireframing from "../content/wireframing.json";
 import userFlow from "../content/user-flow.json";
+import caseHours from "../content/case-hours.json";
 import combined from "../content/combined.json";
 
 export const topics: Topic[] = topicsData as Topic[];
@@ -32,6 +33,7 @@ const byTopic: Record<string, Problem[]> = {
   metrics: metrics as unknown as Problem[],
   wireframing: wireframing as unknown as Problem[],
   "user-flow": userFlow as unknown as Problem[],
+  "case-hours": caseHours as unknown as Problem[],
 };
 
 export const problems: Problem[] = [

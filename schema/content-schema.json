@@ -24,6 +24,36 @@
             "required": ["label", "value"],
             "properties": { "label": { "type": "string" }, "value": { "type": "string" } }
           }
+        },
+        "tables": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["columns", "rows"],
+            "properties": {
+              "title": { "type": "string" },
+              "columns": { "type": "array", "items": { "type": "string" }, "minItems": 2 },
+              "rows": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": { "type": "string" },
+                  "minItems": 2
+                }
+              }
+            }
+          }
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["items"],
+            "properties": {
+              "title": { "type": "string" },
+              "items": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+            }
+          }
         }
       }
     },
@@ -39,7 +69,7 @@
             "enum": [
               "kpi-tree", "causal-diagram", "user-segmentation", "root-cause", "opportunity-sizing",
               "hypothesis", "survey", "interview", "problem-framing", "idea-filters", "metrics",
-              "wireframing", "user-flow"
+              "wireframing", "user-flow", "case-hours"
             ]
           },
           "task": { "type": "string", "minLength": 1 },
@@ -48,10 +78,24 @@
             "enum": [
               "kpi-tree", "causal-diagram", "user-segmentation", "root-cause", "opportunity-sizing",
               "hypothesis", "survey", "interview", "problem-framing", "idea-filters", "metrics",
-              "wireframing", "user-flow"
+              "wireframing", "user-flow", "case-analysis"
             ]
           },
           "showPreviousAnswer": { "type": "boolean" },
+          "taskPoints": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+          "constraints": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+          "deliverables": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+          "worksheet": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["label"],
+              "properties": {
+                "label": { "type": "string", "minLength": 1 },
+                "placeholder": { "type": "string" }
+              }
+            }
+          },
           "reference": {
             "type": "object",
             "required": ["content", "rubric"],

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 import { getProblem, topicName, topicById, problems } from "../lib/content";
-import type { AnswerData, Problem, SchemaId, Step } from "../lib/types";
+import type { AnswerData, Problem, SchemaId, Scenario, Step } from "../lib/types";
 import { hasAnswer, loadAnswer, saveAnswer } from "../lib/storage";
 import { useProgress } from "../state/ProgressContext";
 import { pickNext } from "../lib/random";
@@ -9,6 +9,53 @@ import { useDifficulty } from "../state/DifficultyContext";
 import { Breadcrumb, Hints, Rubric } from "../components/bits";
 import { AnswerEditor } from "../components/editors";
 import { ReferenceView, AnswerSummary } from "../components/renderers";
+
+/* ---------- scenario data blocks (business cases) ---------- */
+
+function ScenarioTable({ table }: { table: NonNullable<Scenario["tables"]>[number] }) {
+  return (
+    <div className="mt-4">
+      {table.title && <div className="label mb-2">{table.title}</div>}
+      <div className="overflow-x-auto rounded-xl" style={{ border: "1px solid var(--border)" }}>
+        <table className="w-full text-[15px]" style={{ borderCollapse: "collapse" }}>
+          <thead>
+            <tr style={{ borderBottom: "1px solid var(--border)" }}>
+              {table.columns.map((c, i) => (
+                <th key={i} className="px-3 py-2 text-left font-semibold">
+                  {c}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {table.rows.map((row, i) => (
+              <tr key={i} style={{ borderBottom: i < table.rows.length - 1 ? "1px solid var(--border)" : "none" }}>
+                {row.map((cell, j) => (
+                  <td key={j} className="px-3 py-2 align-top">
+                    {cell}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function ScenarioNotes({ notes }: { notes: NonNullable<Scenario["notes"]>[number] }) {
+  return (
+    <div className="mt-4">
+      {notes.title && <div className="label mb-2">{notes.title}</div>}
+      <ul className="space-y-1 text-[15px]" style={{ listStyle: "disc", paddingLeft: 20 }}>
+        {notes.items.map((n, i) => (
+          <li key={i}>{n}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 function ReferenceCard({
   problemId,
@@ -91,7 +138,7 @@ function ReferenceCard({
             {sideBySide && (
               <div className="rounded-xl p-4" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
                 <div className="label mb-2">Your answer</div>
-                <AnswerSummary schema={step.answerSchema} data={answer} />
+                <AnswerSummary schema={step.answerSchema} data={answer} labels={step.worksheet?.map((w) => w.label)} />
               </div>
             )}
             <div>
@@ -173,18 +220,49 @@ function StepBlock({
       <section className="card-tint p-5">
         <div className="label-tint mb-2">Task</div>
         <p className="text-[17px]">{step.task}</p>
+        {step.taskPoints && step.taskPoints.length > 0 && (
+          <ol className="mt-3 space-y-2 text-[15px]" style={{ listStyle: "decimal", paddingLeft: 20 }}>
+            {step.taskPoints.map((tp, i) => (
+              <li key={i}>{tp}</li>
+            ))}
+          </ol>
+        )}
+        {step.constraints && step.constraints.length > 0 && (
+          <div className="mt-4">
+            <div className="label mb-1">Constraints</div>
+            <ul className="space-y-1 text-[15px]" style={{ listStyle: "disc", paddingLeft: 20 }}>
+              {step.constraints.map((c, i) => (
+                <li key={i}>{c}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {step.deliverables && step.deliverables.length > 0 && (
+          <div className="mt-4">
+            <div className="label mb-1">Deliverables</div>
+            <ul className="space-y-1 text-[15px]" style={{ listStyle: "disc", paddingLeft: 20 }}>
+              {step.deliverables.map((d, i) => (
+                <li key={i}>{d}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </section>
 
       {showRecap && (
         <section className="card p-5">
           <div className="label mb-2">Your step {stepIndex} answer</div>
-          <AnswerSummary schema={problem.steps[stepIndex - 1].answerSchema} data={answerOf(problem.id, stepIndex - 1)} />
+          <AnswerSummary
+            schema={problem.steps[stepIndex - 1].answerSchema}
+            data={answerOf(problem.id, stepIndex - 1)}
+            labels={problem.steps[stepIndex - 1].worksheet?.map((w) => w.label)}
+          />
         </section>
       )}
 
       <section className="card p-5">
         <div className="label mb-2">Your answer</div>
-        <AnswerEditor schema={step.answerSchema} value={answer} onChange={onAnswerChange} />
+        <AnswerEditor schema={step.answerSchema} value={answer} onChange={onAnswerChange} step={step} />
         <p className="muted text-[13px] mt-3">Saved automatically on this device. Take your time — there's no single right answer.</p>
       </section>
 
@@ -274,7 +352,7 @@ export default function Problem() {
 
       <section className="card p-5 mb-4">
         <div className="label mb-2">Scenario</div>
-        <p className="text-[17px]">
+        <p className="text-[17px] whitespace-pre-line">
           {problem.scenario.company ? (
             <>
               <strong>{problem.scenario.company}</strong>{" "}
@@ -282,6 +360,21 @@ export default function Problem() {
           ) : null}
           {problem.scenario.context}
         </p>
+        {(problem.scenario.data?.length ?? 0) > 0 && (
+          <ul className="mt-4 space-y-1 text-[15px]" style={{ listStyle: "disc", paddingLeft: 20 }}>
+            {problem.scenario.data!.map((d, i) => (
+              <li key={i}>
+                <strong>{d.label}:</strong> {d.value}
+              </li>
+            ))}
+          </ul>
+        )}
+        {(problem.scenario.tables ?? []).map((t, i) => (
+          <ScenarioTable key={i} table={t} />
+        ))}
+        {(problem.scenario.notes ?? []).map((n, i) => (
+          <ScenarioNotes key={i} notes={n} />
+        ))}
       </section>
 
       <div className="space-y-4">

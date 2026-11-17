@@ -1,4 +1,4 @@
-import type { AnswerData, SchemaId } from "../lib/types";
+import type { AnswerData, SchemaId, Step } from "../lib/types";
 
 /* ============================================================
    Generic building blocks
@@ -637,7 +637,38 @@ function FlowEditor({ value, onChange }: { value: any; onChange: (v: any) => voi
    Registry
    ============================================================ */
 
-export const editors: Record<SchemaId, (p: { value: any; onChange: (v: any) => void }) => JSX.Element> = {
+/* Business-case worksheet: one textarea per task part, labels from step.worksheet */
+function CaseWorksheetEditor({ value, onChange, step }: { value: any; onChange: (v: any) => void; step?: Step }) {
+  const parts = step?.worksheet ?? [];
+  const v = value ?? { answers: parts.map(() => "") };
+  const answers = parts.map((_, i) => (typeof v.answers?.[i] === "string" ? v.answers[i] : ""));
+  const set = (i: number, text: string) => {
+    const next = [...answers];
+    next[i] = text;
+    onChange({ answers: next });
+  };
+  return (
+    <div className="space-y-4">
+      {parts.map((p, i) => (
+        <Labeled key={i} label={`${i + 1}. ${p.label}`} wide>
+          <textarea
+            className="field"
+            rows={4}
+            placeholder={p.placeholder ?? "Your analysis…"}
+            value={answers[i]}
+            onChange={(e) => set(i, e.target.value)}
+            aria-label={`Part ${i + 1}: ${p.label}`}
+          />
+        </Labeled>
+      ))}
+    </div>
+  );
+}
+
+export const editors: Record<
+  SchemaId,
+  (p: { value: any; onChange: (v: any) => void; step?: Step }) => JSX.Element
+> = {
   "kpi-tree": TreeEditor,
   "causal-diagram": EdgeListEditor,
   "user-segmentation": SegmentsEditor,
@@ -651,9 +682,20 @@ export const editors: Record<SchemaId, (p: { value: any; onChange: (v: any) => v
   metrics: MetricSetEditor,
   wireframing: WireframeListEditor,
   "user-flow": FlowEditor,
+  "case-analysis": CaseWorksheetEditor,
 };
 
-export function AnswerEditor({ schema, value, onChange }: { schema: SchemaId; value: AnswerData | null; onChange: (v: any) => void }) {
+export function AnswerEditor({
+  schema,
+  value,
+  onChange,
+  step,
+}: {
+  schema: SchemaId;
+  value: AnswerData | null;
+  onChange: (v: any) => void;
+  step?: Step;
+}) {
   const Editor = editors[schema];
-  return <Editor value={value} onChange={onChange} />;
+  return <Editor value={value} onChange={onChange} step={step} />;
 }

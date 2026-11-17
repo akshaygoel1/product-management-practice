@@ -13,7 +13,8 @@ export type SchemaId =
   | "idea-filters"
   | "metrics"
   | "wireframing"
-  | "user-flow";
+  | "user-flow"
+  | "case-analysis";
 
 export interface Reference {
   content: Record<string, unknown>;
@@ -29,12 +30,21 @@ export interface Step {
   answerSchema: SchemaId;
   showPreviousAnswer?: boolean;
   reference: Reference;
+  /* business-case extensions (case-analysis schema) */
+  taskPoints?: string[];
+  constraints?: string[];
+  deliverables?: string[];
+  worksheet?: { label: string; placeholder?: string }[];
 }
 
 export interface Scenario {
   company: string;
   context: string;
   data?: { label: string; value: string }[];
+  /* multi-column data tables, e.g. "Data snapshot" */
+  tables?: { title?: string; columns: string[]; rows: string[][] }[];
+  /* bulleted context groups, e.g. "Additional findings" */
+  notes?: { title?: string; items: string[] }[];
 }
 
 export interface Problem {
@@ -164,6 +174,10 @@ export interface FlowAnswer {
   steps: FlowStepRow[];
 }
 
+export interface CaseAnswer {
+  answers: string[];
+}
+
 export type AnswerData =
   | KpiTreeAnswer
   | CausalAnswer
@@ -177,4 +191,5 @@ export type AnswerData =
   | ScoreMatrixAnswer
   | MetricSetAnswer
   | WireframeAnswer
-  | FlowAnswer;
+  | FlowAnswer
+  | CaseAnswer;
