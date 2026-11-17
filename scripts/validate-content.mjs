@@ -79,6 +79,16 @@ for (const p of problems) {
   if (p.type !== "single" && p.type !== "combined") fail(`${p.id}: type must be single or combined`);
   if (!["easy", "medium", "hard"].includes(p.difficulty)) fail(`${p.id}: bad difficulty ${p.difficulty}`);
   if (!Array.isArray(p.tags) || p.tags.length === 0) fail(`${p.id}: tags missing`);
+  if (p._isCase) {
+    const sc = p.scoping;
+    if (!sc || typeof sc !== "object") fail(`${p.id}: case problems need a scoping block`);
+    else {
+      if (!sc.referenceStatement || !sc.referenceStatement.trim()) fail(`${p.id}: scoping.referenceStatement missing`);
+      if (!Array.isArray(sc.keyTerms) || sc.keyTerms.length < 3 || sc.keyTerms.some((k) => !k?.term?.trim() || !k?.why?.trim())) {
+        fail(`${p.id}: scoping.keyTerms needs 3+ term/why pairs`);
+      }
+    }
+  }
   if (!p.scenario || typeof p.scenario.company !== "string" || typeof p.scenario.context !== "string" || !p.scenario.context.trim())
     fail(`${p.id}: scenario needs company and context`);
 

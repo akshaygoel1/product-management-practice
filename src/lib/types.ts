@@ -56,6 +56,7 @@ export interface Problem {
   tags: string[];
   scenario: Scenario;
   steps: Step[];
+  scoping?: ScopingReference;
 }
 
 export interface Topic {
@@ -176,6 +177,30 @@ export interface FlowAnswer {
 
 export interface CaseAnswer {
   answers: string[];
+}
+
+/* ---- problem-scoping stage (Case Hours) ---- */
+
+export interface ScopingKeyTerm {
+  term: string;
+  why: string;
+}
+export interface ScopingReference {
+  referenceStatement: string;
+  keyTerms: ScopingKeyTerm[];
+}
+export interface ScopingAmbiguity {
+  term: string;
+  why: string;
+  clarification: string;
+  assumption: boolean;
+}
+export interface ScopingData {
+  statement: string;
+  ambiguities: ScopingAmbiguity[];
+  finalStatement: string;
+  rubric: boolean[];
+  completedAt: number | null;
 }
 
 export type AnswerData =

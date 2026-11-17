@@ -3,6 +3,8 @@ import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 import { getProblem, topicName, topicById, problems } from "../lib/content";
 import type { AnswerData, Problem, SchemaId, Scenario, Step } from "../lib/types";
 import { hasAnswer, loadAnswer, saveAnswer } from "../lib/storage";
+import { loadScoping } from "../lib/scoping";
+import { ProblemScoping } from "../components/scoping";
 import { useProgress } from "../state/ProgressContext";
 import { pickNext } from "../lib/random";
 import { useDifficulty } from "../state/DifficultyContext";
@@ -290,11 +292,14 @@ export default function Problem() {
   const problem = getProblem(problemId);
 
   const [answers, setAnswers] = useState<(AnswerData | null)[]>([]);
+  const [scopingOpen, setScopingOpen] = useState(false);
 
   useEffect(() => {
     if (!problem) return;
     setAnswers(problem.steps.map((_, i) => loadAnswer<AnswerData>(problem.id, i)));
     answerCache.set(problem.id, problem.steps.map((_, i) => loadAnswer<AnswerData>(problem.id, i)));
+    const isCase = problem.steps[0].answerSchema === "case-analysis";
+    setScopingOpen(isCase ? !loadScoping(problem.id)?.completedAt : false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [problem?.id]);
 
@@ -331,6 +336,7 @@ export default function Problem() {
   };
 
   const viaRandom = new URLSearchParams(location.search).get("v") === "r";
+  const isCase = problem.steps[0].answerSchema === "case-analysis";
 
   return (
     <main className="mx-auto max-w-6xl px-6 pb-16">
@@ -377,30 +383,42 @@ export default function Problem() {
         ))}
       </section>
 
-      <div className="space-y-4">
-        {problem.steps.map((step, i) => (
-          <StepBlock
-            key={i}
-            problem={problem}
-            step={step}
-            stepIndex={i}
-            answer={answers[i] ?? null}
-            onAnswerChange={(v) => setAnswer(i, v)}
-          />
-        ))}
-      </div>
+      {isCase && (
+        <ProblemScoping
+          problemId={problem.id}
+          scoping={problem.scoping}
+          onEditingChange={setScopingOpen}
+        />
+      )}
 
-      <div className="flex flex-wrap gap-3 mt-8">
-        <button type="button" className="btn-primary" onClick={nextRandom}>
-          Next random problem
-        </button>
-        <Link to="/" className="btn-secondary">
-          Back home
-        </Link>
-      </div>
+      {(!isCase || !scopingOpen) && (
+        <>
+          <div className="space-y-4">
+            {problem.steps.map((step, i) => (
+              <StepBlock
+                key={i}
+                problem={problem}
+                step={step}
+                stepIndex={i}
+                answer={answers[i] ?? null}
+                onAnswerChange={(v) => setAnswer(i, v)}
+              />
+            ))}
+          </div>
 
-      {viaRandom && (
-        <p className="muted text-[13px] mt-4">Skipped problems are not marked as attempted.</p>
+          <div className="flex flex-wrap gap-3 mt-8">
+            <button type="button" className="btn-primary" onClick={nextRandom}>
+              Next random problem
+            </button>
+            <Link to="/" className="btn-secondary">
+              Back home
+            </Link>
+          </div>
+
+          {viaRandom && (
+            <p className="muted text-[13px] mt-4">Skipped problems are not marked as attempted.</p>
+          )}
+        </>
       )}
     </main>
   );

@@ -11,6 +11,24 @@
     "difficulty": { "enum": ["easy", "medium", "hard"] },
     "estimatedMinutes": { "type": "integer", "minimum": 5 },
     "tags": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "scoping": {
+      "type": "object",
+      "required": ["referenceStatement", "keyTerms"],
+      "properties": {
+        "referenceStatement": { "type": "string", "minLength": 1 },
+        "keyTerms": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["term", "why"],
+            "properties": {
+              "term": { "type": "string", "minLength": 1 },
+              "why": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
     "scenario": {
       "type": "object",
       "required": ["company", "context"],

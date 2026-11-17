@@ -6,6 +6,15 @@
     "difficulty": "medium",
     "estimatedMinutes": 35,
     "tags": ["business-case", "operations", "kpi-tree", "capacity-planning"],
+    "scoping": {
+      "referenceStatement": "Reduce QuickKart's support cost by cutting avoidable queries in the highest-volume categories (order tracking, late delivery) through product self-service, while keeping customer satisfaction at or above 3.5/5 within the existing support budget.",
+      "keyTerms": [
+        { "term": "support costs", "why": "Cost per query, total agent cost or cost per order? The COO's goal needs a metric." },
+        { "term": "avoidable", "why": "Which queries can product changes actually remove? Missing/wrong items may need ops fixes, not product." },
+        { "term": "customer satisfaction", "why": "CSAT on resolved support queries or overall app satisfaction? The 3.5/5 floor needs a definition." },
+        { "term": "first", "why": "Priority by query volume, cost per query, or impact on satisfaction?" }
+      ]
+    },
     "scenario": {
       "company": "QuickKart",
       "context": "QuickKart is an Indian quick-commerce platform operating in 25 cities. It delivers groceries and household essentials within 15–30 minutes.\n\nOver the last six months, the business has grown by 40%, but customer support costs have increased by 75%. Customers complain about delayed responses, while support agents are struggling to manage their workload.\n\nThe COO wants to reduce support costs without negatively affecting customer satisfaction.",
@@ -135,6 +144,15 @@
     "difficulty": "hard",
     "estimatedMinutes": 45,
     "tags": ["business-case", "segmentation", "research", "growth"],
+    "scoping": {
+      "referenceStatement": "Prioritise fitness enthusiasts and working professionals, and raise their LTV by improving first-week activation (three workouts) rather than acquiring more low-conversion beginner users.",
+      "keyTerms": [
+        { "term": "highest-value", "why": "Value by current revenue, LTV potential, or market size? The CEO and Growth Lead read it differently." },
+        { "term": "attracting the wrong customers", "why": "Wrong for the product, or underserved by activation? The data supports either story." },
+        { "term": "habit", "why": "Three workouts in week one is an observed correlation, not a proven causal habit metric." },
+        { "term": "grow", "why": "Grow conversion, retention, or LTV — each implies a different intervention." }
+      ]
+    },
     "scenario": {
       "company": "FitLife",
       "context": "FitLife is a fitness app offering personalised workout plans, diet tracking and live sessions with fitness coaches.\n\nThe app has acquired 500,000 users in the last year. However, only 8% of users convert to a paid subscription, and monthly churn among paid users has reached 12%.\n\nThe CEO believes the company is attracting the wrong customers and wants the product team to identify its highest-value segments.",
@@ -261,6 +279,15 @@
     "difficulty": "medium",
     "estimatedMinutes": 35,
     "tags": ["business-case", "growth", "referrals", "experimentation"],
+    "scoping": {
+      "referenceStatement": "Grow the number of referred users who stay active at 30 days by improving referral participation and the post-install experience, without increasing reward spend or fraud.",
+      "keyTerms": [
+        { "term": "underperforming", "why": "Against what benchmark — paid channels, industry referral rates, or its own potential?" },
+        { "term": "successful referral", "why": "The reward pays for registration, but value only arrives at 30-day activity." },
+        { "term": "reward", "why": "100 coins is worth what, and is it the blocker — or is the moment of asking?" },
+        { "term": "valuable users", "why": "Referred users retain at 18% vs 25% paid — quality differs by channel and is unmeasured." }
+      ]
+    },
     "scenario": {
       "company": "PlayZone",
       "context": "PlayZone is a mobile gaming platform with 8 million registered users. It offers multiplayer games, leaderboards, tournaments and virtual rewards.\n\nThe company wants to reduce its dependence on paid acquisition by improving organic growth through referrals.\n\nIts existing referral program gives users 100 coins for every friend who installs the app and completes registration.\n\nDespite this incentive, the referral program is underperforming.",
@@ -393,6 +420,15 @@
     "difficulty": "hard",
     "estimatedMinutes": 45,
     "tags": ["business-case", "pricing", "monetisation", "research"],
+    "scoping": {
+      "referenceStatement": "Pilot a ₹149 premium tier (ad-free, offline, exclusives) for heavy Streamly users, and expand only if incremental subscription revenue exceeds cannibalised ad revenue and added content cost.",
+      "keyTerms": [
+        { "term": "premium plan", "why": "Which bundle — all three benefits or a subset? Each has a different cost and willingness to pay." },
+        { "term": "will pay", "why": "Stated demand is not willingness to pay; only a pilot or price test shows that." },
+        { "term": "heavy users", "why": "Defined by 90 min/day — but is the segment big enough to hit the profit bar?" },
+        { "term": "profitable", "why": "Profitable per subscriber, or after content cost and lost ad revenue from upgraders?" }
+      ]
+    },
     "scenario": {
       "company": "Streamly",
       "context": "Streamly is an Indian video-streaming platform with 3 million monthly active users.\n\nIts current business model relies on advertising and a basic subscription plan costing ₹99 per month.\n\nThe company is considering launching a premium plan with exclusive content, ad-free streaming and offline downloads.\n\nHowever, leadership is unsure whether users will pay more for these features.",
@@ -519,6 +555,15 @@
     "difficulty": "hard",
     "estimatedMinutes": 35,
     "tags": ["business-case", "experimentation", "metrics", "statistics"],
+    "scoping": {
+      "referenceStatement": "Hold the new checkout until it shows a significant lift in revenue per visitor on both platforms, outside sale effects, without worsening payment failures, refunds or support contacts.",
+      "keyTerms": [
+        { "term": "promising", "why": "Completion is up, but AOV, failures, refunds and support contacts all moved the wrong way." },
+        { "term": "launched", "why": "Roll out to all users, Android only, or iterate first? The platform split matters." },
+        { "term": "significance", "why": "The analytics team has not run the test — a 4-point lift could still be noise or a sale-event effect." },
+        { "term": "better", "why": "Better for completion rate, or better for revenue per visitor? The decision flips on this." }
+      ]
+    },
     "scenario": {
       "company": "ShopEase",
       "context": "ShopEase is an e-commerce platform with 5 million monthly active users.\n\nThe product team recently tested a redesigned checkout experience. The new version reduces the number of checkout steps and introduces a prominent one-click purchase button.\n\nThe initial results look promising. The Head of Growth wants to roll out the new checkout to all users immediately.\n\nHowever, the analytics team has raised concerns.",
@@ -637,6 +682,15 @@
     "difficulty": "hard",
     "estimatedMinutes": 45,
     "tags": ["business-case", "prioritisation", "roadmap", "stakeholders"],
+    "scoping": {
+      "referenceStatement": "Fund platform reliability and enterprise SSO next quarter — protecting the blocked ₹2 crore pipeline and existing revenue — and collect demand evidence for onboarding and AI reporting before the next planning cycle.",
+      "keyTerms": [
+        { "term": "prioritise", "why": "By revenue at stake, customer impact, evidence quality, or strategic fit? Each ranks the four differently." },
+        { "term": "capacity", "why": "Two major initiatives — is that two squads for a quarter, or strictly two projects?" },
+        { "term": "strategically important", "why": "Important to whom, on what evidence? Competitor moves are not customer demand." },
+        { "term": "important", "why": "Onboarding's 35% churn delta is correlational — does setup completion cause retention?" }
+      ]
+    },
     "scenario": {
       "company": "EnterpriseFlow",
       "context": "EnterpriseFlow is a B2B SaaS platform used by mid-sized businesses to manage projects, approvals and internal workflows.\n\nThe company has 40,000 paying organisations and an annual recurring revenue of ₹80 crore.\n\nThe product team has capacity to deliver only two major initiatives in the next quarter.\n\nUnfortunately, every department has a different priority.",
@@ -741,6 +795,15 @@
     "difficulty": "hard",
     "estimatedMinutes": 50,
     "tags": ["business-case", "market-entry", "gtm", "unit-economics"],
+    "scoping": {
+      "referenceStatement": "Validate a scheduled-delivery, regional-catalogue model for contribution-margin-positive unit economics in one or two Tier 2 cities before committing the expansion budget beyond metros.",
+      "keyTerms": [
+        { "term": "expand", "why": "Full multi-city launch or a measured pilot? The economics say pilot." },
+        { "term": "growth opportunity", "why": "Opportunity measured in users, orders, or contribution margin? Lower CAC alone is not profit." },
+        { "term": "business model", "why": "Instant delivery at high density vs scheduled delivery at low density — which model travels?" },
+        { "term": "significant", "why": "Significant against what bar — company growth targets or city-level payback?" }
+      ]
+    },
     "scenario": {
       "company": "FreshBasket",
       "context": "FreshBasket is an online grocery delivery platform operating in Bengaluru, Mumbai, Delhi and Hyderabad.\n\nThe company has achieved strong adoption in metro cities and wants to expand into Tier 2 cities.\n\nThe CEO believes cities like Jaipur, Indore, Lucknow and Coimbatore represent a significant growth opportunity.\n\nHowever, the current business model may not work outside metros.",
@@ -860,6 +923,15 @@
     "difficulty": "hard",
     "estimatedMinutes": 45,
     "tags": ["business-case", "marketplace", "liquidity", "incentives"],
+    "scoping": {
+      "referenceStatement": "Raise completed bookings by fixing the evening-supply gap and matching in the five most-demanded subjects, rather than acquiring more students into an unfulfillable funnel.",
+      "keyTerms": [
+        { "term": "liquidity", "why": "Is the constraint demand, supply, availability or matching? The data points to evening supply." },
+        { "term": "preferred times", "why": "70% of students want evenings; only 35% of tutors offer them — that is the mismatch to scope." },
+        { "term": "growing", "why": "Growth in registrations or in completed transactions? The CEO is worried about the latter." },
+        { "term": "too few bookings", "why": "3 requests per tutor per month — is that a supply surplus or a matching failure?" }
+      ]
+    },
     "scenario": {
       "company": "SkillBridge",
       "context": "SkillBridge is an online marketplace connecting students with tutors.\n\nThe platform has grown rapidly through student acquisition campaigns. However, students increasingly complain that they cannot find tutors at their preferred times.\n\nAt the same time, many tutors complain that they receive too few bookings.\n\nThe CEO is concerned that the marketplace is growing in registrations but not in successful transactions.",
@@ -978,6 +1050,15 @@
     "difficulty": "hard",
     "estimatedMinutes": 50,
     "tags": ["business-case", "ai", "quality", "trust"],
+    "scoping": {
+      "referenceStatement": "Increase successful customer resolution (not just AI containment) by automating only high-accuracy query types, escalating sensitive ones like refunds, and fixing troubleshooting accuracy before any scope expansion.",
+      "keyTerms": [
+        { "term": "successful", "why": "The CEO's 80% containment target ignores whether answers are correct and satisfying." },
+        { "term": "trust", "why": "Users repeat questions and get wrong refund answers — trust is the constraint on adoption." },
+        { "term": "accuracy", "why": "95% on billing vs 68% on plan recommendations — a single blended accuracy number hides the risk." },
+        { "term": "expand", "why": "Expanding scope before fixing the 72% troubleshooting accuracy would compound the CSAT decline." }
+      ]
+    },
     "scenario": {
       "company": "HelpMate",
       "context": "HelpMate is an AI-powered customer support assistant used by a telecom company.\n\nIt answers customer questions about billing, recharge plans, network issues and account management.\n\nThe company launched the assistant six months ago to reduce support costs and improve response times.\n\nAlthough adoption is increasing, customer satisfaction has started declining.",
@@ -1111,6 +1192,15 @@
     "difficulty": "hard",
     "estimatedMinutes": 45,
     "tags": ["business-case", "technical-pm", "build-vs-buy", "finance"],
+    "scoping": {
+      "referenceStatement": "Choose the lowest risk-adjusted cost path to handle 2× volume: renegotiate or hybrid-architect with the current provider before committing ₹1.5 crore (plus 5 hires and compliance scope) to an in-house build.",
+      "keyTerms": [
+        { "term": "more economical", "why": "Over what horizon? Build costs ₹1.5 crore upfront; provider fees are ₹2.05 crore per month." },
+        { "term": "build", "why": "Full payments infrastructure or selective components? The CTO and CFO are debating different scopes." },
+        { "term": "risks", "why": "99.9% provider uptime vs an inexperienced team plus regulatory burden — reliability risk is unpriced." },
+        { "term": "double in 18 months", "why": "Volume doubles — provider pricing may improve with scale, changing the economics." }
+      ]
+    },
     "scenario": {
       "company": "FinEdge",
       "context": "FinEdge is a fintech company offering payment processing services to small businesses.\n\nThe company currently relies on a third-party payment infrastructure provider. As transaction volume grows, the fees charged by the provider are becoming a significant expense.\n\nThe CTO believes FinEdge should build its own payment processing infrastructure.\n\nThe CFO believes continuing with the third-party provider is more economical.\n\nThe PM has been asked to evaluate both options.",
@@ -1239,6 +1329,15 @@
     "difficulty": "medium",
     "estimatedMinutes": 35,
     "tags": ["business-case", "gtm", "launch", "funnel"],
+    "scoping": {
+      "referenceStatement": "Fix AI summary quality, recording setup and privacy communication to lift 7-day repeat usage for meeting-heavy professionals, before spending more on awareness marketing.",
+      "keyTerms": [
+        { "term": "adoption", "why": "Is adoption trials, completed summaries, or 7-day repeat usage? They fail at different stages." },
+        { "term": "disappointing", "why": "Against what target? 900 of 6,000 triers returned — retention, not awareness, is broken." },
+        { "term": "users", "why": "Which users? Existing heavy users say they already have other tools — positioning is unclear." },
+        { "term": "more marketing", "why": "60% of triers found the output weak — more spend would pour users into a leaky funnel." }
+      ]
+    },
     "scenario": {
       "company": "NoteFlow",
       "context": "NoteFlow is a productivity app that helps professionals organise meeting notes, tasks and project updates.\n\nThe company recently launched an AI meeting summarisation feature after spending three months building it.\n\nThe launch received positive feedback internally, and the marketing team ran a campaign across social media, email and the website.\n\nHowever, adoption has been disappointing.",
@@ -1365,6 +1464,15 @@
     "difficulty": "hard",
     "estimatedMinutes": 45,
     "tags": ["business-case", "incident", "risk", "communication"],
+    "scoping": {
+      "referenceStatement": "Roll back the automatic allocator where harm is concentrated, restore completed rides and driver satisfaction to baseline, and relaunch only against explicit relaunch criteria (cancellations, rejections, complaints).",
+      "keyTerms": [
+        { "term": "harm", "why": "Which metric defines harm — cancellations, driver satisfaction, or the 6% drop in completed rides?" },
+        { "term": "too far away", "why": "No distance threshold is defined; 'near' in the algorithm is not 'acceptable' to drivers." },
+        { "term": "fixed", "why": "What does fixed mean — the 6-week redesign, or interim mitigations with a relaunch bar?" },
+        { "term": "before the next city expansion", "why": "A deadline is not a success metric; relaunch needs measurable criteria." }
+      ]
+    },
     "scenario": {
       "company": "RideNow",
       "context": "RideNow is a ride-hailing platform operating in 15 Indian cities.\n\nThe company recently launched an automatic driver allocation feature designed to reduce passenger waiting times.\n\nThe feature uses an algorithm to assign nearby drivers to ride requests.\n\nInitially, the launch appeared successful. Average driver allocation time decreased significantly.\n\nHowever, within two weeks, the company started receiving complaints from drivers and passengers.",
