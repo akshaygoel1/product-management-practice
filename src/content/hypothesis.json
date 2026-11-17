@@ -1,0 +1,110 @@
+[
+  {
+    "id": "hyp-01",
+    "title": "PennyPal onboarding",
+    "type": "single",
+    "difficulty": "easy",
+    "estimatedMinutes": 10,
+    "tags": ["consumer", "fintech", "onboarding"],
+    "scenario": {
+      "company": "PennyPal",
+      "context": "PennyPal is a budgeting app. Only 38% of new users finish onboarding. The flow has 7 screens: sign-up, permissions, bank linking, goal setting, categories, tutorial, dashboard. Analytics show the biggest drop is at bank linking (screen 3), and 55% of users deny the notification permission."
+    },
+    "steps": [
+      {
+        "topic": "hypothesis",
+        "task": "Write 3 testable hypotheses in the form We believe… because… so we expect…, each with a metric.",
+        "hints": [
+          "One change per hypothesis.",
+          "Tie each one to evidence in the scenario."
+        ],
+        "answerSchema": "hypothesis",
+        "reference": {
+          "content": {
+            "items": [
+              { "text": "We believe asking users to link a bank on screen 3 causes drop-off because it asks for trust before showing value, so showing a sample dashboard first should lift completion from 38% to 46%.", "metric": "Metric: onboarding completion rate; guardrail: % with a linked account by day 7." },
+              { "text": "We believe 7 screens is too long because most users who leave do so by screen 4, so cutting to 4 screens should add 5 points of completion.", "metric": "Metric: completion rate and time to finish." },
+              { "text": "We believe users deny notifications because they do not see the benefit, so adding a one-line benefit before the prompt should raise the grant rate from 45% to 60%.", "metric": "Metric: permission grant rate." }
+            ]
+          },
+          "whyItWorks": "Each hypothesis has one change, a reason, a number, and a metric you can measure.",
+          "commonMistakes": ["Vague statements like improve onboarding", "Bundling several changes in one hypothesis"],
+          "rubric": ["Uses the We believe… because… so we expect… form", "One change each", "Reason is based on evidence", "Metric and target given"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "hyp-02",
+    "title": "SketchPad trial conversion",
+    "type": "single",
+    "difficulty": "medium",
+    "estimatedMinutes": 15,
+    "tags": ["saas", "conversion"],
+    "scenario": {
+      "company": "SketchPad",
+      "context": "SketchPad is a design tool with a 14-day free trial and 6% trial-to-paid conversion. Data: 60% of trial users never create a second project; paying users mostly use templates and invite teammates; most teams say they need more than 14 days to decide."
+    },
+    "steps": [
+      {
+        "topic": "hypothesis",
+        "task": "Write 4 hypotheses, rank them by how risky the underlying assumption is, and design a test for the top one.",
+        "hints": [
+          "Rank by impact and uncertainty.",
+          "A good test names the variant, the metric and the run length."
+        ],
+        "answerSchema": "hypothesis",
+        "reference": {
+          "content": {
+            "items": [
+              { "text": "H1 (top): We believe trial users stall because a blank canvas gives no starting point, so a template-first start should raise the second-project rate from 40% to 55% and conversion from 6% to 7.5%.", "metric": "Metric: second-project rate within 7 days; secondary conversion at day 14." },
+              { "text": "H2: We believe invites drive conversion because teams pay, so prompting an invite on day 2 should raise conversion among invited users.", "metric": "Metric: conversion among invited users." },
+              { "text": "H3: We believe 14 days is too short for team decisions, so extending team trials to 21 days should lift team conversion.", "metric": "Metric: team trial conversion." },
+              { "text": "H4: We believe pricing is seen too late, so showing the pricing page on day 3 should reduce last-day drop-off.", "metric": "Metric: last-day drop-off." }
+            ],
+            "notes": "Ranking: H1 first, then H2, H3, H4. Test for H1: 50/50 A/B test on new trials; primary metric second-project rate within 7 days; secondary conversion at day 14; guardrail: time to first project; run for at least 2 full weekly cycles and until each arm has a few hundred users."
+          },
+          "whyItWorks": "Hypotheses link to specific data, and the test has a variant, metric, guardrail and duration.",
+          "commonMistakes": ["Testing the easiest idea instead of the riskiest", "No guardrail", "Tests that end after a few days"],
+          "rubric": ["Four testable hypotheses", "Ranked with a reason", "Test has variant and metric", "Guardrail and duration stated"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "hyp-03",
+    "title": "HomeFix repeat bookings",
+    "type": "single",
+    "difficulty": "hard",
+    "estimatedMinutes": 25,
+    "tags": ["marketplace", "home-services", "retention"],
+    "scenario": {
+      "company": "HomeFix",
+      "context": "HomeFix is a home-services marketplace. 28% of customers rebook within 90 days. The top 20% of providers get 70% of repeat bookings. Customers say they struggle to find the same provider again. Providers admit they sometimes take regular customers off the platform to avoid the fee."
+    },
+    "steps": [
+      {
+        "topic": "hypothesis",
+        "task": "Write 4 hypotheses covering demand, supply, trust and timing. For each give the riskiest assumption, the cheapest test, and a result that would prove it wrong.",
+        "hints": [
+          "Cover both sides of the marketplace.",
+          "State the falsifying result before running the test."
+        ],
+        "answerSchema": "hypothesis",
+        "reference": {
+          "content": {
+            "items": [
+              { "text": "H1 (demand): We believe rebooking is hard because re-finding a provider is cumbersome, so a Book again button should lift 90-day rebooking by 4 points. Riskiest assumption: customers want the same provider. Test: button for 50% of customers. Falsified if button use is under 5% or rebooking does not move.", "metric": "Metric: 90-day rebooking rate; button use." },
+              { "text": "H2 (supply): We believe ranking providers with strong repeat rates higher will lift conversion. Test: two pilot zones. Falsified if conversion falls or new providers starve and fill rate drops.", "metric": "Metric: conversion; fill rate." },
+              { "text": "H3 (trust and leakage): We believe providers move customers off-platform because of the fee, so a lower fee on repeat jobs with the same customer (for example 15% to 8%) should raise on-platform repeats. Falsified if repeats do not rise or margin loss exceeds gain.", "metric": "Metric: on-platform repeats; margin." },
+              { "text": "H4 (timing): We believe service needs recur on cycles (for example AC service every 6 months), so reminders at 5 months should create bookings. Falsified if open rate is under 10% or no bookings follow.", "metric": "Metric: reminder open rate; bookings from reminders." }
+            ]
+          },
+          "whyItWorks": "Covers all drivers of repeat behaviour and sets stop conditions in advance.",
+          "commonMistakes": ["Only demand-side ideas", "No falsification criteria"],
+          "rubric": ["Demand, supply, trust and timing covered", "Riskiest assumption per hypothesis", "Cheap test per hypothesis", "Falsifying result stated"]
+        }
+      }
+    ]
+  }
+]

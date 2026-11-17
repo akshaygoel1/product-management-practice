@@ -1,0 +1,124 @@
+[
+  {
+    "id": "opp-01",
+    "title": "Premium pet food in Bengaluru",
+    "type": "single",
+    "difficulty": "easy",
+    "estimatedMinutes": 10,
+    "tags": ["consumer", "india"],
+    "scenario": {
+      "company": "",
+      "context": "A startup wants to launch premium pet-food delivery in Bengaluru."
+    },
+    "steps": [
+      {
+        "topic": "opportunity-sizing",
+        "task": "Estimate the annual market size in rupees, stating every assumption.",
+        "hints": [
+          "Start from households.",
+          "Funnel down to buyers of premium food."
+        ],
+        "answerSchema": "opportunity-sizing",
+        "reference": {
+          "content": {
+            "assumptions": [
+              { "label": "Population", "value": "~13M" },
+              { "label": "People per household", "value": "4" },
+              { "label": "Households", "value": "≈ 3.2M" },
+              { "label": "Pet-owning households", "value": "~12% ≈ 384,000" },
+              { "label": "Buy packaged premium food", "value": "~25% ≈ 96,000" },
+              { "label": "Monthly spend per buyer", "value": "₹1,500" },
+              { "label": "Annual spend per buyer", "value": "₹18,000" }
+            ],
+            "formula": "3.2M households × 12% pet-owning × 25% premium × ₹18,000 a year",
+            "result": "≈ ₹173 crore a year",
+            "sanity": "₹1,500 a month is plausible for one medium dog on premium food; compare against any known metro pet-food estimate and discuss serviceable share (maybe 10 to 20% via delivery)."
+          },
+          "whyItWorks": "Clear funnel with round numbers that are easy to challenge and replace.",
+          "commonMistakes": ["Starting with a huge top-down figure and no logic", "Mixing monthly and yearly numbers"],
+          "rubric": ["Funnel from households", "Units consistent", "Assumptions stated", "Sanity check"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "opp-02",
+    "title": "Pay-later at checkout",
+    "type": "single",
+    "difficulty": "medium",
+    "estimatedMinutes": 15,
+    "tags": ["consumer", "fintech", "quick-commerce"],
+    "scenario": {
+      "company": "",
+      "context": "A quick-commerce app has 800,000 monthly ordering users and an AOV of ₹500. Product wants to add pay-later at checkout and needs the incremental GMV opportunity."
+    },
+    "steps": [
+      {
+        "topic": "opportunity-sizing",
+        "task": "Estimate the annual incremental GMV from the feature and list the 3 assumptions that matter most.",
+        "hints": [
+          "Think adoption, frequency, and basket uplift.",
+          "Be careful to count only incremental value."
+        ],
+        "answerSchema": "opportunity-sizing",
+        "reference": {
+          "content": {
+            "assumptions": [
+              { "label": "Monthly ordering users", "value": "800,000" },
+              { "label": "Adoption of pay-later", "value": "10% → 80,000 users" },
+              { "label": "Orders per user per month", "value": "4 → 320,000 orders" },
+              { "label": "Average order value", "value": "₹500" },
+              { "label": "Basket uplift with pay-later", "value": "15% of ₹500 = ₹75" }
+            ],
+            "formula": "Incremental GMV = orders placed by adopters × incremental basket per order = 320,000 × ₹75",
+            "result": "≈ ₹2.4 crore a month ≈ ₹29 crore a year",
+            "sanity": "Key assumptions: 10% adoption, 15% uplift, no cannibalisation. Also note possible extra revenue from fees and risk cost from defaults."
+          },
+          "whyItWorks": "Isolates the increment rather than counting total GMV from adopters.",
+          "commonMistakes": ["Counting all adopter GMV as new", "Ignoring default risk"],
+          "rubric": ["Adoption, frequency, uplift present", "Counts only incremental value", "Top assumptions named", "Math consistent"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "opp-03",
+    "title": "AI meeting notes for Indian SMEs",
+    "type": "single",
+    "difficulty": "hard",
+    "estimatedMinutes": 25,
+    "tags": ["b2b", "ai", "india"],
+    "scenario": {
+      "company": "",
+      "context": "A startup is building an AI meeting-notes tool for small and medium businesses in India and needs a market estimate for the board."
+    },
+    "steps": [
+      {
+        "topic": "opportunity-sizing",
+        "task": "Estimate the annual revenue opportunity using both a top-down and a bottom-up approach and reconcile the two.",
+        "hints": [
+          "Bottom-up: accounts × seats × price.",
+          "Top-down: pick a known broader market and take a share."
+        ],
+        "answerSchema": "opportunity-sizing",
+        "reference": {
+          "content": {
+            "assumptions": [
+              { "label": "SMEs with more than 10 employees", "value": "≈ 1.2M" },
+              { "label": "With frequent remote meetings", "value": "30% ≈ 360,000" },
+              { "label": "Paying adoption", "value": "8% ≈ 28,800 accounts" },
+              { "label": "Seats per account", "value": "6" },
+              { "label": "Price per seat", "value": "₹600 a month" }
+            ],
+            "formula": "Bottom-up: 28,800 accounts × 6 seats × ₹600 × 12 = ₹43,200 per account a year. Top-down: take the Indian SME software-spend pool and assume meeting tools capture a small share.",
+            "result": "Bottom-up ≈ ₹124 crore a year; top-down should land in the same order of magnitude (₹100 to 200 crore)",
+            "sanity": "Reconcile: if the two differ by more than 2 to 3 times, revisit adoption and price. Biggest unknowns: adoption rate and price sensitivity."
+          },
+          "whyItWorks": "Two methods cross-check each other and expose the weakest assumptions.",
+          "commonMistakes": ["One method only", "Treating total addressable market as expected revenue"],
+          "rubric": ["Both methods used", "Assumptions explicit", "Reconciliation step", "Weakest assumption named"]
+        }
+      }
+    ]
+  }
+]

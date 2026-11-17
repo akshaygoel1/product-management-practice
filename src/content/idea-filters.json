@@ -1,0 +1,115 @@
+[
+  {
+    "id": "if-01",
+    "title": "CityReads library app",
+    "type": "single",
+    "difficulty": "easy",
+    "estimatedMinutes": 10,
+    "tags": ["consumer", "engagement"],
+    "scenario": {
+      "company": "CityReads",
+      "context": "CityReads is a public library app. The team has 4 ideas: A) reading streaks; B) personalised recommendations; C) audiobook integration; D) social book clubs. Available criteria: Impact, Ease (5 = easiest), Reach, Strategic fit, Risk."
+    },
+    "steps": [
+      {
+        "topic": "idea-filters",
+        "task": "Choose 3 criteria, score each idea 1 to 5, and pick one.",
+        "hints": ["Score ease so that a higher number is always better."],
+        "answerSchema": "idea-filters",
+        "reference": {
+          "content": {
+            "criteria": ["Impact", "Ease", "Reach"],
+            "ideas": [
+              { "name": "A) Reading streaks", "scores": [3, 5, 4], "total": 12 },
+              { "name": "B) Personalised recommendations", "scores": [4, 2, 5], "total": 11 },
+              { "name": "C) Audiobook integration", "scores": [5, 1, 3], "total": 9 },
+              { "name": "D) Social book clubs", "scores": [3, 2, 2], "total": 7 }
+            ],
+            "pick": "A, reading streaks",
+            "reasoning": "It is the cheapest to ship and reaches most users; B is the follow-up once there is more behaviour data."
+          },
+          "whyItWorks": "Criteria fit the decision and scores are consistent in direction.",
+          "commonMistakes": ["Scoring effort so that high means hard", "Picking by gut after scoring"],
+          "rubric": ["3 sensible criteria", "All ideas scored consistently", "Total shown", "Pick explained"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "if-02",
+    "title": "CalmCove RICE",
+    "type": "single",
+    "difficulty": "medium",
+    "estimatedMinutes": 15,
+    "tags": ["consumer", "retention", "rice"],
+    "scenario": {
+      "company": "CalmCove",
+      "context": "CalmCove is a meditation app. To cut churn, the team has 4 ideas with estimates. A) Personalised reminders: reach 120,000 users per quarter, impact 0.5, confidence 80%, effort 1 person-month. B) Sleep stories: 40,000, impact 2, confidence 50%, effort 4. C) Streak freeze: 80,000, impact 1, confidence 70%, effort 2. D) Live group sessions: 20,000, impact 3, confidence 30%, effort 6."
+    },
+    "steps": [
+      {
+        "topic": "idea-filters",
+        "task": "Calculate the RICE score for each idea, rank them, and say whether you would follow the ranking.",
+        "hints": ["RICE = Reach × Impact × Confidence ÷ Effort."],
+        "answerSchema": "idea-filters",
+        "reference": {
+          "content": {
+            "criteria": ["Reach", "Impact", "Confidence", "Effort (person-months)"],
+            "formula": "RICE = Reach × Impact × Confidence ÷ Effort",
+            "ideas": [
+              { "name": "A) Personalised reminders", "scores": [120000, 0.5, 0.8, 1], "total": 48000, "note": "= 120,000 × 0.5 × 0.8 ÷ 1 = 48,000" },
+              { "name": "B) Sleep stories", "scores": [40000, 2, 0.5, 4], "total": 10000, "note": "= 40,000 × 2 × 0.5 ÷ 4 = 10,000" },
+              { "name": "C) Streak freeze", "scores": [80000, 1, 0.7, 2], "total": 28000, "note": "= 80,000 × 1 × 0.7 ÷ 2 = 28,000" },
+              { "name": "D) Live group sessions", "scores": [20000, 3, 0.3, 6], "total": 3000, "note": "= 20,000 × 3 × 0.3 ÷ 6 = 3,000" }
+            ],
+            "pick": "A, C, B, D — start with A and C as quick wins",
+            "reasoning": "D has the highest impact but the lowest confidence, so run a cheap pilot (for example one live session a week) to raise confidence before investing 6 person-months."
+          },
+          "whyItWorks": "Correct maths plus a view on what the number does not capture.",
+          "commonMistakes": ["Treating the score as the final answer", "Ignoring low confidence"],
+          "rubric": ["Formula applied correctly", "Ranking correct", "Low confidence idea handled", "Reasoned recommendation"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "if-03",
+    "title": "SaveSmart strategic filter",
+    "type": "single",
+    "difficulty": "hard",
+    "estimatedMinutes": 25,
+    "tags": ["fintech", "strategy", "trade-offs"],
+    "scenario": {
+      "company": "SaveSmart",
+      "context": "SaveSmart is a fintech app with 500,000 users and 14 months of cash. This year's strategy is to activate existing users. Ideas: A) auto-invest round-ups; B) credit-score tracker (needs a regulated partner and approval); C) bill-pay marketplace (needs merchants and users); D) premium subscription tier."
+    },
+    "steps": [
+      {
+        "topic": "idea-filters",
+        "task": "Choose 4 weighted criteria, score the ideas, decide what to build first, name one idea to kill, and test how sensitive your decision is to the weights.",
+        "hints": [
+          "The strategy should show up in a criterion and its weight.",
+          "Change the weights to see if the winner holds."
+        ],
+        "answerSchema": "idea-filters",
+        "reference": {
+          "content": {
+            "criteria": ["Impact on activation (35%)", "Time to launch (25%)", "Regulatory risk — 5 = low risk (20%)", "Revenue potential (20%)"],
+            "ideas": [
+              { "name": "A) Auto-invest round-ups", "scores": [5, 4, 4, 3], "total": 4.15, "note": "1.75 + 1.00 + 0.80 + 0.60 = 4.15" },
+              { "name": "B) Credit-score tracker", "scores": [3, 3, 2, 2], "total": 2.6, "note": "1.05 + 0.75 + 0.40 + 0.40 = 2.60" },
+              { "name": "C) Bill-pay marketplace", "scores": [2, 2, 3, 4], "total": 2.6, "note": "0.70 + 0.50 + 0.60 + 0.80 = 2.60" },
+              { "name": "D) Premium subscription tier", "scores": [2, 3, 5, 5], "total": 3.45, "note": "0.70 + 0.75 + 1.00 + 1.00 = 3.45" }
+            ],
+            "pick": "Build A first; D is a second-half option",
+            "kill": "B, because of regulatory dependency and low activation impact.",
+            "sensitivity": "If activation weight falls to 15% and revenue rises to 40%, A scores 3.75 and D scores 4.05, so D wins. Since this year's strategy is activation, keep A first, and revisit D if the strategy changes."
+          },
+          "whyItWorks": "Makes strategy explicit in the weights and shows how fragile the result is.",
+          "commonMistakes": ["Equal weights with no strategy", "Never testing the weights"],
+          "rubric": ["Weights reflect strategy", "Totals calculated correctly", "Clear build and kill decisions", "Sensitivity check"]
+        }
+      }
+    ]
+  }
+]

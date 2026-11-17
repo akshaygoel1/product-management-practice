@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm-practice-studio/content-schema.json",
+  "title": "PM Practice Studio problem",
+  "type": "object",
+  "required": ["id", "title", "type", "difficulty", "estimatedMinutes", "tags", "scenario", "steps"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "title": { "type": "string", "minLength": 1 },
+    "type": { "enum": ["single", "combined"] },
+    "difficulty": { "enum": ["easy", "medium", "hard"] },
+    "estimatedMinutes": { "type": "integer", "minimum": 5 },
+    "tags": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "scenario": {
+      "type": "object",
+      "required": ["company", "context"],
+      "properties": {
+        "company": { "type": "string" },
+        "context": { "type": "string", "minLength": 1 },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["label", "value"],
+            "properties": { "label": { "type": "string" }, "value": { "type": "string" } }
+          }
+        }
+      }
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "required": ["topic", "task", "hints", "answerSchema", "reference"],
+        "properties": {
+          "topic": {
+            "enum": [
+              "kpi-tree", "causal-diagram", "user-segmentation", "root-cause", "opportunity-sizing",
+              "hypothesis", "survey", "interview", "problem-framing", "idea-filters", "metrics",
+              "wireframing", "user-flow"
+            ]
+          },
+          "task": { "type": "string", "minLength": 1 },
+          "hints": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+          "answerSchema": {
+            "enum": [
+              "kpi-tree", "causal-diagram", "user-segmentation", "root-cause", "opportunity-sizing",
+              "hypothesis", "survey", "interview", "problem-framing", "idea-filters", "metrics",
+              "wireframing", "user-flow"
+            ]
+          },
+          "showPreviousAnswer": { "type": "boolean" },
+          "reference": {
+            "type": "object",
+            "required": ["content", "rubric"],
+            "properties": {
+              "content": { "type": "object" },
+              "whyItWorks": { "type": "string" },
+              "commonMistakes": { "type": "array", "items": { "type": "string" } },
+              "rubric": { "type": "array", "items": { "type": "string" }, "minItems": 3 }
+            }
+          }
+        }
+      }
+    }
+  }
+}

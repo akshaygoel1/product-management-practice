@@ -1,0 +1,126 @@
+[
+  {
+    "id": "sur-01",
+    "title": "CampusBite pre-ordering",
+    "type": "single",
+    "difficulty": "easy",
+    "estimatedMinutes": 10,
+    "tags": ["consumer", "campus"],
+    "scenario": {
+      "company": "CampusBite",
+      "context": "CampusBite lets students pre-order food at a university food court, but few students use it."
+    },
+    "steps": [
+      {
+        "topic": "survey",
+        "task": "Write the research goal, the target respondents, and 8 questions with their types (single choice, multi choice, scale, open).",
+        "hints": [
+          "One idea per question.",
+          "Add a screener so you only hear from the right people."
+        ],
+        "answerSchema": "survey",
+        "reference": {
+          "content": {
+            "goal": "Understand barriers to pre-ordering and which features would matter.",
+            "respondents": "Students who ate at the food court at least once in the last 2 weeks.",
+            "questions": [
+              { "text": "In the last 2 weeks, how often did you eat at the food court?", "type": "single", "options": ["Never", "1 to 2 times", "3 to 5 times", "Daily"], "note": "Screener; end the survey for never." },
+              { "text": "How do you usually get your food?", "type": "single", "options": ["Walk up and queue", "Call ahead", "Pre-order on an app", "Other"] },
+              { "text": "Have you used CampusBite?", "type": "single", "options": ["Yes", "No"] },
+              { "text": "What is the main reason?", "type": "single", "options": ["Did not know about it", "Queue is fine", "Prefer paying cash", "App is slow", "Other"], "note": "If no to CampusBite." },
+              { "text": "How long do you usually wait at peak?", "type": "single", "options": ["Under 5 min", "5 to 10", "10 to 20", "Over 20"] },
+              { "text": "How important is each to you when ordering?", "type": "scale", "options": ["Pick-up time guarantee", "Discounts", "Menu photos", "Payment options"], "note": "Scale 1 to 5 for each." },
+              { "text": "Which payment method do you prefer?", "type": "single", "options": ["UPI", "Card", "Cash", "Campus wallet"] },
+              { "text": "What would make ordering food on campus easier?", "type": "open" }
+            ]
+          },
+          "whyItWorks": "Neutral wording, mutually exclusive options, an other option, and one open question at the end.",
+          "commonMistakes": ["Leading wording", "Overlapping ranges", "Asking everyone the same follow-up"],
+          "rubric": ["Clear goal and respondent", "Screener present", "Neutral wording", "Mix of question types", "Options exclusive and complete"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "sur-02",
+    "title": "PayQuick question review",
+    "type": "single",
+    "difficulty": "medium",
+    "estimatedMinutes": 15,
+    "tags": ["fintech", "upi", "survey-quality"],
+    "scenario": {
+      "company": "PayQuick",
+      "context": "PayQuick is a UPI payments app. A teammate drafted these satisfaction survey questions: (1) How much do you love our fast and secure payments? (2) Do you use PayQuick often? (3) How satisfied are you with the app's speed and customer support? (4) Don't you agree the new design is better? (5) Rate your satisfaction from 1 to 5."
+    },
+    "steps": [
+      {
+        "topic": "survey",
+        "task": "Name the flaw in each question and rewrite it.",
+        "hints": ["Look for leading wording, double-barrelled questions, vague terms, and missing scale labels."],
+        "answerSchema": "survey",
+        "reference": {
+          "content": {
+            "goal": "Fix five flawed satisfaction-survey questions.",
+            "respondents": "Existing PayQuick users.",
+            "questions": [
+              { "text": "How satisfied or dissatisfied are you with the speed of payments in PayQuick?", "type": "scale", "options": ["Very dissatisfied", "Dissatisfied", "Neutral", "Satisfied", "Very satisfied"], "note": "Flaw in the original: leading and double-barrelled (love, fast and secure). Ask security separately." },
+              { "text": "In the last 30 days, how many times did you pay using PayQuick?", "type": "single", "options": ["0", "1 to 4", "5 to 10", "11 to 20", "More than 20"], "note": "Flaw in the original: vague frequency." },
+              { "text": "How satisfied are you with the app's speed?", "type": "scale", "options": ["Very dissatisfied", "Dissatisfied", "Neutral", "Satisfied", "Very satisfied"], "note": "The original was double-barrelled: split it, and ask customer support separately." },
+              { "text": "How satisfied are you with customer support?", "type": "scale", "options": ["Very dissatisfied", "Dissatisfied", "Neutral", "Satisfied", "Very satisfied"], "note": "Second half of the split double-barrelled question." },
+              { "text": "Compared with the previous design, how would you rate the new design?", "type": "single", "options": ["Much worse", "Worse", "About the same", "Better", "Much better"], "note": "Flaw in the original: leading and agree-style." },
+              { "text": "Overall, how satisfied are you with PayQuick?", "type": "scale", "options": ["1 = very dissatisfied", "5 = very satisfied"], "note": "Flaw in the original: unlabelled scale and no object." }
+            ]
+          },
+          "whyItWorks": "Each rewrite asks for one thing in neutral words with defined answer options.",
+          "commonMistakes": ["Fixing only the wording but keeping two ideas in one question"],
+          "rubric": ["All five flaws identified", "Rewrites are neutral", "Double-barrelled questions split", "Scales labelled"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "sur-03",
+    "title": "TaskTide pricing survey",
+    "type": "single",
+    "difficulty": "hard",
+    "estimatedMinutes": 25,
+    "tags": ["b2b", "saas", "pricing"],
+    "scenario": {
+      "company": "TaskTide",
+      "context": "TaskTide is a new project-management tool for teams of 10 to 50 people. The founders need to set a per-user monthly price and have never run pricing research."
+    },
+    "steps": [
+      {
+        "topic": "survey",
+        "task": "Design a 10-question pricing survey that uses the four Van Westendorp questions. Include screeners, a concept description, and a short analysis plan.",
+        "hints": [
+          "Show a concept card before the price questions.",
+          "Plan how you will analyse the four price curves."
+        ],
+        "answerSchema": "survey",
+        "reference": {
+          "content": {
+            "goal": "Set a per-user monthly price using the Van Westendorp method.",
+            "respondents": "People involved in choosing project tools at teams of 10 to 50 people.",
+            "questions": [
+              { "text": "Are you involved in choosing project tools?", "type": "single", "options": ["Decision maker", "Influencer", "Not involved"], "note": "Screener; end survey for not involved." },
+              { "text": "How big is your team?", "type": "single", "options": ["Under 10", "10 to 50", "Over 50"], "note": "End survey if outside 10 to 50." },
+              { "text": "Which tool does your team use now?", "type": "single", "options": ["List of common tools", "Other"] },
+              { "text": "What do you pay per user per month now?", "type": "open", "note": "Numeric or I do not know." },
+              { "text": "At what price would TaskTide be so cheap that you would doubt its quality?", "type": "open", "note": "Van Westendorp; numeric, per user per month." },
+              { "text": "At what price would it be a bargain?", "type": "open", "note": "Van Westendorp; numeric, per user per month." },
+              { "text": "At what price would it start to feel expensive but you would still consider it?", "type": "open", "note": "Van Westendorp; numeric, per user per month." },
+              { "text": "At what price would it be too expensive to consider?", "type": "open", "note": "Van Westendorp; numeric, per user per month." },
+              { "text": "Rank the 6 features by importance.", "type": "rank" },
+              { "text": "What would stop you from switching?", "type": "open" }
+            ],
+            "notes": "Concept card: one short description and 4 key features, shown before the price questions. Analysis plan: validate answers (too cheap < bargain < expensive < too expensive); plot the four cumulative curves; read the acceptable price range from the intersections and the optimal point; cut by team size; aim for at least 200 respondents per key segment; note that stated willingness to pay is higher than real behaviour, so confirm with a live price test."
+          },
+          "whyItWorks": "Uses a standard method with validation and a plan to read the result.",
+          "commonMistakes": ["Asking a single what would you pay question", "No screener", "No data validation"],
+          "rubric": ["Screeners", "Concept description", "Four price questions", "Analysis plan", "Limits of stated price noted"]
+        }
+      }
+    ]
+  }
+]

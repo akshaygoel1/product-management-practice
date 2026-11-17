@@ -1,0 +1,788 @@
+[
+  {
+    "id": "c-01",
+    "title": "PocketCoach: weakest segment, then its retention tree",
+    "type": "combined",
+    "difficulty": "medium",
+    "estimatedMinutes": 30,
+    "tags": ["consumer", "fitness", "subscription"],
+    "scenario": {
+      "company": "PocketCoach",
+      "context": "PocketCoach is an online fitness coaching subscription with 150,000 subscribers and about 10% monthly churn. Behaviour data in the first 30 days: some subscribers train 5 or more times a week; some train only on weekends; some start strongly and drop off after 2 weeks; some download plans but log less than one workout a week. Churn by group: 3%, 7%, 18% and 25% respectively. Group sizes: 30%, 35%, 25% and 10%."
+    },
+    "steps": [
+      {
+        "topic": "user-segmentation",
+        "task": "Segment the subscribers and decide which segment contributes most to churn and deserves attention first.",
+        "hints": ["Contribution to churn is segment share times segment churn."],
+        "answerSchema": "user-segmentation",
+        "reference": {
+          "content": {
+            "basis": "Engagement behaviour in the first 30 days.",
+            "segments": [
+              { "name": "Daily doers", "criteria": "Train 5 or more times a week", "size": "~30% · 3% churn · contributes 0.9 points", "need": "" },
+              { "name": "Weekend warriors", "criteria": "Train only on weekends", "size": "~35% · 7% churn · contributes 2.45 points", "need": "" },
+              { "name": "Fading starters", "criteria": "Start strongly and drop off after 2 weeks", "size": "~25% · 18% churn · contributes 4.5 points", "need": "" },
+              { "name": "Plan collectors", "criteria": "Download plans but log less than one workout a week", "size": "~10% · 25% churn · contributes 2.5 points", "need": "" }
+            ],
+            "priority": { "name": "Fading starters", "reason": "They contribute the most churn (about 4.5 of about 10.35 points) and, having started strongly, are more recoverable than plan collectors." }
+          },
+          "rubric": ["One behavioural basis", "Contribution to churn computed", "Priority justified with numbers"]
+        }
+      },
+      {
+        "topic": "kpi-tree",
+        "showPreviousAnswer": true,
+        "task": "Build a KPI tree for monthly retention of the priority segment to three levels and mark 2 levers.",
+        "hints": ["Retention requires forming a habit and then deciding to renew."],
+        "answerSchema": "kpi-tree",
+        "reference": {
+          "content": {
+            "root": {
+              "label": "Monthly retention of fading starters",
+              "children": [
+                { "label": "% who stay active in weeks 3 to 4", "formula": "Workouts planned per week × % of planned workouts completed", "levers": ["plan difficulty calibration", "week-2 coach check-in"] },
+                { "label": "% of active users who renew", "formula": "Perceived progress × Price value", "levers": ["progress summaries", "mid-month reminders"] }
+              ]
+            },
+            "firstLevers": ["week-2 coach check-in", "plan difficulty calibration"]
+          },
+          "rubric": ["Tree for the chosen segment", "Levels multiply", "Levers tied to leaf nodes"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "c-02",
+    "title": "SwiftCart: causal map, then root cause",
+    "type": "combined",
+    "difficulty": "hard",
+    "estimatedMinutes": 30,
+    "tags": ["marketplace", "operations", "delivery"],
+    "scenario": {
+      "company": "SwiftCart",
+      "context": "SwiftCart is a grocery delivery service. On-time delivery fell from 92% to 81% in a month. Possible factors: a festival boosted orders, rider numbers grew only slightly, restaurant and store prep times did not change, and in week 2 the dispatch team increased order batching (multiple orders per rider trip)."
+    },
+    "steps": [
+      {
+        "topic": "causal-diagram",
+        "task": "Draw a causal diagram connecting orders, riders, batching, trip length, and on-time delivery. Show at least one feedback loop.",
+        "hints": ["Batching helps rider efficiency but can lengthen each trip."],
+        "answerSchema": "causal-diagram",
+        "reference": {
+          "content": {
+            "edges": [
+              { "cause": "Festival", "effect": "Orders", "sign": "+" },
+              { "cause": "Orders", "effect": "Riders needed", "sign": "+" },
+              { "cause": "Riders needed vs riders available", "effect": "Rider shortage", "sign": "+" },
+              { "cause": "Rider shortage", "effect": "Batching size", "sign": "+", "note": "dispatch reacts" },
+              { "cause": "Batching size", "effect": "Orders per trip", "sign": "+" },
+              { "cause": "Orders per trip", "effect": "Trip length", "sign": "+" },
+              { "cause": "Trip length", "effect": "On-time delivery", "sign": "−" },
+              { "cause": "Rider shortage", "effect": "Wait to assign a rider", "sign": "+" },
+              { "cause": "Wait to assign a rider", "effect": "On-time delivery", "sign": "−" }
+            ],
+            "loops": ["Reinforcing loop: Late deliveries → Customer re-orders or support contacts (+) → Orders (+) → Shortage (+)."],
+            "confounders": ["Weather."],
+            "insight": "Prep time has no change, so its arrow is flat."
+          },
+          "rubric": ["Both demand and supply sides", "Batching shown as both helper and cause of delay", "A loop", "Signs correct"]
+        }
+      },
+      {
+        "topic": "root-cause",
+        "showPreviousAnswer": true,
+        "task": "Use this data to find the root cause. Week 1: orders +10%, batching 1.2, on-time 91%. Week 2: orders +25%, batching 1.8, on-time 84%. Week 3: orders +25%; in one pilot zone batching returned to 1.2 and that zone was 90% on-time, while other zones with batching 1.8 were 80%.",
+        "hints": ["Look for the natural experiment."],
+        "answerSchema": "root-cause",
+        "reference": {
+          "content": {
+            "hypotheses": [
+              { "hypothesis": "Volume alone is not the cause", "check": "Orders were already up 10% in week 1 with on-time at 91%." },
+              { "hypothesis": "The batching increase is the cause", "check": "The drop started in week 2, when batching rose. In week 3, the pilot zone with batching restored to 1.2 recovered to 90%, while zones that kept 1.8 stayed near 80%, despite equal order growth." }
+            ],
+            "finding": "Root cause: the increase in batching size from 1.2 to 1.8 lengthened trips under a tight rider supply. Volume and rider shortage played a supporting role. Action: revert batching, set a cap that depends on rider supply, monitor on-time rate by zone."
+          },
+          "rubric": ["Rules out volume as sole cause", "Uses the pilot zone as evidence", "Root cause stated", "Action proposed"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "c-03",
+    "title": "BookNook: renewal drop, then hypotheses",
+    "type": "combined",
+    "difficulty": "medium",
+    "estimatedMinutes": 30,
+    "tags": ["consumer", "subscription", "retention"],
+    "scenario": {
+      "company": "BookNook",
+      "context": "BookNook is an e-book subscription. Annual renewal rate fell from 72% to 61% this quarter. Changes in the quarter: annual price up 20%; 15% of titles removed after a licence ended; renewal reminder email moved from 30 days before renewal to 7 days before. Renewal by reading level: users who read 4 or more books a year renewed at 85% (unchanged); users who read 0 or 1 book renewed at 41%, down from 58%."
+    },
+    "steps": [
+      {
+        "topic": "root-cause",
+        "task": "Work out what is driving the drop and what is not.",
+        "hints": ["Compare the heavy and light readers."],
+        "answerSchema": "root-cause",
+        "reference": {
+          "content": {
+            "hypotheses": [
+              { "hypothesis": "The price rise and lost titles hurt heavy readers", "check": "Heavy readers are unchanged at 85%, so this is not the cause." },
+              { "hypothesis": "Light readers saw less value for a higher price and had less warning", "check": "The whole drop sits among light readers (58% to 41%)." }
+            ],
+            "finding": "Root cause: light readers saw less value for a higher price and had less warning (7 days instead of 30), so they cancelled or did not act when the renewal arrived. Not the cause: catalogue loss for heavy readers (no change in their renewal). To confirm: compare light readers who got the old versus new reminder timing, and survey reasons for cancellation."
+          },
+          "rubric": ["Segments heavy and light readers", "Root cause attributed to light readers", "Confirmation plan"]
+        }
+      },
+      {
+        "topic": "hypothesis",
+        "showPreviousAnswer": true,
+        "task": "Write 3 testable hypotheses (We believe… because… so we expect…) with metrics to win back light readers.",
+        "hints": ["Address the gap in perceived value and the reminder timing."],
+        "answerSchema": "hypothesis",
+        "reference": {
+          "content": {
+            "items": [
+              { "text": "H1: We believe light readers cancel because the reminder came too late to reconsider, so restoring the 30-day reminder should raise their renewal from 41% to 50%.", "metric": "Metric: light-reader renewal rate." },
+              { "text": "H2: We believe light readers do not see value because they do not find books they like, so a personalised three-book pick before renewal should raise renewal by 5 points.", "metric": "Metric: renewal and books started in the 30 days before renewal." },
+              { "text": "H3: We believe price is the barrier for light readers, so offering a lower-cost light plan should keep at least 30% of those who would cancel.", "metric": "Metric: share who switch to the light plan instead of cancelling; guardrail: average revenue per user." }
+            ]
+          },
+          "rubric": ["Testable form", "Linked to the root cause", "Metric and target", "Guardrail where needed"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "c-04",
+    "title": "TrailMate: hypotheses, then a survey",
+    "type": "combined",
+    "difficulty": "medium",
+    "estimatedMinutes": 30,
+    "tags": ["consumer", "outdoors", "freemium"],
+    "scenario": {
+      "company": "TrailMate",
+      "context": "TrailMate is a hiking app with a free tier and a paid tier at ₹799 a year. Only 3% of users upgrade. Paid users most often use offline maps, trail conditions and GPX export."
+    },
+    "steps": [
+      {
+        "topic": "hypothesis",
+        "task": "Write 3 hypotheses about why people upgrade or do not, and mark the riskiest one.",
+        "hints": ["The riskiest hypothesis is the one that, if wrong, would change the plan the most."],
+        "answerSchema": "hypothesis",
+        "reference": {
+          "content": {
+            "items": [
+              { "text": "H1 (riskiest): We believe people upgrade mainly for offline maps because hikers often lose signal, so making offline maps the headline upgrade benefit should raise conversion from 3% to 4%.", "metric": "Metric: upgrade conversion." },
+              { "text": "H2: We believe many free users do not know premium features exist, so a feature preview at the right moment (when signal drops) should raise upgrade views.", "metric": "Metric: upgrade views." },
+              { "text": "H3: We believe ₹799 feels high for occasional hikers, so a seasonal pass should convert users who hike fewer than 5 times a year.", "metric": "Metric: seasonal pass conversions." }
+            ],
+            "notes": "Riskiest hypothesis: H1."
+          },
+          "rubric": ["Three testable hypotheses", "Riskiest identified", "Each has a metric or expected change"]
+        }
+      },
+      {
+        "topic": "survey",
+        "showPreviousAnswer": true,
+        "task": "Design a 7 to 8 question survey to test H1 with free users.",
+        "hints": ["Do not tell respondents what you are hoping to hear; ask about past behaviour."],
+        "answerSchema": "survey",
+        "reference": {
+          "content": {
+            "goal": "Test whether offline maps drive upgrades.",
+            "respondents": "Free users of TrailMate.",
+            "questions": [
+              { "text": "How many times did you hike in the last 3 months?", "type": "single", "options": ["0", "1 to 2", "3 to 5", "6 or more"], "note": "Screener; end for 0." },
+              { "text": "How often did you lose mobile signal on a hike?", "type": "single", "options": ["Never", "Rarely", "Sometimes", "Often"] },
+              { "text": "Which did you use to navigate when you had no signal?", "type": "multi", "options": ["Paper map", "Downloaded map from another app", "Remembered the route", "Turned back", "Other"] },
+              { "text": "How important are these when hiking?", "type": "scale", "options": ["Offline maps", "Trail conditions", "GPX export", "Photo sharing"], "note": "Scale 1 to 5 for each." },
+              { "text": "Have you considered upgrading TrailMate?", "type": "single", "options": ["Yes", "No"] },
+              { "text": "What was the main reason?", "type": "multi", "options": ["Price", "Not enough value", "Did not know premium features", "Use another app", "Other"], "note": "If yes or no to upgrading, multi with other." },
+              { "text": "What yearly price would feel fair for the features you rated most important?", "type": "single", "options": ["Ranges"], "note": "Ranges." },
+              { "text": "What would make you upgrade?", "type": "open" }
+            ]
+          },
+          "rubric": ["Screener", "Past behaviour questions", "Neutral wording", "Questions that can confirm or refute H1"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "c-05",
+    "title": "ShelfShare: hypotheses, then lender interviews",
+    "type": "combined",
+    "difficulty": "medium",
+    "estimatedMinutes": 30,
+    "tags": ["consumer", "community", "marketplace"],
+    "scenario": {
+      "company": "ShelfShare",
+      "context": "ShelfShare is a neighbourhood book-lending app. Borrowers outnumber lenders 3 to 1, and 40% of people who list a book never list a second one."
+    },
+    "steps": [
+      {
+        "topic": "hypothesis",
+        "task": "Write 3 hypotheses for why lenders stop listing, and pick the riskiest.",
+        "hints": ["Think about effort, reward and trust."],
+        "answerSchema": "hypothesis",
+        "reference": {
+          "content": {
+            "items": [
+              { "text": "H1 (riskiest): We believe lenders stop because lending feels like a hassle (coordinating pick-up and return), so enabling drop-off at a partner cafe should raise second-listing rate from 60% to 70%.", "metric": "Metric: second-listing rate." },
+              { "text": "H2: We believe lenders worry about not getting books back, so a simple borrower rating and return reminder should raise second listing.", "metric": "Metric: second-listing rate." },
+              { "text": "H3: We believe lenders get no reward, so showing a lender badge and how many readers they helped should raise listings per lender.", "metric": "Metric: listings per lender." }
+            ],
+            "notes": "Riskiest hypothesis: H1."
+          },
+          "rubric": ["Testable form", "Based on motives", "Riskiest identified"]
+        }
+      },
+      {
+        "topic": "interview",
+        "showPreviousAnswer": true,
+        "task": "Write an 8 to 9 question interview guide for lenders to test the riskiest hypothesis without leading.",
+        "hints": ["Ask about the last lending experience."],
+        "answerSchema": "interview",
+        "reference": {
+          "content": {
+            "goals": [],
+            "questions": [
+              { "label": "Warm-up", "text": "Tell me about the books you have at home and how you decide what to keep." },
+              { "label": "Past behaviour", "text": "Tell me about the last time you lent a book through ShelfShare." },
+              { "text": "How did the pick-up happen?" },
+              { "text": "What did you do when the borrower contacted you?" },
+              { "text": "How did the return go?" },
+              { "label": "Depth", "text": "What took the most effort or time?" },
+              { "text": "Did you think about lending another book afterwards? What happened?" },
+              { "label": "Wrap-up", "text": "If you could change one thing about lending, what would it be? Anything else?" }
+            ],
+            "avoid": [
+              { "text": "Would you lend more if there were a cafe drop-off?", "why": "Leading, hypothetical." }
+            ]
+          },
+          "rubric": ["Past-behaviour focus", "Open wording", "Tests effort hypothesis without naming it", "Wrap-up"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "c-06",
+    "title": "PedalCity: frame the problem, then filter ideas",
+    "type": "combined",
+    "difficulty": "medium",
+    "estimatedMinutes": 30,
+    "tags": ["consumer", "mobility", "operations"],
+    "scenario": {
+      "company": "PedalCity",
+      "context": "PedalCity is a city bike-share. At its 6 busiest stations between 8 and 10 am, 28% of trips fail because no bike is available or docks are full. Operations has 3 rebalancing trucks and a budget of ₹40 lakh this year."
+    },
+    "steps": [
+      {
+        "topic": "problem-framing",
+        "task": "Fill in the canvas (Who, Problem, Why now, Evidence, Impact, Constraints, Success metric).",
+        "hints": ["Do not name a solution."],
+        "answerSchema": "problem-framing",
+        "reference": {
+          "content": {
+            "who": "Commuters at the 6 busiest stations.",
+            "problem": "Bikes and docks are not where riders need them at peak.",
+            "whyNow": "Ridership grew after the new office district opened and complaints are rising.",
+            "evidence": "28% failed trips at peak; 3 trucks cover 60 stations.",
+            "impact": "Lost rides and revenue; riders switch to cabs.",
+            "constraints": "3 trucks; ₹40 lakh budget; no new station permits this year.",
+            "successMetric": "Peak availability from 72% to 90% in 6 months."
+          },
+          "rubric": ["Specific who", "No solution in the problem", "Numeric evidence", "Constraints and metric"]
+        }
+      },
+      {
+        "topic": "idea-filters",
+        "showPreviousAnswer": true,
+        "task": "Score these ideas on Impact on availability, Cost (5 = cheapest), Time to launch (5 = fastest) and Scalability, then pick one. Ideas: A) more truck rebalancing; B) bike reservations; C) rewards for returning bikes to low-stock stations; D) build new stations.",
+        "hints": ["Use the constraints from step 1."],
+        "answerSchema": "idea-filters",
+        "reference": {
+          "content": {
+            "criteria": ["Impact on availability", "Cost (5 = cheapest)", "Time to launch (5 = fastest)", "Scalability"],
+            "ideas": [
+              { "name": "A) More truck rebalancing", "scores": [4, 2, 4, 2], "total": 12 },
+              { "name": "B) Bike reservations", "scores": [2, 4, 3, 3], "total": 12, "note": "Reservations lead to hoarding." },
+              { "name": "C) Rewards for returning bikes to low-stock stations", "scores": [4, 4, 3, 5], "total": 16 },
+              { "name": "D) Build new stations", "scores": [3, 1, 1, 3], "total": 8 }
+            ],
+            "pick": "C, rewards",
+            "reasoning": "It works within budget and scales without trucks; use existing trucks for the worst stations as a complement. Drop D because of permits and cost."
+          },
+          "rubric": ["Criteria scored consistently", "Constraints used", "Clear pick with reasons"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "c-07",
+    "title": "SignSwift: define the metrics, then build the tree",
+    "type": "combined",
+    "difficulty": "medium",
+    "estimatedMinutes": 30,
+    "tags": ["b2b", "saas", "e-signature"],
+    "scenario": {
+      "company": "SignSwift",
+      "context": "SignSwift is an e-signature tool for small businesses. Leadership wants more signed documents without more spam to recipients."
+    },
+    "steps": [
+      {
+        "topic": "metrics",
+        "task": "Define a north star, 2 input metrics, 2 guardrails and 1 counter-metric.",
+        "hints": ["Remember there are two parties: the sender and the signer."],
+        "answerSchema": "metrics",
+        "reference": {
+          "content": {
+            "northStar": "Documents fully signed per week.",
+            "inputs": [
+              { "name": "Documents sent per active sender per week" },
+              { "name": "Completion rate", "definition": "Signed ÷ sent." }
+            ],
+            "guardrails": [
+              { "name": "Time to complete (median)" },
+              { "name": "Signer drop-off at the signature step" }
+            ],
+            "counter": [
+              { "name": "Reminder complaints or opt-outs per 1,000 reminders sent" }
+            ]
+          },
+          "rubric": ["North star tied to value", "Inputs are levers", "Guardrail and counter-metric"]
+        }
+      },
+      {
+        "topic": "kpi-tree",
+        "showPreviousAnswer": true,
+        "task": "Break down your north star into a KPI tree to three levels and mark 2 levers.",
+        "hints": ["Use the inputs you defined."],
+        "answerSchema": "kpi-tree",
+        "reference": {
+          "content": {
+            "root": {
+              "label": "Signed documents",
+              "children": [
+                { "label": "Active senders", "formula": "Registered senders × % sending in the week", "levers": ["templates"] },
+                { "label": "Documents sent per sender" },
+                {
+                  "label": "Completion rate",
+                  "formula": "% opened × % signed given opened",
+                  "children": [
+                    { "label": "% opened", "formula": "Delivery rate × Open rate", "levers": ["sender identification", "reminder timing"] },
+                    { "label": "% signed given opened", "formula": "1 − drop-off across steps", "levers": ["mobile signing", "fewer fields", "saved signature"] }
+                  ]
+                }
+              ]
+            },
+            "firstLevers": ["automatic reminders at 24 and 72 hours (open rate)", "one-tap mobile signing (drop-off)"]
+          },
+          "rubric": ["Multiplicative levels", "Matches step 1 inputs", "Levers on leaf nodes"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "c-08",
+    "title": "Zesty Kitchens: size three categories, then choose",
+    "type": "combined",
+    "difficulty": "hard",
+    "estimatedMinutes": 30,
+    "tags": ["consumer", "food", "india"],
+    "scenario": {
+      "company": "Zesty",
+      "context": "Zesty is a cloud kitchen company in Pune with 4 outlets and about ₹9 crore annual revenue. It is considering three new categories and can launch only one pilot. Use these inputs. A) Breakfast subscription: 150,000 office workers in the delivery area, 5% subscribe, ₹90 a day, 22 working days, 12 months. B) Protein bowls for gym-goers: 300,000 gym members, 8% order, 2 orders a week, ₹280 an order, 50 weeks. C) Premium desserts: 600,000 high-income households, 10% order, 6 orders a year, ₹350 an order. Assume Zesty could capture 10% of each market."
+    },
+    "steps": [
+      {
+        "topic": "opportunity-sizing",
+        "task": "Estimate the annual market and the capturable revenue for each category.",
+        "hints": ["Multiply down the funnel, then apply the 10% share."],
+        "answerSchema": "opportunity-sizing",
+        "reference": {
+          "content": {
+            "assumptions": [
+              { "label": "A) Breakfast subscription", "value": "150,000 × 5% = 7,500 × ₹90 × 22 × 12 = ₹23,760 each ≈ ₹17.8 crore" },
+              { "label": "B) Protein bowls for gym-goers", "value": "300,000 × 8% = 24,000 × 2 × ₹280 × 50 = ₹28,000 each ≈ ₹67.2 crore" },
+              { "label": "C) Premium desserts", "value": "600,000 × 10% = 60,000 × 6 × ₹350 = ₹2,100 each ≈ ₹12.6 crore" }
+            ],
+            "formula": "Market = population × adoption × frequency × price; capturable = 10% of market",
+            "result": "A ≈ ₹1.8 crore; B ≈ ₹6.7 crore; C ≈ ₹1.3 crore capturable",
+            "sanity": ""
+          },
+          "rubric": ["Correct funnel maths", "Units consistent", "Capturable share applied"]
+        }
+      },
+      {
+        "topic": "idea-filters",
+        "showPreviousAnswer": true,
+        "task": "Score the three categories on Capturable revenue, Investment needed (5 = lowest), Operational fit and Margin, and choose the pilot.",
+        "hints": ["Operational fit with the existing kitchens matters for a pilot."],
+        "answerSchema": "idea-filters",
+        "reference": {
+          "content": {
+            "criteria": ["Capturable revenue", "Investment needed (5 = lowest)", "Operational fit", "Margin"],
+            "ideas": [
+              { "name": "A) Breakfast subscription", "scores": [2, 4, 4, 3], "total": 13 },
+              { "name": "B) Protein bowls", "scores": [5, 3, 4, 3], "total": 15 },
+              { "name": "C) Premium desserts", "scores": [2, 2, 2, 5], "total": 11 }
+            ],
+            "pick": "B, protein bowls, in one outlet near gyms, with a 3 month pilot",
+            "reasoning": "Risks: gym-goer demand may be seasonal; ingredient cost for protein is high. Next: track orders per week per gym, repeat rate and gross margin."
+          },
+          "rubric": ["Uses step 1 numbers", "Sensible criteria", "Pilot choice with risks"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "c-09",
+    "title": "StudyBuddy: segment, interview, frame",
+    "type": "combined",
+    "difficulty": "hard",
+    "estimatedMinutes": 45,
+    "tags": ["edtech", "marketplace"],
+    "scenario": {
+      "company": "StudyBuddy",
+      "context": "StudyBuddy is an online tutoring marketplace for college students. Bookings are low outside exam season and most students use it only once."
+    },
+    "steps": [
+      {
+        "topic": "user-segmentation",
+        "task": "Segment the student users on one basis (4 segments) and choose one to research first.",
+        "hints": ["Use need or behaviour, not year of study."],
+        "answerSchema": "user-segmentation",
+        "reference": {
+          "content": {
+            "basis": "Why they seek help.",
+            "segments": [
+              { "name": "Last-minute crammers", "criteria": "Book in the 2 weeks before exams", "size": "~40%", "need": "Fast coverage" },
+              { "name": "Concept strugglers", "criteria": "Fall behind during the term and need regular help", "size": "~25%", "need": "Patient explanation" },
+              { "name": "High-achievers seeking an edge", "criteria": "Already doing well and want more", "size": "~15%", "need": "Advanced practice" },
+              { "name": "Working students", "criteria": "Limited time, flexible schedule", "size": "~20%", "need": "Short sessions" }
+            ],
+            "priority": { "name": "Concept strugglers", "reason": "Their need is recurring (repeat bookings) and unmet by one-time cramming." }
+          },
+          "rubric": ["One basis", "Distinct needs", "Choice linked to repeat use"]
+        }
+      },
+      {
+        "topic": "interview",
+        "showPreviousAnswer": true,
+        "task": "Write 8 open questions to interview concept strugglers.",
+        "hints": ["Start with the moment they realised they were behind."],
+        "answerSchema": "interview",
+        "reference": {
+          "content": {
+            "goals": [],
+            "questions": [
+              { "text": "Tell me about your courses this term." },
+              { "text": "Tell me about the last time you realised you were falling behind in a subject." },
+              { "text": "What did you do next?" },
+              { "text": "Who or what did you turn to for help?" },
+              { "text": "Tell me about a time you tried to get a tutor. How did you choose?" },
+              { "text": "What happened in the first session?" },
+              { "text": "What made you continue or stop?" },
+              { "text": "If you could change one thing about getting help, what would it be?" }
+            ],
+            "avoid": [
+              { "text": "Would you pay for a weekly tutor?", "why": "Hypothetical." }
+            ]
+          },
+          "rubric": ["Past-behaviour questions", "Covers discovery, choice and drop-off", "No hypotheticals"]
+        }
+      },
+      {
+        "topic": "problem-framing",
+        "showPreviousAnswer": true,
+        "task": "Using these findings, fill in the canvas. Findings from 8 interviews: students wait about 2 weeks before seeking help; they find tutors through friends, not marketplaces; their main fear is tutor quality; sessions happen late at night; they prefer 30 minute sessions; repeat bookings stop after a poor first session.",
+        "hints": ["The problem is about trust and timing, not about features."],
+        "answerSchema": "problem-framing",
+        "reference": {
+          "content": {
+            "who": "College students who fall behind during the term.",
+            "problem": "They get help too late and cannot judge tutor quality before paying, so one weak first session ends the relationship.",
+            "whyNow": "Mid-term performance is slipping and competitor apps offer free trial sessions.",
+            "evidence": "8 interviews: late help-seeking, friend referrals, quality fear, drop-off after a poor first session.",
+            "impact": "Low repeat bookings and low lifetime value.",
+            "constraints": "Tutor supply limited at night; small team.",
+            "successMetric": "Second-session booking rate from 25% to 40%."
+          },
+          "rubric": ["Uses interview evidence", "Problem not a solution", "Measurable metric"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "c-10",
+    "title": "Dwell: KPI tree, root cause, hypotheses",
+    "type": "combined",
+    "difficulty": "hard",
+    "estimatedMinutes": 45,
+    "tags": ["marketplace", "rentals", "funnel"],
+    "scenario": {
+      "company": "Dwell",
+      "context": "Dwell is a rental listings platform. Monthly confirmed bookings fell from 2,736 to 2,160. In the same month, two changes shipped: a map-first search layout and a new default sort (newest instead of most relevant). Funnel data (before to after): searches 1,000,000 to 1,000,000; searches that open a listing 38% to 30%; listing views that become an enquiry 6% to 6%; enquiries that become bookings 12% to 12%."
+    },
+    "steps": [
+      {
+        "topic": "kpi-tree",
+        "task": "Build a KPI tree for monthly bookings to 3 levels.",
+        "hints": ["Follow the funnel."],
+        "answerSchema": "kpi-tree",
+        "reference": {
+          "content": {
+            "root": {
+              "label": "Monthly bookings",
+              "children": [
+                { "label": "Searches", "formula": "Active seekers × Searches per seeker" },
+                { "label": "% opening a listing", "formula": "Result relevance × Result presentation" },
+                { "label": "Enquiry rate", "formula": "Listing quality × Contact friction" },
+                { "label": "Booking rate", "formula": "Response time × Fit and price" }
+              ]
+            }
+          },
+          "rubric": ["Follows the funnel", "Multiplies", "Drivers per step"]
+        }
+      },
+      {
+        "topic": "root-cause",
+        "showPreviousAnswer": true,
+        "task": "Use the tree and the data to find where the drop comes from.",
+        "hints": ["Compute the bookings before and after, and find the one node that changed."],
+        "answerSchema": "root-cause",
+        "reference": {
+          "content": {
+            "hypotheses": [
+              { "hypothesis": "The open-a-listing rate changed", "check": "Before: 1,000,000 × 0.38 × 0.06 × 0.12 = 2,736. After: 1,000,000 × 0.30 × 0.06 × 0.12 = 2,160, a 21% drop, entirely explained by the open-a-listing rate falling from 38% to 30%. Searches, enquiry rate and booking rate are unchanged." }
+            ],
+            "finding": "Root cause area: the search result page, the point where people decide to open a listing. The two changes in that area (map-first layout, newest-first sort) are the suspects."
+          },
+          "rubric": ["Computes before and after", "Isolates the single changed node", "Names the suspects"]
+        }
+      },
+      {
+        "topic": "hypothesis",
+        "showPreviousAnswer": true,
+        "task": "Write 3 testable hypotheses with metrics to recover the rate.",
+        "hints": ["Test the two changes separately."],
+        "answerSchema": "hypothesis",
+        "reference": {
+          "content": {
+            "items": [
+              { "text": "H1: We believe the map-first layout pushes listings below the fold on mobile, so reverting to list-first for mobile should lift the open rate from 30% to 36%.", "metric": "Metric: search-to-open rate." },
+              { "text": "H2: We believe newest-first sorting shows weaker matches at the top, so restoring relevance sort should lift the open rate by 4 points.", "metric": "Metric: search-to-open rate." },
+              { "text": "H3: We believe listings without good photos are skipped, so ranking listings with photos higher should lift the open rate for new listings.", "metric": "Metric: search-to-open rate; guardrail: bookings per search." }
+            ]
+          },
+          "rubric": ["Separates layout from sort", "Metric and target", "Guardrail"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "c-11",
+    "title": "ClinicQueue: frame, flow, wireframe",
+    "type": "combined",
+    "difficulty": "medium",
+    "estimatedMinutes": 45,
+    "tags": ["health-services", "operations", "consumer"],
+    "scenario": {
+      "company": "ClinicQueue",
+      "context": "A chain of walk-in clinics has an average wait of 55 minutes, 22% of patients leave before being seen, and the front desk is overwhelmed with where-am-I-in-the-queue questions. The team wants to pilot a virtual queue."
+    },
+    "steps": [
+      {
+        "topic": "problem-framing",
+        "task": "Fill in the canvas.",
+        "hints": ["Keep it about waiting and uncertainty."],
+        "answerSchema": "problem-framing",
+        "reference": {
+          "content": {
+            "who": "Walk-in patients and front-desk staff.",
+            "problem": "Patients wait with no visibility of when they will be seen, so many leave and staff handle repeated queue questions.",
+            "whyNow": "Patient volume is up and leave-without-being-seen is rising.",
+            "evidence": "55 minute average wait; 22% leave unseen; frequent queue questions at the desk.",
+            "impact": "Lost visits, poor experience, staff stress.",
+            "constraints": "Walk-ins must still be possible; limited desk staff; some patients lack smartphones.",
+            "successMetric": "Leave-unseen rate from 22% to 10%."
+          },
+          "rubric": ["Specific who", "Problem not solution", "Constraints include non-smartphone users"]
+        }
+      },
+      {
+        "topic": "user-flow",
+        "showPreviousAnswer": true,
+        "task": "Map the flow for a patient joining and using the virtual queue, including 3 exception paths.",
+        "hints": ["Include patients without a phone and patients who miss their turn."],
+        "answerSchema": "user-flow",
+        "reference": {
+          "content": {
+            "steps": [
+              { "n": 1, "type": "action", "text": "Patient arrives and scans the QR code (or asks the desk to add them)." },
+              { "n": 2, "type": "action", "text": "Enter name and mobile number, choose reason for visit." },
+              { "n": 3, "type": "decision", "text": "Valid number?", "branches": ["No: error, back to 2.", "Yes: go to 4."] },
+              { "n": 4, "type": "action", "text": "Show queue position and estimated wait." },
+              { "n": 5, "type": "action", "text": "Patient can leave and gets updates by SMS." },
+              { "n": 6, "type": "decision", "text": "Near the front (3 people ahead)?", "branches": ["No: keep waiting, updates continue.", "Yes: send Come back now alert."] },
+              { "n": 7, "type": "decision", "text": "Patient arrives within 10 minutes of being called?", "branches": ["Yes: check in, go to 9.", "No: go to 8."] },
+              { "n": 8, "type": "action", "text": "Move patient back by 3 places and send one more alert; second miss removes them from the queue." },
+              { "n": 9, "type": "action", "text": "Patient is seen." },
+              { "n": 10, "type": "end", "text": "Visit complete." }
+            ],
+            "extras": [
+              "No phone: desk adds them and prints a token.",
+              "Patient wants to cancel: one-tap cancel."
+            ]
+          },
+          "rubric": ["Join and update steps", "Missed-turn path", "No-phone path", "Clear end"]
+        }
+      },
+      {
+        "topic": "wireframing",
+        "showPreviousAnswer": true,
+        "task": "Wireframe the Queue status screen, including the state when the patient is called.",
+        "hints": ["The main question is how long."],
+        "answerSchema": "wireframing",
+        "reference": {
+          "content": {
+            "screens": [
+              {
+                "name": "Queue status",
+                "parts": [
+                  "Header with clinic name.",
+                  "Large number: your position (for example, 7th).",
+                  "Estimated wait (for example, about 25 minutes) with last-updated time.",
+                  "Progress bar of patients ahead.",
+                  "Primary button: I am on my way (shown when 3 or fewer ahead).",
+                  "Secondary link: Cancel my spot.",
+                  "Footer: desk phone number."
+                ]
+              }
+            ],
+            "states": [
+              { "name": "Called state", "text": "Green banner, Please come to the desk within 10 minutes, with a countdown and a button Check in." }
+            ]
+          },
+          "rubric": ["Position and wait prominent", "Called state", "Cancel option"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "c-12",
+    "title": "PlantPal: filter ideas, flow, wireframe, metrics",
+    "type": "combined",
+    "difficulty": "hard",
+    "estimatedMinutes": 45,
+    "tags": ["consumer", "lifestyle", "mobile"],
+    "scenario": {
+      "company": "PlantPal",
+      "context": "PlantPal is a new plant-care app with 3 candidate first features: A) watering reminders; B) plant disease scan with the camera; C) community Q&A. The team has 8 weeks and 2 engineers."
+    },
+    "steps": [
+      {
+        "topic": "idea-filters",
+        "task": "Score the ideas on Impact on retention, Ease (5 = easiest) and Strategic fit, and pick the first feature.",
+        "hints": ["Consider the 8 week limit."],
+        "answerSchema": "idea-filters",
+        "reference": {
+          "content": {
+            "criteria": ["Impact on retention", "Ease (5 = easiest)", "Strategic fit"],
+            "ideas": [
+              { "name": "A) Watering reminders", "scores": [4, 5, 5], "total": 14 },
+              { "name": "B) Plant disease scan with the camera", "scores": [5, 2, 4], "total": 11 },
+              { "name": "C) Community Q&A", "scores": [3, 2, 2], "total": 7 }
+            ],
+            "pick": "A, watering reminders",
+            "reasoning": "It is deliverable in 8 weeks and ties to the core habit; B is the next bet once the user base exists to learn from; C needs a community first."
+          },
+          "rubric": ["Consistent scoring", "Uses the time limit", "Clear pick"]
+        }
+      },
+      {
+        "topic": "user-flow",
+        "showPreviousAnswer": true,
+        "task": "Map the flow for adding a plant and receiving and acting on a watering reminder, with 3 exception paths.",
+        "hints": ["Include snooze and skip."],
+        "answerSchema": "user-flow",
+        "reference": {
+          "content": {
+            "steps": [
+              { "n": 1, "type": "action", "text": "Tap Add plant." },
+              { "n": 2, "type": "action", "text": "Choose the plant type (search) and name it." },
+              { "n": 3, "type": "action", "text": "Set the starting schedule (suggested, editable)." },
+              { "n": 4, "type": "action", "text": "Allow notifications (explain benefit first)." },
+              { "n": 5, "type": "decision", "text": "Allowed?", "branches": ["No: show a daily in-app Today list only.", "Yes: go to 6."] },
+              { "n": 6, "type": "action", "text": "Reminder arrives." },
+              { "n": 7, "type": "decision", "text": "What does the user do?", "branches": ["Mark watered: go to 9.", "Snooze: remind again in 3 hours.", "Skip: log as skipped, ask why (rained, soil still wet) to adjust the schedule.", "Ignore: reminder repeats once, then logs as missed."] },
+              { "n": 9, "type": "action", "text": "Schedule updates and a streak count increases." },
+              { "n": 10, "type": "end", "text": "Plant is up to date." }
+            ],
+            "extras": [
+              "Plant not in the list: custom plant.",
+              "Several plants due at once: grouped reminder.",
+              "User travelling: pause schedule."
+            ]
+          },
+          "rubric": ["Add and remind steps", "Snooze and skip", "Notification refusal", "Exceptions"]
+        }
+      },
+      {
+        "topic": "wireframing",
+        "showPreviousAnswer": true,
+        "task": "Wireframe the Today screen.",
+        "hints": ["Make marking as watered one tap."],
+        "answerSchema": "wireframing",
+        "reference": {
+          "content": {
+            "screens": [
+              {
+                "name": "Today",
+                "parts": [
+                  "Header with date and a streak badge.",
+                  "Section: Due today, with cards per plant: photo, name, last watered, button Watered (primary) and a three-dot menu (snooze, skip, details).",
+                  "Section: Coming up (collapsed).",
+                  "Floating button: Add plant.",
+                  "Bottom navigation: Today, My plants, Settings."
+                ]
+              }
+            ],
+            "states": [
+              { "name": "Empty state", "text": "Illustration, All plants are happy, with link to add a plant." },
+              { "name": "Notifications off", "text": "Banner at the top explaining the benefit with a button to turn them on." }
+            ]
+          },
+          "rubric": ["One-tap primary action", "Empty state", "Notification banner"]
+        }
+      },
+      {
+        "topic": "metrics",
+        "showPreviousAnswer": true,
+        "task": "Define a north star, 2 inputs, 2 guardrails and 1 counter-metric for the feature.",
+        "hints": ["Think about the habit you want to create."],
+        "answerSchema": "metrics",
+        "reference": {
+          "content": {
+            "northStar": "Plants watered on time per weekly active user.",
+            "inputs": [
+              { "name": "% of added plants with notifications enabled" },
+              { "name": "Reminder-to-action rate within 6 hours" }
+            ],
+            "guardrails": [
+              { "name": "Notification opt-out rate" },
+              { "name": "Uninstall rate within 14 days" }
+            ],
+            "counter": [
+              { "name": "Percentage of actions marked Watered with no plant growth or condition change in 4 weeks", "definition": "May mean people tap to clear reminders without caring for the plant." }
+            ]
+          },
+          "rubric": ["Habit-based north star", "Inputs are levers", "Guardrails and counter-metric"]
+        }
+      }
+    ]
+  }
+]

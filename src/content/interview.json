@@ -1,0 +1,160 @@
+[
+  {
+    "id": "int-01",
+    "title": "Choosing where to eat",
+    "type": "single",
+    "difficulty": "easy",
+    "estimatedMinutes": 10,
+    "tags": ["consumer", "discovery"],
+    "scenario": {
+      "company": "",
+      "context": "A food-discovery startup wants to understand how people decide where to eat on a weeknight."
+    },
+    "steps": [
+      {
+        "topic": "interview",
+        "task": "Write 3 learning goals and 8 open questions in a sensible order, and list 2 questions to avoid.",
+        "hints": [
+          "Ask about the last time, not what they usually do.",
+          "Do not pitch your idea."
+        ],
+        "answerSchema": "interview",
+        "reference": {
+          "content": {
+            "goals": [
+              "Learn what triggers the decision.",
+              "Learn what options people consider.",
+              "Learn what criteria and frustrations shape the choice."
+            ],
+            "questions": [
+              { "label": "Warm-up", "text": "Tell me a bit about your usual weeknight." },
+              { "text": "Tell me about the last time you ate out or ordered in on a weeknight." },
+              { "text": "Walk me through it from the moment you felt hungry." },
+              { "text": "How did you decide where to go?" },
+              { "text": "What other options did you consider?" },
+              { "text": "Was there anything that nearly changed your mind or made it harder?" },
+              { "text": "Who else was involved, and how did they influence it?" },
+              { "label": "Wrap-up", "text": "If you could change one thing about how you decide, what would it be? Is there anything I did not ask that I should have?" }
+            ],
+            "avoid": [
+              { "text": "Would you use an app that recommends restaurants?", "why": "Hypothetical and leading." },
+              { "text": "Do you like discounts?", "why": "Closed and obvious." }
+            ]
+          },
+          "whyItWorks": "The guide moves from context to a specific past event to depth and a wrap-up.",
+          "commonMistakes": ["Asking about the future", "Yes or no questions", "Selling the solution"],
+          "rubric": ["Learning goals", "Questions about past behaviour", "Open-ended wording", "Sensible order", "Bad questions identified"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "int-02",
+    "title": "Freelancers and invoicing",
+    "type": "single",
+    "difficulty": "medium",
+    "estimatedMinutes": 15,
+    "tags": ["b2b", "saas", "discovery"],
+    "scenario": {
+      "company": "",
+      "context": "An invoicing startup wants to learn why freelancers get paid late. The founder tends to pitch the product during interviews."
+    },
+    "steps": [
+      {
+        "topic": "interview",
+        "task": "Write a guide with warm-up, past-behaviour, depth and wrap-up sections (9 to 10 questions), add 3 follow-up probes, and list 3 questions to avoid and why.",
+        "hints": [
+          "Focus on the last late payment.",
+          "Probes should dig into what happened, not into opinions."
+        ],
+        "answerSchema": "interview",
+        "reference": {
+          "content": {
+            "goals": [],
+            "questions": [
+              { "label": "Warm-up", "text": "What kind of work do you do, and how do you find clients?" },
+              { "label": "Warm-up", "text": "How do you usually get paid?" },
+              { "label": "Past behaviour", "text": "Tell me about the last invoice that was paid late." },
+              { "label": "Past behaviour", "text": "What happened from sending it until it was paid?" },
+              { "label": "Past behaviour", "text": "What did you do when it was late?" },
+              { "label": "Depth", "text": "How do you decide when to follow up?" },
+              { "label": "Depth", "text": "What tools or notes do you use?" },
+              { "label": "Depth", "text": "How did the client react?" },
+              { "label": "Depth", "text": "What does a late payment cost you?" },
+              { "label": "Wrap-up", "text": "What is the hardest part of getting paid? Anything else I should know?" }
+            ],
+            "probes": ["Can you tell me more about that?", "What did you do next?", "What did you expect to happen?"],
+            "avoid": [
+              { "text": "Would you use a tool that sends automatic reminders?", "why": "Hypothetical, pitch." },
+              { "text": "Do you hate chasing payments?", "why": "Leading." },
+              { "text": "How often are you paid late?", "why": "Asks them to average; answers will be unreliable." }
+            ]
+          },
+          "whyItWorks": "Focuses on a real recent event so answers show actual behaviour and cost.",
+          "commonMistakes": ["Pitching", "Asking for averages", "Leading with emotional words"],
+          "rubric": ["Four sections", "Focus on a specific recent event", "Probes included", "Bad questions explained"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "int-03",
+    "title": "Parents and kids' learning apps",
+    "type": "single",
+    "difficulty": "hard",
+    "estimatedMinutes": 25,
+    "tags": ["edtech", "parents", "ethics"],
+    "scenario": {
+      "company": "",
+      "context": "An edtech company is building a learning app for children aged 8 to 12. Parents buy it and children use it. Parents may feel guilty about screen time and give socially desirable answers."
+    },
+    "steps": [
+      {
+        "topic": "interview",
+        "task": "Write a guide for parent interviews, explain how you will reduce socially desirable answers, and plan an ethical way to learn from children.",
+        "hints": [
+          "Separate buyer and user.",
+          "Ask about behaviour, not opinions."
+        ],
+        "answerSchema": "interview",
+        "reference": {
+          "content": {
+            "goals": ["How they discovered and chose learning apps, who influenced the decision, what they track, and what makes them cancel."],
+            "questions": [
+              { "text": "Tell me about the last learning app or paid course you chose for your child." },
+              { "text": "How did you find it?" },
+              { "text": "What else did you look at?" },
+              { "text": "Who was involved in the decision?" },
+              { "text": "What happened in the first week?" },
+              { "text": "How do you know whether your child is learning?" },
+              { "text": "Tell me about a time you stopped using one." },
+              { "text": "How do you handle screen time on a typical day?" }
+            ],
+            "approach": [
+              "Ask for specific past examples.",
+              "Use neutral wording.",
+              "Avoid moral language about screen time.",
+              "Ask what they did, not what they should do.",
+              "Interview parents in private."
+            ],
+            "children": [
+              "Only with parental consent and the child's own agreement.",
+              "Keep sessions short and play-based.",
+              "Ask about favourite activities, not about the product's quality.",
+              "No sensitive probing.",
+              "The child can stop at any time.",
+              "Store notes without names."
+            ],
+            "avoid": [
+              { "text": "Would you pay for this?", "why": "Hypothetical purchase question." },
+              { "text": "Do you limit screen time enough?", "why": "Moral wording that triggers defensive answers." }
+            ]
+          },
+          "whyItWorks": "Treats buyer and user differently and builds consent and bias controls into the method.",
+          "commonMistakes": ["Asking children direct purchase questions", "Moral wording that triggers defensive answers"],
+          "rubric": ["Buyer and user separated", "Behaviour-based questions", "Bias reduction plan", "Consent and child safeguards", "Hypotheticals avoided"]
+        }
+      }
+    ]
+  }
+]

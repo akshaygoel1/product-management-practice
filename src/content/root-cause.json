@@ -1,0 +1,111 @@
+[
+  {
+    "id": "rca-01",
+    "title": "ShopSwift checkout drop",
+    "type": "single",
+    "difficulty": "easy",
+    "estimatedMinutes": 10,
+    "tags": ["consumer", "e-commerce", "funnel"],
+    "scenario": {
+      "company": "ShopSwift",
+      "context": "ShopSwift's app checkout conversion fell from 22% to 17% last week. Traffic is stable. A new app version shipped on Tuesday."
+    },
+    "steps": [
+      {
+        "topic": "root-cause",
+        "task": "List your hypotheses, what data you would pull for each, and name the most likely root cause.",
+        "hints": [
+          "Slice the drop by platform, version, step and payment method.",
+          "Match the timing to the release."
+        ],
+        "answerSchema": "root-cause",
+        "reference": {
+          "content": {
+            "hypotheses": [
+              { "hypothesis": "A release bug", "check": "Conversion by app version and OS" },
+              { "hypothesis": "Payment failure", "check": "Funnel by step and payment method" },
+              { "hypothesis": "Pricing or shipping-fee change", "check": "Fee shown at checkout, by cohort" },
+              { "hypothesis": "Traffic quality change", "check": "Conversion by channel" },
+              { "hypothesis": "Outside event or competitor sale", "check": "Compare web conversion" }
+            ],
+            "finding": "The drop is only on Android v4.2 and only at the payment step for UPI. Root cause: a broken UPI intent call in v4.2. Action: roll back or hotfix and monitor payment success rate."
+          },
+          "whyItWorks": "Segment first, then drill, and tie the timing to a change.",
+          "commonMistakes": ["Jumping to marketing causes", "No data plan for each hypothesis"],
+          "rubric": ["Multiple hypotheses", "Data check per hypothesis", "Segmented the drop", "Root cause linked to timing"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "rca-02",
+    "title": "MeetMint retention",
+    "type": "single",
+    "difficulty": "medium",
+    "estimatedMinutes": 15,
+    "tags": ["saas", "retention", "acquisition"],
+    "scenario": {
+      "company": "MeetMint",
+      "context": "MeetMint is a video-meeting app. D30 retention for October sign-ups is 33%, down from 41%. Two things changed: paid social went from 15% to 45% of sign-ups, and the free-plan meeting limit fell from 60 to 40 minutes. D30 retention for paid-social users is 25% in both periods. For all other channels it fell from 44% to 40%."
+    },
+    "steps": [
+      {
+        "topic": "root-cause",
+        "task": "Work out how much of the 8-point drop each change explains and state the root cause.",
+        "hints": [
+          "Separate the mix effect from the within-channel effect.",
+          "Hold one factor constant and recompute."
+        ],
+        "answerSchema": "root-cause",
+        "reference": {
+          "content": {
+            "hypotheses": [
+              { "hypothesis": "Mix effect: the share of low-retention paid-social sign-ups rose from 15% to 45%", "check": "Keep other-channel retention at 44% with the new mix: 0.45 × 25 + 0.55 × 44 ≈ 35.5, so mix explains about 5.7 points" },
+              { "hypothesis": "Limit effect: the free-plan meeting limit fell from 60 to 40 minutes, lowering retention in other channels", "check": "Other-channel retention fell from 44% to 40%, weighted at 55%, so the limit explains about 2.2 points" }
+            ],
+            "finding": "Before: 0.15 × 25 + 0.85 × 44 ≈ 41. After: 0.45 × 25 + 0.55 × 40 ≈ 33. Root cause: mostly a shift toward low-retention paid-social users (about 70% of the drop), plus a smaller effect from the tighter free limit. Next steps: improve paid-social onboarding or targeting; A/B test the limit."
+          },
+          "whyItWorks": "Decomposes the change into mix and rate instead of blaming one factor.",
+          "commonMistakes": ["Blaming the limit alone", "Not checking channel mix"],
+          "rubric": ["Mix and rate effects separated", "Numbers computed correctly", "Root cause stated with split", "Follow-up actions"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "rca-03",
+    "title": "RunnerGo rider supply",
+    "type": "single",
+    "difficulty": "hard",
+    "estimatedMinutes": 25,
+    "tags": ["marketplace", "operations"],
+    "scenario": {
+      "company": "RunnerGo",
+      "context": "RunnerGo is a delivery-partner platform. In one city, active riders fell 12% in a month although applications rose 20%. Data: document verification time rose from 2 to 6 days; earnings per hour for riders with 3+ months' tenure fell 9% after an incentive cut; a competitor launched in the city two weeks ago."
+    },
+    "steps": [
+      {
+        "topic": "root-cause",
+        "task": "Build a cause tree for the fall in active riders, say what each data point implies, and state the root cause(s) and how you would confirm them.",
+        "hints": [
+          "Active riders = new activations + retained riders.",
+          "Look at each side separately."
+        ],
+        "answerSchema": "root-cause",
+        "reference": {
+          "content": {
+            "hypotheses": [
+              { "hypothesis": "Activations: verification backlog", "check": "Applications up 20% but verification takes 6 days, so many applicants drop before activation → check application-to-activation rate by wait time" },
+              { "hypothesis": "Retention: incentive cut lowered earnings for tenured riders", "check": "Earnings per hour for riders with 3+ months' tenure fell 9% → check churn by tenure and by earnings change" },
+              { "hypothesis": "Retention: competitor launch may add churn", "check": "Check where churned riders move (survey)" }
+            ],
+            "finding": "Root causes: (1) verification backlog cutting activations — supply is not lost at the top of the funnel, it is lost in the middle; (2) incentive cut raising churn among tenured riders; competitor effect likely secondary and recent. Confirm: cohort activation rate by verification time; churn before and after the incentive change; exit survey. Fix: add verification capacity, restore targeted incentives for tenured riders."
+          },
+          "whyItWorks": "Splits the problem into funnel and retention and matches each fact to a branch.",
+          "commonMistakes": ["Blaming the competitor because it is visible", "Ignoring the funnel"],
+          "rubric": ["Cause tree with two sides", "Each data point mapped", "Competitor treated as secondary with reasoning", "Confirmation plan", "Fix tied to causes"]
+        }
+      }
+    ]
+  }
+]

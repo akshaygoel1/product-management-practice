@@ -1,0 +1,135 @@
+[
+  {
+    "id": "met-01",
+    "title": "QuickRead news app",
+    "type": "single",
+    "difficulty": "easy",
+    "estimatedMinutes": 10,
+    "tags": ["consumer", "media"],
+    "scenario": {
+      "company": "QuickRead",
+      "context": "QuickRead is a news app. The team wants to grow engaged readership without annoying users."
+    },
+    "steps": [
+      {
+        "topic": "metrics",
+        "task": "Define a north-star metric, 2 input metrics, 2 guardrails and 1 counter-metric, each with a clear definition.",
+        "hints": [
+          "The north star should reflect value to the reader, not just opens.",
+          "Guardrails protect experience, counter-metrics catch gaming."
+        ],
+        "answerSchema": "metrics",
+        "reference": {
+          "content": {
+            "northStar": "Weekly engaged readers — users who read at least 3 articles (each for 30 seconds or more) in a week.",
+            "inputs": [
+              { "name": "Articles read per session", "definition": "Average articles read to the end (or 30 seconds+) per session." },
+              { "name": "Sessions per week per active user", "definition": "Driven by notifications and habit." }
+            ],
+            "guardrails": [
+              { "name": "Crash-free session rate", "definition": "Protects the reading experience." },
+              { "name": "Notification opt-out rate", "definition": "Protects against over-messaging." }
+            ],
+            "counter": [
+              { "name": "Share of reads under 10 seconds", "definition": "Rises if headlines are clickbait." }
+            ]
+          },
+          "whyItWorks": "Measures real reading, names the levers, and watches for harm and gaming.",
+          "commonMistakes": ["Using app opens or downloads as the north star", "No guardrails"],
+          "rubric": ["North star reflects value", "Inputs are levers", "Guardrails protect experience", "Counter-metric catches gaming", "Definitions are precise"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "met-02",
+    "title": "Scheduled delivery feature",
+    "type": "single",
+    "difficulty": "medium",
+    "estimatedMinutes": 15,
+    "tags": ["consumer", "food-delivery", "operations"],
+    "scenario": {
+      "company": "",
+      "context": "A food-delivery app is launching scheduled orders, where customers pick a delivery slot up to 3 days ahead. Operations worry it may hurt instant-order delivery times."
+    },
+    "steps": [
+      {
+        "topic": "metrics",
+        "task": "Define success metrics for the launch: a north star, 2 input metrics, 3 guardrails, and counter-metrics, with definitions and reasons.",
+        "hints": [
+          "Success needs both adoption and reliability.",
+          "Think about what scheduled orders could harm on the supply side."
+        ],
+        "answerSchema": "metrics",
+        "reference": {
+          "content": {
+            "northStar": "Scheduled orders delivered within the promised 15-minute window per week.",
+            "inputs": [
+              { "name": "Adoption", "definition": "% of active customers who place a scheduled order in a week." },
+              { "name": "On-time rate for scheduled orders", "definition": "Delivered in window ÷ scheduled orders." }
+            ],
+            "guardrails": [
+              { "name": "p90 delivery time for instant orders", "definition": "Must not worsen." },
+              { "name": "Rider utilisation and idle time", "definition": "Watches the supply side." },
+              { "name": "Restaurant acceptance rate for scheduled orders", "definition": "Watches the merchant side." }
+            ],
+            "counter": [
+              { "name": "Cancellation rate for scheduled orders" },
+              { "name": "Refunds per 1,000 scheduled orders", "definition": "A reliable-looking number can hide customers who gave up." }
+            ]
+          },
+          "whyItWorks": "Connects the customer promise to operational health on both sides.",
+          "commonMistakes": ["Measuring only adoption", "Ignoring the effect on the existing product"],
+          "rubric": ["North star tied to the promise", "Adoption and reliability both measured", "Guardrails cover existing flow", "Counter-metrics included"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "met-03",
+    "title": "WriteWell AI assistant",
+    "type": "single",
+    "difficulty": "hard",
+    "estimatedMinutes": 25,
+    "tags": ["ai", "saas", "quality"],
+    "scenario": {
+      "company": "WriteWell",
+      "context": "WriteWell is an AI writing assistant that suggests sentences while users write. Usage is high, but the team is unsure whether suggestions actually help, and inference costs are rising."
+    },
+    "steps": [
+      {
+        "topic": "metrics",
+        "task": "Propose a metric set that measures value and quality rather than just usage, and explain how each metric could be gamed.",
+        "hints": [
+          "Acceptance rate alone can be misleading.",
+          "Include cost and quality guardrails."
+        ],
+        "answerSchema": "metrics",
+        "reference": {
+          "content": {
+            "northStar": "Documents completed with at least one accepted suggestion and kept for 24 hours, per weekly active writer.",
+            "inputs": [
+              { "name": "Suggestion acceptance rate", "definition": "Accepted ÷ shown." },
+              { "name": "Time to first accepted suggestion" },
+              { "name": "Documents started per weekly active writer" }
+            ],
+            "guardrails": [
+              { "name": "Post-acceptance edit rate", "definition": "Heavy edits mean the suggestion was poor." },
+              { "name": "p95 suggestion latency" },
+              { "name": "Thumbs-down rate" },
+              { "name": "Inference cost per active writer" }
+            ],
+            "counter": [
+              { "name": "Share of users who accept more than 90% of suggestions with no edits", "definition": "Possible rubber-stamping." },
+              { "name": "User reports of factual errors" }
+            ],
+            "gaming": "Gaming risks: showing fewer, easier suggestions inflates acceptance rate; autocompleting filler text inflates accepted words; both are caught by edit rate and kept-for-24-hours."
+          },
+          "whyItWorks": "Measures outcomes and quality, accounts for cost, and anticipates Goodhart-style gaming.",
+          "commonMistakes": ["Using total suggestions shown or words generated as success", "Ignoring cost"],
+          "rubric": ["Outcome-based north star", "Quality guardrail", "Cost metric", "Gaming risks identified", "Definitions precise"]
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,117 @@
+[
+  {
+    "id": "seg-01",
+    "title": "FreshBowl subscribers",
+    "type": "single",
+    "difficulty": "easy",
+    "estimatedMinutes": 10,
+    "tags": ["consumer", "subscription", "india"],
+    "scenario": {
+      "company": "FreshBowl",
+      "context": "FreshBowl delivers meal kits weekly to 60,000 subscribers across Indian metros. Order size, skip rate and plan choice vary widely."
+    },
+    "steps": [
+      {
+        "topic": "user-segmentation",
+        "task": "Pick one segmentation basis, define 4 segments (criteria, size guess, key need), and choose one to prioritise.",
+        "hints": [
+          "Use one basis only, such as motivation or behaviour.",
+          "Each segment should need something different from the product."
+        ],
+        "answerSchema": "user-segmentation",
+        "reference": {
+          "content": {
+            "basis": "Main reason for subscribing, checked against behaviour.",
+            "segments": [
+              { "name": "Time-poor professionals", "criteria": "25 to 40, 2 to 3 meals a week, rarely skip", "size": "~35%", "need": "Speed and zero planning" },
+              { "name": "Health-focused", "criteria": "Pick low-calorie or high-protein plans", "size": "~25%", "need": "Nutrition detail and control" },
+              { "name": "Family planners", "criteria": "4+ servings, kid-friendly picks", "size": "~25%", "need": "Quantity, variety and value" },
+              { "name": "Deal-driven trialists", "criteria": "Join on promos, skip often, churn within 6 weeks", "size": "~15%", "need": "Price" }
+            ],
+            "priority": { "name": "Time-poor professionals", "reason": "Large, low skip rate, high lifetime value and referrals." }
+          },
+          "whyItWorks": "One basis, mutually exclusive segments, and a priority backed by value.",
+          "commonMistakes": ["Mixing bases (age plus city plus diet)", "Segments that need the same thing"],
+          "rubric": ["Single clear basis", "Segments mutually exclusive", "Distinct needs per segment", "Priority justified"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "seg-02",
+    "title": "LearnLoop learners",
+    "type": "single",
+    "difficulty": "medium",
+    "estimatedMinutes": 15,
+    "tags": ["consumer", "edtech"],
+    "scenario": {
+      "company": "LearnLoop",
+      "context": "LearnLoop is a language-learning app with 2M monthly users and 4% paid conversion. Some users learn daily for a month then quit; others do a short burst before a trip."
+    },
+    "steps": [
+      {
+        "topic": "user-segmentation",
+        "task": "Segment learners by goal and commitment into 4 segments and choose where to focus to raise paid conversion.",
+        "hints": [
+          "Goal explains why they learn; commitment explains how long they stay.",
+          "Willingness to pay differs by goal."
+        ],
+        "answerSchema": "user-segmentation",
+        "reference": {
+          "content": {
+            "basis": "Goal (why they learn) and commitment (how long they stay).",
+            "segments": [
+              { "name": "Trip-prep sprinters", "criteria": "10 to 30 day burst, want survival phrases", "size": "~30%", "need": "Low lifetime value, buy short passes" },
+              { "name": "Career movers", "criteria": "3 to 5 sessions a week, want certificates", "size": "~20%", "need": "Highest willingness to pay, need a structured path" },
+              { "name": "Heritage learners", "criteria": "Learning a family language, slow and steady", "size": "~15%", "need": "Need conversation with relatives" },
+              { "name": "Streak hobbyists", "criteria": "Casual daily use, motivated by games", "size": "~35%", "need": "Low willingness to pay but high engagement" }
+            ],
+            "priority": { "name": "Career movers", "reason": "They convert and retain best; offer certificates and a study plan." }
+          },
+          "whyItWorks": "Segments link to different value and different product bets.",
+          "commonMistakes": ["Segmenting by age or country only", "Ignoring willingness to pay"],
+          "rubric": ["Goal and commitment both used", "Four distinct segments", "Willingness to pay considered", "Focus tied to conversion"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "seg-03",
+    "title": "LedgerLite accounts",
+    "type": "single",
+    "difficulty": "hard",
+    "estimatedMinutes": 25,
+    "tags": ["b2b", "saas", "india"],
+    "scenario": {
+      "company": "LedgerLite",
+      "context": "LedgerLite sells accounting software to small businesses and has 18,000 accounts. Support load is high, and two kinds of buyer appear: business owners, and accountants who run several client businesses."
+    },
+    "steps": [
+      {
+        "topic": "user-segmentation",
+        "task": "Segment by the job the software does and who the buyer is. Recommend a focus for the next 12 months and one risk.",
+        "hints": [
+          "Separate buyer from user.",
+          "One accountant can bring many accounts."
+        ],
+        "answerSchema": "user-segmentation",
+        "reference": {
+          "content": {
+            "basis": "The job the software does and who the buyer is.",
+            "segments": [
+              { "name": "Solo freelancers", "criteria": "1 person; invoices and tax", "size": "~40%", "need": "Simplicity; easy self-serve, low revenue per account" },
+              { "name": "Micro-businesses with staff", "criteria": "2 to 10 people; payroll and GST", "size": "~30%", "need": "Compliance" },
+              { "name": "Inventory-heavy shops and traders", "criteria": "Inventory-heavy operations", "size": "~15%", "need": "Stock plus billing" },
+              { "name": "Accountants managing many clients", "criteria": "~15% of accounts but each controls 10 to 40 client workspaces", "size": "~15% of accounts, 10 to 40 workspaces each", "need": "Multi-client dashboard and bulk filing" }
+            ],
+            "priority": { "name": "Accountants managing many clients", "reason": "One win brings many workspaces and referrals." },
+            "risk": "Multi-client features need heavy build, and the core self-serve base may be neglected; mitigate with a phased rollout."
+          },
+          "whyItWorks": "Uses jobs and buyer, not just company size, and weighs channel leverage.",
+          "commonMistakes": ["Segmenting only by size", "Treating each account as one user"],
+          "rubric": ["Buyer and user separated", "Segments based on jobs", "Channel effect of accountants noticed", "Focus and risk both stated"]
+        }
+      }
+    ]
+  }
+]

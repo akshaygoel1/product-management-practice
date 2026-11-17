@@ -1,0 +1,131 @@
+[
+  {
+    "id": "kpi-01",
+    "title": "StreamNest watch time",
+    "type": "single",
+    "difficulty": "easy",
+    "estimatedMinutes": 10,
+    "tags": ["consumer", "media"],
+    "scenario": {
+      "company": "StreamNest",
+      "context": "StreamNest is a subscription video app with 4M subscribers. The average subscriber watches 18 hours a month. Leadership wants total monthly watch time to grow."
+    },
+    "steps": [
+      {
+        "topic": "kpi-tree",
+        "task": "Build a KPI tree for total monthly watch time to three levels and mark the 2 levers you would test first.",
+        "hints": [
+          "Ask who watches, how often, and for how long.",
+          "Each level should multiply or add up to the level above."
+        ],
+        "answerSchema": "kpi-tree",
+        "reference": {
+          "content": {
+            "root": {
+              "label": "Total monthly watch time",
+              "children": [
+                { "label": "Active subscribers", "formula": "Total subscribers × % active in the month", "levers": ["reactivation emails", "onboarding"] },
+                { "label": "Sessions per active subscriber", "formula": "Active days × Sessions per active day", "levers": ["new-episode notifications", "release cadence"] },
+                { "label": "Average session length", "formula": "Episodes per session × Average episode length", "levers": ["autoplay-next", "content mix"] }
+              ]
+            },
+            "firstLevers": ["autoplay-next (session length)", "new-episode notifications (sessions)"]
+          },
+          "whyItWorks": "The first level is a clean product, so every node is measurable and each lever's effect can be estimated.",
+          "commonMistakes": ["Mixing revenue metrics into a usage tree", "Listing activities (send emails) instead of measurable nodes"],
+          "rubric": ["Top node is one measurable outcome", "First-level nodes multiply to the parent", "Branches do not overlap", "Levers tied to specific leaf nodes"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "kpi-02",
+    "title": "CartCrate GMV",
+    "type": "single",
+    "difficulty": "medium",
+    "estimatedMinutes": 15,
+    "tags": ["consumer", "quick-commerce", "india"],
+    "scenario": {
+      "company": "CartCrate",
+      "context": "CartCrate is a quick-commerce grocery app in Bengaluru with 1.2M monthly active users. 38% order in a given month, and average order value (AOV) is ₹520. The goal is to grow monthly GMV."
+    },
+    "steps": [
+      {
+        "topic": "kpi-tree",
+        "task": "Build a KPI tree for monthly GMV to three levels and mark the 3 levers you would test first.",
+        "hints": [
+          "Split GMV into customers, frequency and basket size.",
+          "Break customers into new, retained and reactivated."
+        ],
+        "answerSchema": "kpi-tree",
+        "reference": {
+          "content": {
+            "root": {
+              "label": "Monthly GMV",
+              "children": [
+                { "label": "Ordering customers", "formula": "New + Retained + Reactivated", "levers": ["acquisition spend", "D30 retention nudges", "win-back campaigns"] },
+                { "label": "Orders per customer", "formula": "f(assortment breadth, delivery time, stock-outs)" },
+                { "label": "AOV", "formula": "Items per order × Average item price", "levers": ["basket-builder suggestions", "free-delivery threshold", "private-label mix"] }
+              ]
+            },
+            "firstLevers": ["free-delivery threshold (AOV)", "D30 retention nudges (customers)", "stock-out reduction (frequency)"]
+          },
+          "whyItWorks": "Clean multiplication at level 1; levers sit where the team can intervene quickly.",
+          "commonMistakes": ["Mixing outcome and activity metrics at one level", "A tree that adds up conceptually but has no formula"],
+          "rubric": ["One measurable top node", "Level 1 multiplies to GMV", "Customers split into new, retained, reactivated", "Levers justified by impact and ease", "No overlapping branches"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "kpi-03",
+    "title": "HireHub net revenue",
+    "type": "single",
+    "difficulty": "hard",
+    "estimatedMinutes": 25,
+    "tags": ["marketplace", "two-sided"],
+    "scenario": {
+      "company": "HireHub",
+      "context": "HireHub is a freelance marketplace. Clients post projects, freelancers send proposals, and HireHub earns a fee on payments made through the platform. Net revenue is flat while sign-ups on both sides are growing."
+    },
+    "steps": [
+      {
+        "topic": "kpi-tree",
+        "task": "Build a KPI tree for net revenue that shows both supply and demand sides, and identify where the leak is most likely to be.",
+        "hints": [
+          "Revenue = money flowing through × the share you keep.",
+          "Where could value move off-platform?"
+        ],
+        "answerSchema": "kpi-tree",
+        "reference": {
+          "content": {
+            "root": {
+              "label": "Net revenue",
+              "children": [
+                {
+                  "label": "GMV",
+                  "formula": "Hired projects × Average project value",
+                  "children": [
+                    {
+                      "label": "Hired projects",
+                      "formula": "Posted projects × Fill rate",
+                      "children": [
+                        { "label": "Posted projects", "formula": "Active clients × Projects per active client", "levers": ["client repeat rate", "category breadth"] },
+                        { "label": "Fill rate", "formula": "f(proposals per project, time to first proposal, match quality)", "levers": ["active freelancers", "response time", "search relevance"] }
+                      ]
+                    }
+                  ]
+                },
+                { "label": "Net take rate", "formula": "Fee % × % of payments kept on-platform (leakage) − refund and payment costs %" }
+              ]
+            },
+            "firstLevers": ["Likely leak: low fill rate caused by supply that signs up but never becomes active, and leakage after the first hire when parties move off-platform"]
+          },
+          "whyItWorks": "Separates liquidity (fill rate) from monetisation (take rate), so a flat revenue line can be diagnosed.",
+          "commonMistakes": ["Treating sign-ups as the driver", "Ignoring leakage and refunds"],
+          "rubric": ["GMV and take rate separated", "Supply and demand drivers both present", "Leakage modelled", "Fill rate decomposed", "Likely leak named with reasoning"]
+        }
+      }
+    ]
+  }
+]

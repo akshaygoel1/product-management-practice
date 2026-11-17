@@ -1,0 +1,136 @@
+[
+  {
+    "id": "uf-01",
+    "title": "Password reset",
+    "type": "single",
+    "difficulty": "easy",
+    "estimatedMinutes": 10,
+    "tags": ["consumer", "account", "security"],
+    "scenario": {
+      "company": "",
+      "context": "A user forgot their password to a shopping app."
+    },
+    "steps": [
+      {
+        "topic": "user-flow",
+        "task": "Map the user flow from tapping Forgot password to being logged in again, including at least 3 failure paths.",
+        "hints": ["Think about wrong email, expired link, and weak new password."],
+        "answerSchema": "user-flow",
+        "reference": {
+          "content": {
+            "steps": [
+              { "n": 1, "type": "action", "text": "Tap Forgot password." },
+              { "n": 2, "type": "action", "text": "Enter email and submit." },
+              { "n": 3, "type": "decision", "text": "Is the email valid in format?", "branches": ["No: show an inline error, back to 2.", "Yes: go to 4."] },
+              { "n": 4, "type": "action", "text": "Show a generic message: If an account exists, we have sent a link (avoids revealing who has an account)." },
+              { "n": 5, "type": "action", "text": "User opens the email and taps the link." },
+              { "n": 6, "type": "decision", "text": "Is the link valid and unexpired?", "branches": ["No: show Link expired with a button to request a new one, back to 2.", "Yes: go to 7."] },
+              { "n": 7, "type": "action", "text": "Enter and confirm a new password." },
+              { "n": 8, "type": "decision", "text": "Does it meet the rules and do both entries match?", "branches": ["No: inline errors, back to 7.", "Yes: go to 9."] },
+              { "n": 9, "type": "action", "text": "Password updated, user is logged in or sent to login." },
+              { "n": 10, "type": "end", "text": "Success." }
+            ],
+            "extras": [
+              "Too many requests (rate-limit message).",
+              "Email not received (resend after 60 seconds)."
+            ]
+          },
+          "whyItWorks": "Covers happy path and failures while protecting privacy.",
+          "commonMistakes": ["Showing only the happy path", "Telling users whether an email exists"],
+          "rubric": ["Start and end clear", "Decisions have both branches", "At least 3 failure paths", "Security considered"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "uf-02",
+    "title": "Checkout with a coupon",
+    "type": "single",
+    "difficulty": "medium",
+    "estimatedMinutes": 15,
+    "tags": ["consumer", "e-commerce", "payments"],
+    "scenario": {
+      "company": "",
+      "context": "A shopper wants to pay for an order using a coupon code, and the first payment attempt may fail."
+    },
+    "steps": [
+      {
+        "topic": "user-flow",
+        "task": "Map the flow from cart to order confirmation, including invalid coupon, payment failure and retry with another method.",
+        "hints": ["Make sure the user never loses the cart."],
+        "answerSchema": "user-flow",
+        "reference": {
+          "content": {
+            "steps": [
+              { "n": 1, "type": "action", "text": "Open cart and tap Checkout." },
+              { "n": 2, "type": "action", "text": "Confirm address." },
+              { "n": 3, "type": "action", "text": "Enter coupon code and tap Apply." },
+              { "n": 4, "type": "decision", "text": "Is the coupon valid and applicable?", "branches": ["No: show the reason (expired, minimum not met) and keep the total; user may try another code or continue, go to 5.", "Yes: apply discount, go to 5."] },
+              { "n": 5, "type": "action", "text": "Choose a payment method." },
+              { "n": 6, "type": "action", "text": "Tap Pay." },
+              { "n": 7, "type": "decision", "text": "Did the payment succeed?", "branches": ["Yes: go to 11.", "No: go to 8."] },
+              { "n": 8, "type": "action", "text": "Show payment failed, cart and coupon are kept." },
+              { "n": 9, "type": "decision", "text": "Retry with the same method?", "branches": ["Yes: back to 6.", "No: go to 10."] },
+              { "n": 10, "type": "action", "text": "Choose another method, back to 6." },
+              { "n": 11, "type": "action", "text": "Show order confirmation with order number and ETA." },
+              { "n": 12, "type": "end", "text": "Order placed." }
+            ],
+            "extras": [
+              "Coupon becomes invalid after address change.",
+              "Money debited but order not placed (show pending status and auto-refund promise)."
+            ]
+          },
+          "whyItWorks": "Preserves state across failures and covers money-related edge cases.",
+          "commonMistakes": ["Losing the coupon after failure", "No pending-payment case"],
+          "rubric": ["Coupon branches", "Payment failure and retry loop", "State preserved", "Money edge case"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "uf-03",
+    "title": "Split a bill",
+    "type": "single",
+    "difficulty": "hard",
+    "estimatedMinutes": 25,
+    "tags": ["fintech", "payments", "social"],
+    "scenario": {
+      "company": "",
+      "context": "A payments app lets a user split a restaurant bill with friends. Some friends are on the app, some are not, and some may decline or pay late."
+    },
+    "steps": [
+      {
+        "topic": "user-flow",
+        "task": "Map the flow for the person splitting the bill and the friends paying, covering partial payment, decline, a friend not on the app, expiry and refund.",
+        "hints": [
+          "Draw the organiser and a friend as two lanes.",
+          "Add a time limit."
+        ],
+        "answerSchema": "user-flow",
+        "reference": {
+          "content": {
+            "steps": [
+              { "n": 1, "lane": "Organiser", "type": "action", "text": "Pay the restaurant and tap Split." },
+              { "n": 2, "lane": "Organiser", "type": "action", "text": "Choose equal or custom split." },
+              { "n": 3, "lane": "Organiser", "type": "action", "text": "Add friends." },
+              { "n": 4, "lane": "Organiser", "type": "decision", "text": "Is the friend on the app?", "branches": ["Yes: send an in-app request.", "No: send an invite link by SMS (the friend pays by UPI link and may sign up)."] },
+              { "n": 5, "lane": "Organiser", "type": "action", "text": "Request expires in 7 days; reminders on day 2 and day 5." },
+              { "n": 6, "lane": "Friend", "type": "action", "text": "Receives request." },
+              { "n": 7, "lane": "Friend", "type": "decision", "text": "Accept, decline or ignore?", "branches": ["Accept: go to 8.", "Decline: organiser sees Declined, may re-send or absorb the amount.", "Ignore: reminders then expiry."] },
+              { "n": 8, "lane": "Friend", "type": "decision", "text": "Pay full share or partial?", "branches": ["Full: mark Paid.", "Partial: mark Partially paid and show the remaining balance."] },
+              { "n": 9, "lane": "Friend", "type": "action", "text": "Payment goes directly to the organiser." },
+              { "n": 10, "lane": "Friend", "type": "decision", "text": "Payment succeeded?", "branches": ["No: friend sees failure and retry."] },
+              { "n": 11, "lane": "Organiser", "type": "end", "text": "All paid (end, success); some unpaid at expiry (organiser can write off, resend or request again); amount edited after payment (refund the difference to the friend)." }
+            ],
+            "extras": [
+              "Wrong amount, duplicate payments (auto-refund), friend blocked."
+            ]
+          },
+          "whyItWorks": "Handles both roles, partial and failed money states, and the non-user path.",
+          "commonMistakes": ["Modelling only the organiser", "No expiry or write-off path"],
+          "rubric": ["Both roles", "Non-user path", "Partial and declined cases", "Expiry and refund", "Clear end states"]
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,15 @@
+[
+  { "id": "kpi-tree", "name": "KPI tree", "description": "Break an outcome metric into a tree of measurable drivers.", "answerSchema": "kpi-tree" },
+  { "id": "causal-diagram", "name": "Causal diagram", "description": "Map cause → effect links with directions and confounders.", "answerSchema": "causal-diagram" },
+  { "id": "user-segmentation", "name": "User segmentation", "description": "Define segments with criteria, size and needs.", "answerSchema": "user-segmentation" },
+  { "id": "root-cause", "name": "Root cause", "description": "List hypotheses, the data that tests them, and the true cause.", "answerSchema": "root-cause" },
+  { "id": "opportunity-sizing", "name": "Opportunity sizing", "description": "Estimate a market from stated assumptions.", "answerSchema": "opportunity-sizing" },
+  { "id": "hypothesis", "name": "Hypotheses", "description": "Write testable we-believe statements with metrics.", "answerSchema": "hypothesis" },
+  { "id": "survey", "name": "Survey making", "description": "Design unbiased surveys with screeners and scales.", "answerSchema": "survey" },
+  { "id": "interview", "name": "Interview questions", "description": "Frame past-behaviour interview guides.", "answerSchema": "interview" },
+  { "id": "problem-framing", "name": "Problem framing", "description": "Frame who, problem, why now, evidence and success.", "answerSchema": "problem-framing" },
+  { "id": "idea-filters", "name": "Idea filters", "description": "Score ideas on chosen criteria and pick with reason.", "answerSchema": "idea-filters" },
+  { "id": "metrics", "name": "Metrics", "description": "Define north-star, inputs, guardrails and counter-metrics.", "answerSchema": "metrics" },
+  { "id": "wireframing", "name": "Wireframing", "description": "Describe screens as ordered component lists.", "answerSchema": "wireframing" },
+  { "id": "user-flow", "name": "User flow", "description": "Map steps, decisions and failure paths.", "answerSchema": "user-flow" }
+]

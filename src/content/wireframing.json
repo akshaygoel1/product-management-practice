@@ -1,0 +1,166 @@
+[
+  {
+    "id": "wf-01",
+    "title": "Welcome and sign-in screen",
+    "type": "single",
+    "difficulty": "easy",
+    "estimatedMinutes": 10,
+    "tags": ["consumer", "onboarding"],
+    "scenario": {
+      "company": "",
+      "context": "A food-delivery app needs a single welcome screen that gets a new user signed in quickly using their phone number."
+    },
+    "steps": [
+      {
+        "topic": "wireframing",
+        "task": "Describe a text wireframe for the screen, including one error state.",
+        "hints": ["One primary action only. Show what happens if the number is invalid."],
+        "answerSchema": "wireframing",
+        "reference": {
+          "content": {
+            "screens": [
+              {
+                "name": "Welcome",
+                "parts": [
+                  "Logo, centred.",
+                  "Headline: Hungry? Get food in 30 minutes.",
+                  "Phone input with +91 prefix and numeric keypad.",
+                  "Primary button: Continue (disabled until 10 digits).",
+                  "Divider: or.",
+                  "Secondary button: Continue with Google.",
+                  "Text link: Skip and browse.",
+                  "Footer: terms and privacy links."
+                ],
+                "notes": "Next screen: OTP entry."
+              }
+            ],
+            "states": [
+              { "name": "Error state", "text": "Invalid or short number shows a red message under the input and keeps the button disabled." }
+            ]
+          },
+          "whyItWorks": "One clear primary action, a low-friction alternative, and a way to look around without signing in.",
+          "commonMistakes": ["Several competing buttons", "No error state"],
+          "rubric": ["Components ordered top to bottom", "One primary action", "Error state", "Alternative path"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "wf-02",
+    "title": "Quick-commerce checkout",
+    "type": "single",
+    "difficulty": "medium",
+    "estimatedMinutes": 15,
+    "tags": ["consumer", "e-commerce"],
+    "scenario": {
+      "company": "",
+      "context": "A quick-commerce app needs a one-page checkout. Users want to see the delivery time, the total, and how to pay without scrolling much."
+    },
+    "steps": [
+      {
+        "topic": "wireframing",
+        "task": "Describe the checkout wireframe, including the sticky action and two states (empty cart and payment failed).",
+        "hints": ["Put the decision-critical information near the top and the action at the bottom."],
+        "answerSchema": "wireframing",
+        "reference": {
+          "content": {
+            "screens": [
+              {
+                "name": "Checkout",
+                "parts": [
+                  "Header: back arrow and title.",
+                  "Delivery strip: address with change link and ETA (for example 12 minutes).",
+                  "Order summary: item rows with quantity steppers; collapsible after 3 items.",
+                  "Coupon row: apply coupon, showing savings once applied.",
+                  "Tip row: optional, preset chips.",
+                  "Bill details: item total, delivery fee, taxes, discount, grand total.",
+                  "Payment method row: default method with change link.",
+                  "Sticky bottom bar: grand total and Place order button."
+                ]
+              }
+            ],
+            "states": [
+              { "name": "Empty cart", "text": "Illustration, text Your cart is empty, button Browse items." },
+              { "name": "Payment failed", "text": "Banner at top, Retry button, and Choose another method; cart is kept." }
+            ]
+          },
+          "whyItWorks": "Shows total and ETA early, keeps one sticky action, and handles failure without losing the cart.",
+          "commonMistakes": ["Hiding fees until the end", "No failure state"],
+          "rubric": ["Logical order", "Sticky primary action", "Bill breakdown", "Empty and failed states"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "wf-03",
+    "title": "Post a project flow",
+    "type": "single",
+    "difficulty": "hard",
+    "estimatedMinutes": 25,
+    "tags": ["marketplace", "b2b", "multi-step"],
+    "scenario": {
+      "company": "",
+      "context": "On a freelance marketplace, clients abandon the post a project form, which has 14 fields on one page. The team wants a 3-screen flow that saves progress."
+    },
+    "steps": [
+      {
+        "topic": "wireframing",
+        "task": "Describe a 3-screen text wireframe with validation, saving, and a final review. Explain one design decision per screen.",
+        "hints": [
+          "Ask only for what freelancers need to send a good proposal.",
+          "Show progress and allow the user to come back."
+        ],
+        "answerSchema": "wireframing",
+        "reference": {
+          "content": {
+            "screens": [
+              {
+                "name": "Screen 1: Describe the project",
+                "parts": [
+                  "Progress bar (1 of 3)",
+                  "Title input",
+                  "Category dropdown",
+                  "Description textarea with examples",
+                  "Optional file attach",
+                  "Button Next",
+                  "Text Save draft"
+                ],
+                "notes": "Decision: start with the easy, familiar questions."
+              },
+              {
+                "name": "Screen 2: Budget and timeline",
+                "parts": [
+                  "Progress bar (2 of 3)",
+                  "Budget type toggle (fixed or hourly)",
+                  "Budget input with a suggested range based on the category",
+                  "Deadline picker",
+                  "Experience level chips",
+                  "Buttons Back and Next"
+                ],
+                "notes": "Decision: show a suggested range to reduce guessing and abandonment."
+              },
+              {
+                "name": "Screen 3: Review and publish",
+                "parts": [
+                  "Progress bar (3 of 3)",
+                  "Summary cards with edit links",
+                  "Preview of how many matching freelancers exist",
+                  "Checkbox for invite top matches",
+                  "Button Publish project"
+                ],
+                "notes": "Decision: showing the match count gives a reward before the final commitment."
+              }
+            ],
+            "states": [
+              { "name": "Validation", "text": "Inline errors, not a block at the end." },
+              { "name": "Saving", "text": "Draft is saved automatically after each screen and a reminder is sent after 24 hours." }
+            ]
+          },
+          "whyItWorks": "Splits a long form by topic, reduces effort, keeps progress, and builds motivation to finish.",
+          "commonMistakes": ["Asking for every optional field", "Saving only at the end"],
+          "rubric": ["Three screens with clear purpose", "Progress and saving", "Validation approach", "One design reason per screen", "Review step"]
+        }
+      }
+    ]
+  }
+]

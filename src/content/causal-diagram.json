@@ -1,0 +1,137 @@
+[
+  {
+    "id": "cd-01",
+    "title": "Rainy-day orders",
+    "type": "single",
+    "difficulty": "easy",
+    "estimatedMinutes": 10,
+    "tags": ["consumer", "food-delivery"],
+    "scenario": {
+      "company": "FoodZip",
+      "context": "FoodZip is a food-delivery app. On rainy evenings orders rise 30% but average ratings fall from 4.5 to 4.1."
+    },
+    "steps": [
+      {
+        "topic": "causal-diagram",
+        "task": "Draw a causal diagram (cause → effect, with + or − for direction) that explains both effects, and name one confounder.",
+        "hints": ["Think about what rain does to demand and to supply separately."],
+        "answerSchema": "causal-diagram",
+        "reference": {
+          "content": {
+            "edges": [
+              { "cause": "Rain", "effect": "Orders", "sign": "+" },
+              { "cause": "Rain", "effect": "Riders available", "sign": "−" },
+              { "cause": "Orders", "effect": "Delivery time", "sign": "+" },
+              { "cause": "Riders available", "effect": "Delivery time", "sign": "−" },
+              { "cause": "Delivery time", "effect": "Late-delivery rate", "sign": "+" },
+              { "cause": "Late-delivery rate", "effect": "Ratings", "sign": "−" },
+              { "cause": "Delivery time", "effect": "Food coldness", "sign": "+" },
+              { "cause": "Food coldness", "effect": "Ratings", "sign": "−" },
+              { "cause": "Low ratings", "effect": "Repeat orders", "sign": "−", "note": "extension" }
+            ],
+            "loops": [],
+            "confounders": ["Dinner time or weekends, which raise orders and delays independently of rain."],
+            "insight": "Rain raises demand and cuts supply at once, so delivery time is the mediator linking the order spike to the rating drop."
+          },
+          "whyItWorks": "Separates the demand path from the supply path and finds the mediator.",
+          "commonMistakes": ["Drawing Rain → Ratings directly", "Arrows with no sign"],
+          "rubric": ["Demand and supply paths both shown", "Delivery time identified as mediator", "Every arrow has a sign", "A plausible confounder named"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "cd-02",
+    "title": "Fitly notifications",
+    "type": "single",
+    "difficulty": "medium",
+    "estimatedMinutes": 15,
+    "tags": ["consumer", "fitness", "engagement"],
+    "scenario": {
+      "company": "Fitly",
+      "context": "Fitly is a fitness app. After the team doubled daily notifications from 2 to 4, app opens rose 15% in week 1. But 30-day uninstalls rose 20%, and by week 6 opens were below the old level."
+    },
+    "steps": [
+      {
+        "topic": "causal-diagram",
+        "task": "Draw a causal diagram that explains the short-term gain and long-term loss. Include at least one feedback loop and one time lag.",
+        "hints": [
+          "What does a notification do right now versus after weeks of repetition?",
+          "What can users do to stop notifications without uninstalling?"
+        ],
+        "answerSchema": "causal-diagram",
+        "reference": {
+          "content": {
+            "edges": [
+              { "cause": "Notifications", "effect": "Opens", "sign": "+", "note": "immediate" },
+              { "cause": "Notifications", "effect": "Annoyance", "sign": "+", "note": "builds over weeks, lag" },
+              { "cause": "Annoyance", "effect": "Notifications disabled", "sign": "+" },
+              { "cause": "Notifications disabled", "effect": "Opens", "sign": "−" },
+              { "cause": "Annoyance", "effect": "Uninstalls", "sign": "+" },
+              { "cause": "Uninstalls", "effect": "Active users", "sign": "−" },
+              { "cause": "Opens", "effect": "Habit strength", "sign": "+" },
+              { "cause": "Habit strength", "effect": "Opens", "sign": "+" },
+              { "cause": "Annoyance", "effect": "Habit strength", "sign": "−" }
+            ],
+            "loops": [
+              "Reinforcing loop: Opens → Habit strength (+) → Opens (+); annoyance breaks that loop.",
+              "Balancing loop: Notifications disabled → Notifications received (−) → Annoyance (−)."
+            ],
+            "confounders": ["User motivation drives both opens and tolerance for notifications."]
+          },
+          "whyItWorks": "Shows why a metric can win short term and lose long term: the positive path is fast, the negative path is delayed.",
+          "commonMistakes": ["Only drawing the immediate effect", "No loop", "No lag"],
+          "rubric": ["Short-term and long-term paths both shown", "At least one feedback loop", "A lag is marked", "Confounder named", "Signs correct"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "cd-03",
+    "title": "RideRoo surge pricing",
+    "type": "single",
+    "difficulty": "hard",
+    "estimatedMinutes": 25,
+    "tags": ["marketplace", "pricing"],
+    "scenario": {
+      "company": "RideRoo",
+      "context": "RideRoo is a ride-hailing marketplace. During evening peaks it applies surge pricing. Surge reduces wait times on average, but riders complain, and in some zones drivers still do not show up even at 2x surge."
+    },
+    "steps": [
+      {
+        "topic": "causal-diagram",
+        "task": "Draw a causal diagram of the surge system covering riders, drivers and trust. Mark loops, delays, and two confounders. Explain why surge may fail in some zones.",
+        "hints": [
+          "Draw separate rider and driver sides.",
+          "Which links take minutes and which take days?"
+        ],
+        "answerSchema": "causal-diagram",
+        "reference": {
+          "content": {
+            "edges": [
+              { "cause": "Demand", "effect": "Wait time", "sign": "+" },
+              { "cause": "Demand", "effect": "Surge multiplier", "sign": "+" },
+              { "cause": "Surge", "effect": "Rider demand", "sign": "−", "note": "price sensitivity" },
+              { "cause": "Surge", "effect": "Driver supply", "sign": "+", "note": "delayed by travel time to the zone" },
+              { "cause": "Driver supply", "effect": "Wait time", "sign": "−" },
+              { "cause": "Wait time", "effect": "Rider satisfaction", "sign": "−" },
+              { "cause": "Surge", "effect": "Rider satisfaction", "sign": "−", "note": "price annoyance" },
+              { "cause": "Rider satisfaction", "effect": "Future demand", "sign": "+" }
+            ],
+            "loops": [
+              "Balancing loop: Surge → Demand (−) → Surge (−).",
+              "Reinforcing loop: low wait → trust → more demand → more drivers earn → more drivers stay."
+            ],
+            "confounders": [
+              "Events and weather, which raise demand and also slow driving."
+            ],
+            "insight": "Why surge fails in some zones: a supply delay or a barrier (road closure, unsafe area, drivers cannot reach the zone in time) means price cannot pull supply; the surge then only suppresses demand."
+          },
+          "whyItWorks": "Models delay and trust rather than treating surge as a simple dial.",
+          "commonMistakes": ["Assuming supply responds instantly", "Ignoring rider trust"],
+          "rubric": ["Rider and driver sides separate", "Delay on supply link", "One balancing and one reinforcing loop", "Failure case explained", "Two confounders"]
+        }
+      }
+    ]
+  }
+]

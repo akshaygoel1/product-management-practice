@@ -1,0 +1,112 @@
+[
+  {
+    "id": "pf-01",
+    "title": "FitHub class no-shows",
+    "type": "single",
+    "difficulty": "easy",
+    "estimatedMinutes": 10,
+    "tags": ["consumer", "fitness"],
+    "scenario": {
+      "company": "FitHub",
+      "context": "FitHub is a gym with 3 branches. 35% of booked classes have no-shows, instructors teach half-empty rooms, and wait-listed members cannot get a spot."
+    },
+    "steps": [
+      {
+        "topic": "problem-framing",
+        "task": "Fill in the canvas.",
+        "hints": ["Be specific about who is affected and give numbers wherever you can."],
+        "answerSchema": "problem-framing",
+        "reference": {
+          "content": {
+            "who": "Members who want popular classes and instructors who teach them.",
+            "problem": "Booked spots go unused because members do not show up and the spot cannot be re-released in time.",
+            "whyNow": "Wait-lists are growing and members are starting to cancel.",
+            "evidence": "35% no-show rate; wait-listed members unable to attend; instructor complaints.",
+            "impact": "Lost class capacity and lower member satisfaction and retention.",
+            "constraints": "No extra instructors; a late cancellation rule must be fair and simple.",
+            "successMetric": "No-show rate from 35% to 15% in 3 months, with attended classes per member up."
+          },
+          "whyItWorks": "Specific people, a clear problem statement, measurable evidence and a target.",
+          "commonMistakes": ["Stating the solution (add fines) as the problem", "No metric"],
+          "rubric": ["Specific who", "Problem is not a solution", "Evidence has numbers", "Constraints stated", "Measurable success metric"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "pf-02",
+    "title": "Support agents searching for answers",
+    "type": "single",
+    "difficulty": "medium",
+    "estimatedMinutes": 15,
+    "tags": ["b2c", "support", "operations"],
+    "scenario": {
+      "company": "",
+      "context": "At an e-commerce company, support agents spend about 40% of their time searching internal documents. First response time is 9 minutes against a 4 minute target, and CSAT is 71%."
+    },
+    "steps": [
+      {
+        "topic": "problem-framing",
+        "task": "Fill in the canvas, making sure you do not jump to a tool.",
+        "hints": [
+          "Define the problem in terms of time and customer impact.",
+          "State what you do not yet know."
+        ],
+        "answerSchema": "problem-framing",
+        "reference": {
+          "content": {
+            "who": "Frontline support agents, especially new joiners, and the customers waiting for replies.",
+            "problem": "Agents cannot find the right answer quickly, which slows replies and lowers answer quality.",
+            "whyNow": "Ticket volume is rising ahead of the sale season and CSAT has dropped.",
+            "evidence": "40% of agent time spent searching; 9 minute first response against 4; CSAT 71%.",
+            "impact": "More agents needed, poor customer experience, and risk to repeat purchases.",
+            "constraints": "Content is spread over several tools; limited team to maintain it; no budget for a new vendor this quarter.",
+            "unknowns": "Which topics cause the most searches and whether answers exist at all.",
+            "successMetric": "Search time from 40% to 20%, first response from 9 to 5 minutes, CSAT from 71% to 78%."
+          },
+          "whyItWorks": "Defines the problem without prescribing a tool and lists unknowns.",
+          "commonMistakes": ["Writing build a chatbot as the problem", "Ignoring content quality"],
+          "rubric": ["Problem without a solution", "Impact on customer and company", "Unknowns listed", "Targets for success metrics"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "pf-03",
+    "title": "Slow enterprise onboarding",
+    "type": "single",
+    "difficulty": "hard",
+    "estimatedMinutes": 25,
+    "tags": ["b2b", "saas", "ambiguity"],
+    "scenario": {
+      "company": "",
+      "context": "A B2B analytics company hears that onboarding takes too long. Data: average onboarding is 11 weeks. Sales says enterprise customers wait on security reviews, customer success says mid-market customers wait on data setup, and a competitor now promises go-live in 4 weeks. Renewals for the biggest cohort are due next quarter."
+    },
+    "steps": [
+      {
+        "topic": "problem-framing",
+        "task": "Choose a focus, justify it, and fill in the canvas.",
+        "hints": [
+          "The statement onboarding is slow is too broad; narrow the who.",
+          "Say why you picked this segment over the others."
+        ],
+        "answerSchema": "problem-framing",
+        "reference": {
+          "content": {
+            "focus": "Mid-market customers, because they are the largest group, their delay is within our control (data setup), and enterprise security reviews are largely outside our control.",
+            "who": "Mid-market customer admins and the implementation managers who support them.",
+            "problem": "Customers take too long to connect and validate their data, so they reach first value late.",
+            "whyNow": "The renewal cohort is next quarter and a competitor promises 4 weeks.",
+            "evidence": "11 week average; customer success reports data setup as the main wait; need a breakdown of weeks per stage to confirm.",
+            "impact": "Renewal risk, delayed expansion and heavy implementation cost.",
+            "constraints": "Limited engineering time, customer data quality varies, security reviews cannot be skipped.",
+            "successMetric": "Time to first value from 11 weeks to 6 for mid-market, with onboarding CSAT up and no rise in setup errors."
+          },
+          "whyItWorks": "Narrows a vague complaint to one segment with a clear reason and says what must be verified.",
+          "commonMistakes": ["Trying to fix every segment at once", "Accepting sales opinions without a stage-by-stage breakdown"],
+          "rubric": ["Segment chosen with reasoning", "Problem is specific", "Evidence and gaps stated", "Constraints realistic", "Metric time-bound"]
+        }
+      }
+    ]
+  }
+]
