@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { ScopingAmbiguity, ScopingData, ScopingReference } from "../lib/types";
 import {
   GOOD_STATEMENT_HINT,
@@ -39,6 +39,7 @@ export function ProblemScoping({
   const [open, setOpen] = useState<boolean>(!initial.completedAt);
   const [hintShown, setHintShown] = useState(false);
   const [refShown, setRefShown] = useState(false);
+  const [scrollToCase, setScrollToCase] = useState(false);
 
   const keyTerms = scoping?.keyTerms ?? [];
 
@@ -66,8 +67,15 @@ export function ProblemScoping({
     setData(completed);
     saveScoping(problemId, completed);
     setOpen(false);
-    document.getElementById("case-section")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setScrollToCase(true);
   };
+
+  /* scroll to the worksheet only after the collapse has been applied to the layout */
+  useEffect(() => {
+    if (!scrollToCase) return;
+    setScrollToCase(false);
+    document.getElementById("case-section")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 
   const editScoping = () => {
     setOpen(true);
@@ -107,7 +115,7 @@ export function ProblemScoping({
           <div className="label mb-1">Problem scoping</div>
           <h2 className="text-xl font-bold">Understand the problem before you solve it</h2>
           <p className="muted text-[14px] mt-1">
-            Work through the three sections below, then answer the case — it is always visible at the bottom of this page.
+            The task is above and the case worksheet is below — work through this page in whatever order suits you.
           </p>
         </div>
         {data.completedAt && (

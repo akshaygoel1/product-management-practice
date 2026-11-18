@@ -177,18 +177,56 @@ function ReferenceCard({
   );
 }
 
+function TaskCard({ step }: { step: Step }) {
+  return (
+    <section className="card-tint p-5">
+      <div className="label-tint mb-2">Task</div>
+      <p className="text-[17px]">{step.task}</p>
+      {step.taskPoints && step.taskPoints.length > 0 && (
+        <ol className="mt-3 space-y-2 text-[15px]" style={{ listStyle: "decimal", paddingLeft: 20 }}>
+          {step.taskPoints.map((tp, i) => (
+            <li key={i}>{tp}</li>
+          ))}
+        </ol>
+      )}
+      {step.constraints && step.constraints.length > 0 && (
+        <div className="mt-4">
+          <div className="label mb-1">Constraints</div>
+          <ul className="space-y-1 text-[15px]" style={{ listStyle: "disc", paddingLeft: 20 }}>
+            {step.constraints.map((c, i) => (
+              <li key={i}>{c}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {step.deliverables && step.deliverables.length > 0 && (
+        <div className="mt-4">
+          <div className="label mb-1">Deliverables</div>
+          <ul className="space-y-1 text-[15px]" style={{ listStyle: "disc", paddingLeft: 20 }}>
+            {step.deliverables.map((d, i) => (
+              <li key={i}>{d}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </section>
+  );
+}
+
 function StepBlock({
   problem,
   step,
   stepIndex,
   answer,
   onAnswerChange,
+  hideTask,
 }: {
   problem: Problem;
   step: Step;
   stepIndex: number;
   answer: AnswerData | null;
   onAnswerChange: (v: AnswerData) => void;
+  hideTask?: boolean;
 }) {
   const { get } = useProgress();
   const prev = problem.steps[stepIndex - 1];
@@ -218,37 +256,7 @@ function StepBlock({
         </h2>
       )}
 
-      <section className="card-tint p-5">
-        <div className="label-tint mb-2">Task</div>
-        <p className="text-[17px]">{step.task}</p>
-        {step.taskPoints && step.taskPoints.length > 0 && (
-          <ol className="mt-3 space-y-2 text-[15px]" style={{ listStyle: "decimal", paddingLeft: 20 }}>
-            {step.taskPoints.map((tp, i) => (
-              <li key={i}>{tp}</li>
-            ))}
-          </ol>
-        )}
-        {step.constraints && step.constraints.length > 0 && (
-          <div className="mt-4">
-            <div className="label mb-1">Constraints</div>
-            <ul className="space-y-1 text-[15px]" style={{ listStyle: "disc", paddingLeft: 20 }}>
-              {step.constraints.map((c, i) => (
-                <li key={i}>{c}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-        {step.deliverables && step.deliverables.length > 0 && (
-          <div className="mt-4">
-            <div className="label mb-1">Deliverables</div>
-            <ul className="space-y-1 text-[15px]" style={{ listStyle: "disc", paddingLeft: 20 }}>
-              {step.deliverables.map((d, i) => (
-                <li key={i}>{d}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </section>
+      {!hideTask && <TaskCard step={step} />}
 
       {showRecap && (
         <section className="card p-5">
@@ -379,6 +387,12 @@ export default function Problem() {
         ))}
       </section>
 
+      {isCase && (
+        <div className="mb-4">
+          <TaskCard step={problem.steps[0]} />
+        </div>
+      )}
+
       {isCase && <ProblemScoping problemId={problem.id} scoping={problem.scoping} />}
 
       <div id="case-section" className="space-y-4">
@@ -390,6 +404,7 @@ export default function Problem() {
             stepIndex={i}
             answer={answers[i] ?? null}
             onAnswerChange={(v) => setAnswer(i, v)}
+            hideTask={isCase && i === 0}
           />
         ))}
       </div>
