@@ -12,12 +12,14 @@ import {
 
 /* ============================================================
    Problem Scoping (Case Hours only).
-   A single-page exercise: the statement, the ambiguities and
-   the scope all live on one screen, so the user can always see
-   the problem statement they wrote while picking ambiguous
-   words out of it. The summary, rubric feedback and reference
-   appear once all three sections are complete, followed by
-   "Continue to Case". Responses autosave so the user can
+   A single-page exercise shown above the case: the statement,
+   the ambiguities and the scope all live on one screen, so the
+   user can always see the problem statement they wrote while
+   picking ambiguous words out of it. The case itself is always
+   visible below — this exercise never gates it. The summary,
+   rubric feedback and reference appear once all three sections
+   are complete; "Continue to Case" then collapses the exercise
+   and scrolls to the case. Responses autosave so the user can
    leave, revisit and edit at any time.
    ============================================================ */
 
@@ -28,11 +30,9 @@ const wordCount = (s: string) => s.trim().split(/\s+/).filter(Boolean).length;
 export function ProblemScoping({
   problemId,
   scoping,
-  onEditingChange,
 }: {
   problemId: string;
   scoping?: ScopingReference;
-  onEditingChange: (editing: boolean) => void;
 }) {
   const initial = loadScoping(problemId) ?? emptyScoping();
   const [data, setData] = useState<ScopingData>(initial);
@@ -66,12 +66,11 @@ export function ProblemScoping({
     setData(completed);
     saveScoping(problemId, completed);
     setOpen(false);
-    onEditingChange(false);
+    document.getElementById("case-section")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const editScoping = () => {
     setOpen(true);
-    onEditingChange(true);
   };
 
   const valid = scopingStageValid(data, 3);
@@ -107,6 +106,9 @@ export function ProblemScoping({
         <div>
           <div className="label mb-1">Problem scoping</div>
           <h2 className="text-xl font-bold">Understand the problem before you solve it</h2>
+          <p className="muted text-[14px] mt-1">
+            Work through the three sections below, then answer the case — it is always visible at the bottom of this page.
+          </p>
         </div>
         {data.completedAt && (
           <button
@@ -114,7 +116,6 @@ export function ProblemScoping({
             className="btn-small"
             onClick={() => {
               setOpen(false);
-              onEditingChange(false);
             }}
           >
             Close
